@@ -1,0 +1,22 @@
+﻿@model List<MoneyBlog.DataLayer.Models.Article>
+@{
+    ViewBag.Title = "MyArticles";
+}
+
+<h2>MyArticles</h2>
+
+<table class="table">
+    @foreach (var article in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => article.Title)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditArticle", new { id = article.Id }) |
+                @Html.ActionLink("Details", "Article", new { id = article.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = article.Id })
+            </td>
+        </tr>
+    }
+</table>

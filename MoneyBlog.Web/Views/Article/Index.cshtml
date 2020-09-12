@@ -1,0 +1,28 @@
+﻿@model MoneyBlog.Web.Models.ArticlesViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using (Html.BeginForm("Index", "Article", FormMethod.Post))
+{
+    @Html.TextBox("searching") <input type="submit" value="Search"/>
+}
+
+        @foreach (var article in Model.Articles)
+        {
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <img src="@Url.Content(article.Image)" alt="" height=100 width=200 />
+                    <div class="caption">
+                        <p> 
+                            <a href="@Url.Action("Article","Article",new { id = article.Id })">
+                                <br />
+
+                                <span>@article.Title</span>
+                            </a>         
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        }

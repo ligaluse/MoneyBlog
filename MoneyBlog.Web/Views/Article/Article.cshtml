@@ -1,0 +1,10 @@
+﻿@model MoneyBlog.DataLayer.Models.Article
+
+<h2>Article</h2>
+
+<img src="@Model.Image" />
+<h2>@Model.Title</h2>
+<p>Created on:  @Model.CreatedOn.ToShortDateString()</p>
+
+<p>@Model.Description</p>
+<p>Author: @Model.Email</p>

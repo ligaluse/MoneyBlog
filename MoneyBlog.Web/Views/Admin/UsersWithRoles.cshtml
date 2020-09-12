@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MoneyBlog.DataLayer.Models.UsersInRolesModel>
+@using MoneyBlog.DataLayer.Models
+@{
+    ViewBag.Title = "Users With Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("UsersWithRoles", "Admin", FormMethod.Get))
+{
+    @Html.TextBox("search")
+    <input type="submit" value="Search" />
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="box-title">
+            <b>Users with Roles</b>
+        </h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="panel-body">
+        <table class="table table-hover table-bordered table-condensed" id="UsersWithRoles">
+            <thead>
+                <tr>
+                    <td><b>Email</b></td>
+                    <td><b>Roles</b></td>
+                </tr>
+            </thead>
+            @foreach (var user in Model)
+            {
+
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.Role</td>
+                    @*<td><a asp-controller="Admin" asp-action="UserDetails" asp-route-id="@user.UserId" class="btn">@user.Email</a></td>*@
+                    @*<td>
+                            @Html.ActionLink("Edit", "EditUser", "Admin", new { id = user.Id }) |
+                            @Html.ActionLink("Details", "UserDetails", new { id = user.Id }) |
+                            @Html.ActionLink("Delete", "DeleteUser", new { id = user.Id })
+                        </td>*@
+
+                </tr>
+
+            }
+        </table>
+    </div>
+
+    <div class="panel-footer">
+        <p class="box-title"><b>Total Users till @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-primary">@Model.Count()</span></p>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(function () {
+            $('#UsersWithRoles').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true
+            });
+        });
+    </script>
+}  

@@ -1,0 +1,67 @@
+﻿@model MoneyBlog.Web.Models.AddNewArticleViewModel
+    Model
+@{
+    ViewBag.Title = "AddNewArticle";
+}
+
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckeditor/adapters/jquery.js"></script>
+
+<h2>Add new article</h2>
+
+<script type="text/javascript">
+    function fileCheck(obj) {
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        if ($.inArray($(obj).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            alert("Only '.jpeg','.jpg', '.png', '.gif', '.bmp' formats are allowed.");
+        }
+    }
+</script>
+
+@using (Html.BeginForm("AddNewArticle", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Article</h4>
+    <hr />
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Title, new { @class = "form-control", placeholder = "Article Title" })
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.img, new { htmlAttributes = new { @class = "form-control" } })*@
+            <input type="file" required="required" name="file" id="file" />
+            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Article Description" })
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(model => model.Email)
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(model => model.CreatedOn)
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="AddNewArticle" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
