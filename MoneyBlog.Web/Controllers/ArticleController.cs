@@ -26,18 +26,6 @@ namespace MoneyBlog.Web.Controllers
             _ArticleService = articleService;
         }
 
-        //public ActionResult Index(string searching)
-        //{
-        //    DefaultConnection db = new DefaultConnection();
-        //    db.Articles.Where(x=>x.Title.StartsWith(searching)).ToList();
-        //    var articles = _ArticleService.GetAllArticles();
-        //    var model = new ArticlesViewModel()
-        //    {
-        //        Articles = articles
-        //    };
-
-        //    return View(model);
-        //}
         public ActionResult Index()
         {
             DefaultConnection db = new DefaultConnection();
@@ -71,6 +59,7 @@ namespace MoneyBlog.Web.Controllers
            
             return View(article);
         }
+        
         public ActionResult GetArticleByUser(string email)
         {
             return Json(_ArticleService.GetArticleByUser(email), JsonRequestBehavior.AllowGet);
@@ -235,5 +224,109 @@ namespace MoneyBlog.Web.Controllers
             }
             return View();
         }
+        //public PartialViewResult GetComments(int postId)
+        //{
+        //    IQueryable<CommentsVM> comments = dbContext.Comments.Where(c => c.Post.PostID == postId)
+        //                                               .Select(c => new CommentsVM
+        //                                               {
+        //                                                   ComID = c.ComID,
+        //                                                   CommentedDate = c.CommentedDate.Value,
+        //                                                   CommentMsg = c.CommentMsg,
+        //                                                   Users = new UserVM
+        //                                                   {
+        //                                                       UserID = c.User.UserID,
+        //                                                       Username = c.User.Username,
+        //                                                       imageProfile = c.User.imageProfile
+        //                                                   }
+        //                                               }).AsQueryable();
+
+        //    return PartialView("~/Views/Shared/_MyComments.cshtml", comments);
+        //}
+
+        //[HttpPost]
+        //public ActionResult AddComment(CommentsVM comment, int postId)
+        //{
+        //    //bool result = false;
+        //    Comment commentEntity = null;
+        //    int userId = (int)Session["UserID"];
+
+        //    var user = dbContext.Users.FirstOrDefault(u => u.UserID == userId);
+        //    var post = dbContext.Posts.FirstOrDefault(p => p.PostID == postId);
+
+        //    if (comment != null)
+        //    {
+
+        //        commentEntity = new EDMX.Comment
+        //        {
+        //            CommentMsg = comment.CommentMsg,
+        //            CommentedDate = comment.CommentedDate,
+        //        };
+
+
+        //        if (user != null && post != null)
+        //        {
+        //            post.Comments.Add(commentEntity);
+        //            user.Comments.Add(commentEntity);
+
+        //            dbContext.SaveChanges();
+        //            //result = true;
+        //        }
+        //    }
+
+        //    return RedirectToAction("GetComments", "Comments", new { postId = postId });
+        //}
+
+        //[HttpGet]
+        //public PartialViewResult GetSubComments(int ComID)
+        //{
+        //    IQueryable<SubCommentsVM> subComments = dbContext.SubComments.Where(sc => sc.Comment.ComID == ComID)
+        //                                                      .Select(sc => new SubCommentsVM
+        //                                                      {
+        //                                                          SubComID = sc.SubComID,
+        //                                                          CommentMsg = sc.CommentMsg,
+        //                                                          CommentedDate = sc.CommentedDate.Value,
+        //                                                          User = new UserVM
+        //                                                          {
+        //                                                              UserID = sc.User.UserID,
+        //                                                              Username = sc.User.Username,
+        //                                                              imageProfile = sc.User.imageProfile
+        //                                                          }
+        //                                                      }).AsQueryable();
+
+        //    return PartialView("~/Views/Shared/_MySubComments.cshtml", subComments);
+        //}
+
+        //[HttpPost]
+        //public ActionResult AddSubComment(SubCommentsVM subComment, int ComID)
+        //{
+        //    SubComment subCommentEntity = null;
+        //    int userId = (int)Session["UserID"];
+
+        //    var user = dbContext.Users.FirstOrDefault(u => u.UserID == userId);
+        //    var comment = dbContext.Comments.FirstOrDefault(p => p.ComID == ComID);
+
+        //    if (subComment != null)
+        //    {
+
+        //        subCommentEntity = new EDMX.SubComment
+        //        {
+        //            CommentMsg = subComment.CommentMsg,
+        //            CommentedDate = subComment.CommentedDate,
+        //        };
+
+
+        //        if (user != null && comment != null)
+        //        {
+        //            comment.SubComments.Add(subCommentEntity);
+        //            user.SubComments.Add(subCommentEntity);
+
+        //            dbContext.SaveChanges();
+        //            //result = true;
+        //        }
+        //    }
+
+        //    return RedirectToAction("GetSubComments", "Comments", new { ComID = ComID });
+
+        //}
     }
 }

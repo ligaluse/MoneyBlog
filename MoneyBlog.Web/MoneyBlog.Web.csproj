@@ -216,6 +216,7 @@
     <Compile Include="Models\AddNewArticleViewModel.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ArticlesViewModel.cs" />
+    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

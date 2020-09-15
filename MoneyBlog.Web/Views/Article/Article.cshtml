@@ -1,10 +1,13 @@
 ﻿@model MoneyBlog.DataLayer.Models.Article
-
+@using MoneyBlog.Web.Controllers
+@using MoneyBlog.Web.Models
 <h2>Article</h2>
 
-<img src="@Model.Image" />
+<img src="@Url.Content(Model.Image)" alt="Image" height=400 width=800 />
 <h2>@Model.Title</h2>
 <p>Created on:  @Model.CreatedOn.ToShortDateString()</p>
 
 <p>@Model.Description</p>
 <p>Author: @Model.Email</p>
+
+@*@{Html.RenderPartial("Comments");}*@
