@@ -1,20 +1,60 @@
 ﻿using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoneyBlog.DataLayer.Repositories
 {
     public class AdminRepository : IAdminRepository
     {
-        public List<AspNetUser> aspNetUsers()
+        ApplicationDbContext context = new ApplicationDbContext();
+        DefaultConnection db = new DefaultConnection();
+        public List<AspNetUser> AspNetUsers()
         {
-            DefaultConnection blogDB = new DefaultConnection();
-            List<AspNetUser> aspNetUsers = blogDB.AspNetUsers.ToList();
-            return aspNetUsers;
+            List<AspNetUser> AspNetUsers = db.AspNetUsers.ToList();
+            return AspNetUsers;
+        }
+        public AspNetUser GetUser(string id)
+        {
+            var user = db.AspNetUsers.FirstOrDefault(i => i.Id == id);
+            return user;
+        }
+        public IEnumerable<UsersInRolesModel> UsersWithRoles()
+        {
+            //šis ir jāsadala datalayer + service
+            //foreach
+            //atgriezt no context visus userus. service- foreach user..... 
+
+            var usersWithRoles = (from user in context.Users
+                                  select new
+                                  {
+                                      UserId = user.Id,
+                                      Email = user.Email,
+                                      RoleNames = (from userRole in user.Roles
+                                                   join role in context.Roles on userRole.RoleId
+                                                   equals role.Id
+                                                   select role.Name).ToList()
+                                  }).ToList()
+                                     .Select(p => new UsersInRolesModel()
+
+                                     {
+                                         UserId = p.UserId,
+                                         Email = p.Email,
+                                         Role = string.Join(",", p.RoleNames)
+                                     });
+            return usersWithRoles;
+            //var usersWithRolesData = (from user in context.Users
+            //                          select new
+            //                          {
+            //                              UserId = user.Id,
+            //                              Email = user.Email,
+            //                              RoleNames = (from userRole in user.Roles
+            //                                           join role in context.Roles on userRole.RoleId
+            //                                           equals role.Id
+            //                                           select role.Name).ToList()
+            //                          }).ToList();
+
+            //return usersWithRolesData;
         }
     }
 }

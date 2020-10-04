@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using MoneyBlog.DataLayer.Constants;
-using MoneyBlog.Web.Models;
+using MoneyBlog.Web.ViewModels;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(MoneyBlog.Web.Startup))]

@@ -1,4 +1,4 @@
-﻿@model MoneyBlog.Web.Models.ArticlesViewModel
+﻿@model MoneyBlog.Web.ViewModels.ArticlesViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -12,14 +12,14 @@
         {
             <div class="col-sm-6 col-md-3">
                 <div class="thumbnail">
-                    <img src="@Url.Content(article.Image)" alt="" height=100 width=200 />
+                    <img src="/Article/DisplayImage/@article.Id" alt="" height=100 width=200 />
                     <div class="caption">
-                        <p> 
+                        <p>
                             <a href="@Url.Action("Article","Article",new { id = article.Id })">
                                 <br />
 
                                 <span>@article.Title</span>
-                            </a>         
+                            </a>
                         </p>
 
                     </div>

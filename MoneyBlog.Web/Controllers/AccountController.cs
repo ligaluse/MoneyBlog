@@ -8,7 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using MoneyBlog.Web.Models;
+using MoneyBlog.DataLayer;
+using MoneyBlog.Web.ViewModels;
+using MoneyBlog.Web.ViewModels.AccountViewModels;
 using static MoneyBlog.Web.EmailService;
 
 namespace MoneyBlog.Web.Controllers

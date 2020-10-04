@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+using Microsoft.Owin.Security;
+using MoneyBlog.DataLayer;
+using MoneyBlog.Web;
+using System;
 using System.Configuration;
-using System.Data.Entity;
-using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using Microsoft.Owin.Security;
-using MoneyBlog.Web;
-using MoneyBlog.Web.Models;
 
 namespace MoneyBlog.Web
 {

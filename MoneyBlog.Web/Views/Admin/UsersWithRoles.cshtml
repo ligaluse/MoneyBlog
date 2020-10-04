@@ -9,6 +9,9 @@
     @Html.TextBox("search")
     <input type="submit" value="Search" />
 }
+<button type="button">
+    @Html.ActionLink("Create Role", "CreateUserRole", "Admin")
+</button>
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="box-title">
@@ -30,11 +33,11 @@
                 <tr>
                     <td>@user.Email</td>
                     <td>@user.Role</td>
-                    @*<td>
-                            @Html.ActionLink("Edit", "EditUser", "Admin", new { id = user.Id }) |
-                            @Html.ActionLink("Details", "UserDetails", new { id = user.Id }) |
-                            @Html.ActionLink("Delete", "DeleteUser", new { id = user.Id })
-                        </td>*@
+                    <td>
+                            @Html.ActionLink("Edit", "EditUser", new { id = user.UserId }) |
+                            @Html.ActionLink("Details", "UserDetails", new { id = user.UserId }) |
+                            @Html.ActionLink("Delete", "DeleteUser", new { id = user.UserId })
+                        </td>
 
                 </tr>
 

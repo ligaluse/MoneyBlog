@@ -17,9 +17,24 @@ namespace MoneyBlog.Services.Service
         {
             _iAdminRepository = iAdminRepository;
         }
-        public List<AspNetUser> aspNetUsers()
+        public List<AspNetUser> AspNetUsers()
         {
-            return _iAdminRepository.aspNetUsers();
+            return _iAdminRepository.AspNetUsers();
         }
+        public AspNetUser GetUser(string id)
+        {
+            return _iAdminRepository.GetUser(id);
+        }
+        //public IEnumerable<UsersInRolesModel> UsersWithRoles()
+        //{
+        //    var usersWithRoles = _iAdminRepository.UsersWithRoles().Select(p => new UsersInRolesModel()
+        //    {
+        //        UserId = p.UserId,
+        //        Email = p.Email,
+        //        Role = string.Join(",", p.RoleNames)
+        //    });
+
+        //    return usersWithRoles;
+        //}
     }
 }

@@ -5,7 +5,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using MoneyBlog.Web.Models;
+using MoneyBlog.Web.ViewModels;
+using MoneyBlog.DataLayer;
 
 namespace MoneyBlog.Web
 {

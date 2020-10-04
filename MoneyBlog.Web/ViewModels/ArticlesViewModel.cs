@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MoneyBlog.Web.Models
+namespace MoneyBlog.Web.ViewModels
 {
     public class ArticlesViewModel
     {

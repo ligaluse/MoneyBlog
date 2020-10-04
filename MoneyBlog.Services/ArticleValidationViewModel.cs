@@ -1,12 +1,13 @@
-﻿using System;
+﻿using MoneyBlog.Services.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MoneyBlog.Web.Models
+namespace MoneyBlog.Services
 {
-    public class AddNewArticleViewModel
+    public class ArticleValidationViewModel
     {
         public int Id { get; set; }
         [DataType(DataType.Text)]
@@ -19,6 +20,10 @@ namespace MoneyBlog.Web.Models
         public string Email { get; set; }
 
         public DateTime CreatedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
+        [UploadImageSize(10240)]
+        [UploadImageType("jpg,jpeg,png")]
+        public HttpPostedFileBase File { get; set; }
         public byte[] Image { get; set; }
 
     }

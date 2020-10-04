@@ -3,15 +3,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using MoneyBlog.DataLayer;
 using MoneyBlog.DataLayer.Constants;
 using MoneyBlog.DataLayer.Models;
+using MoneyBlog.Services.IService;
 using MoneyBlog.Services.Service;
-using MoneyBlog.Web.Models;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MoneyBlog.Web.Controllers
@@ -19,30 +15,39 @@ namespace MoneyBlog.Web.Controllers
     [Authorize(Roles = AdminConstants.AdminRole)]
     public class AdminController : Controller
     {
-        private AdminService _AdminService;
+        private IAdminService _iAdminService;
+        readonly DefaultConnection db = new DefaultConnection();
 
-        public AdminController(AdminService adminService)
+        public AdminController(IAdminService iAdminService)
         {
-            _AdminService = adminService;
+            _iAdminService = iAdminService;
 
         }
 
         ApplicationDbContext context = new ApplicationDbContext();
-        
 
-        public ActionResult Index()
-        {
-            //return Json(_AdminService.aspNetUsers(), JsonRequestBehavior.AllowGet);
-            DefaultConnection db = new DefaultConnection();
-            return View(db.AspNetUsers.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    return View(db.AspNetUsers.ToList());
+        //}
         public ActionResult UserDetails(string id)
         {
-            DefaultConnection blogDB = new DefaultConnection();
-            AspNetUser aspNetUser = blogDB.AspNetUsers.Single(u => u.Id == id);
-            return View(aspNetUser);
+            var user = _iAdminService.GetUser(id);
+            return View(user);
         }
-
+        public ActionResult EditUser(string id)
+        {
+           var user = _iAdminService.GetUser(id);
+            return View(user);
+        }
+        
+        [HttpPost]
+        public ActionResult EditUser( UsersInRolesModel model /*AspNetUser aspNetUser*/)
+        {
+            db.Entry(model).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("UsersWithRoles");
+        }
         public ActionResult CreateUserRole()
         {
             return View();
@@ -56,6 +61,10 @@ namespace MoneyBlog.Web.Controllers
             {
                 var role = new IdentityRole(roleName);
                 roleManager.Create(role);
+            }
+            else
+            {
+                ModelState.AddModelError("error", "role already exists");
             }
             return View("Index");
         }

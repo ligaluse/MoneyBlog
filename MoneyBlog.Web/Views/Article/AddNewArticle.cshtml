@@ -1,5 +1,4 @@
-﻿@model MoneyBlog.Web.Models.AddNewArticleViewModel
-    Model
+﻿@model MoneyBlog.Services.ArticleValidationViewModel
 @{
     ViewBag.Title = "AddNewArticle";
 }
@@ -11,9 +10,9 @@
 
 <script type="text/javascript">
     function fileCheck(obj) {
-        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        var fileExtension = ['jpeg', 'jpg', 'png'];
         if ($.inArray($(obj).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-            alert("Only '.jpeg','.jpg', '.png', '.gif', '.bmp' formats are allowed.");
+            alert("Only '.jpeg','.jpg', '.png', formats are allowed.");
         }
     }
 </script>
@@ -38,7 +37,6 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*@Html.EditorFor(model => model.img, new { htmlAttributes = new { @class = "form-control" } })*@
             <input type="file" required="required" name="file" id="file" />
             @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
         </div>

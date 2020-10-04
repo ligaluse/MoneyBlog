@@ -6,7 +6,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using MoneyBlog.Web.Models;
+using MoneyBlog.Web.ViewModels;
+using MoneyBlog.Web.ViewModels.ManageViewModels;
 
 namespace MoneyBlog.Web.Controllers
 {
