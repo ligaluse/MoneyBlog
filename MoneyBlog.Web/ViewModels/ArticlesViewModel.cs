@@ -9,5 +9,6 @@ namespace MoneyBlog.Web.ViewModels
     public class ArticlesViewModel
     {
         public List<Article> Articles { get; set; }
+       
     }
 }

@@ -87,10 +87,12 @@ namespace MoneyBlog.Web.Controllers
             model.CreatedOn = DateTime.Now;
             model.ModifiedOn = null;
             model.Image = _iArticleService.ConvertToBytes(file);
+            //model.LikeCount = 0;
+            //model.DislikeCount = 0;
             //if (ModelState.IsValid)
             //{
-                _iArticleRepository.CreateArticle
-                (model.Title, model.Description, model.Image, model.Email, model.CreatedOn);
+            _iArticleRepository.CreateArticle
+                (model.Title, model.Description, model.Image, model.Email, model.CreatedOn, model.LikeCount, model.DislikeCount);
             //};
             return View(model);
         }
@@ -135,6 +137,17 @@ namespace MoneyBlog.Web.Controllers
         {
             byte[] cover = _iArticleService.GetImageFromDataBase(id);
             return File(cover, "image/jpg");
+        }
+
+        public ActionResult Like(int id)
+        {
+            _iArticleService.Like(id);
+            return RedirectToAction("Index");
+        }
+        public ActionResult Dislike(int id)
+        {
+            _iArticleService.Dislike(id);
+            return RedirectToAction("Index");
         }
     }
 }

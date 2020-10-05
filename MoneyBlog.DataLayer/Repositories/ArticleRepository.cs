@@ -38,7 +38,7 @@ namespace MoneyBlog.DataLayer.Repositories
             return article;
         }
 
-        public void CreateArticle(string title, string description, byte[] image, string email, DateTime createdOn)
+        public void CreateArticle(string title, string description, byte[] image, string email, DateTime createdOn, int likeCount, int dislikeCount)
         {
             using (var _db = new DefaultConnection())
             {
@@ -48,7 +48,9 @@ namespace MoneyBlog.DataLayer.Repositories
                     Description = description,
                     Email = email,
                     Image = image,
-                    CreatedOn = createdOn
+                    CreatedOn = createdOn,
+                    LikeCount = likeCount,
+                    DislikeCount = dislikeCount
                 });
                 _db.SaveChanges();
             }
@@ -63,6 +65,18 @@ namespace MoneyBlog.DataLayer.Repositories
         public void DeleteArticle(int id)
         {
             _db.Articles.Remove(_db.Articles.Find(id));
+            _db.SaveChanges();
+        }
+        public void Like(int id)
+        {
+            Article update = GetArticle(id);
+            update.LikeCount += 1;
+            _db.SaveChanges();
+        }
+        public void Dislike(int id)
+        {
+            Article update = GetArticle(id);
+            update.DislikeCount += 1;
             _db.SaveChanges();
         }
     }

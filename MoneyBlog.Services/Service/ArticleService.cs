@@ -72,6 +72,14 @@ namespace MoneyBlog.Services.Service
         {
             _iArticleRepository.DeleteArticle(id);
         }
+        public void Like(int id)
+        {
+            _iArticleRepository.Like(id);
+        }
+        public void Dislike(int id)
+        {
+            _iArticleRepository.Dislike(id);
+        }
 
         public byte[] ConvertToBytes(HttpPostedFileBase image)
         {

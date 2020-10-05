@@ -21,6 +21,11 @@
                                 <span>@article.Title</span>
                             </a>
                         </p>
+                       @Html.DisplayFor(modelItem => article.LikeCount) <span class="glyphicon glyphicon-thumbs-up"></span>
+                        @Html.DisplayFor(modelItem => article.DislikeCount) <span class="glyphicon glyphicon-thumbs-down"></span>
+                         
+
+
 
                     </div>
                 </div>
