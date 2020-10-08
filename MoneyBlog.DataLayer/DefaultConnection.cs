@@ -17,6 +17,8 @@ namespace MoneyBlog.DataLayer
         }
         public DbSet<Article> Articles { get; set; }
         public DbSet<AspNetUser> AspNetUsers { get; set; }
+        public DbSet<AspNetRole> AspNetRoles { get; set; }
+        public DbSet<ArticleLike> ArticleLikes { get; set; }
 
 
     }

@@ -18,9 +18,11 @@ namespace MoneyBlog.Web.Controllers
         private IAdminService _iAdminService;
         readonly DefaultConnection db = new DefaultConnection();
 
-        public AdminController(IAdminService iAdminService)
+
+        public AdminController(IAdminService iAdminService /*ApplicationUserManager applicationUserManager*/)
         {
             _iAdminService = iAdminService;
+            //_userManager = applicationUserManager;
 
         }
 
@@ -30,11 +32,13 @@ namespace MoneyBlog.Web.Controllers
         //{
         //    return View(db.AspNetUsers.ToList());
         //}
-        public ActionResult UserDetails(string id)
+        public ActionResult UserDetails(string id /*UsersInRolesModel model*/)
         {
             var user = _iAdminService.GetUser(id);
+
             return View(user);
         }
+    
         public ActionResult EditUser(string id)
         {
            var user = _iAdminService.GetUser(id);
@@ -86,6 +90,7 @@ namespace MoneyBlog.Web.Controllers
         }
         public ActionResult UsersWithRoles()
         {
+
             var usersWithRoles = (from user in context.Users
                                   select new
                                   {

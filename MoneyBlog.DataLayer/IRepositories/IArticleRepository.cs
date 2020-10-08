@@ -15,7 +15,7 @@ namespace MoneyBlog.DataLayer.IRepositories
         byte[] GetImageFromDataBase(int Id);
         void CreateArticle(string title, string description, byte[] image, string email, DateTime createdOn, int likeCount, int dislikeCount);
         void DeleteArticle(int id);
-        void Like(int id);
-        void Dislike(int id);
+        void Like(int id, string email);
+        void Dislike(int id, string email);
     }
 }

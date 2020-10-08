@@ -106,7 +106,7 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult EditArticle(HttpPostedFileBase file, Article article)
         {
-           article.ModifiedOn = DateTime.Now;
+            article.ModifiedOn = DateTime.Now;
             if (file != null)
             {
                 article.Image = _iArticleService.ConvertToBytes(file);
@@ -118,6 +118,7 @@ namespace MoneyBlog.Web.Controllers
                 db.Entry(article).State = EntityState.Modified;
                 db.SaveChanges();
             }
+
 
             //var _article = db.Articles.Where(s => s.Id == article.Id).FirstOrDefault();
             //db.Articles.Remove(_article);
@@ -141,12 +142,14 @@ namespace MoneyBlog.Web.Controllers
 
         public ActionResult Like(int id)
         {
-            _iArticleService.Like(id);
+            var email = User.Identity.GetUserName();
+            _iArticleService.Like(id, email);
             return RedirectToAction("Index");
         }
         public ActionResult Dislike(int id)
         {
-            _iArticleService.Dislike(id);
+            var email = User.Identity.GetUserName();
+            _iArticleService.Dislike(id, email);
             return RedirectToAction("Index");
         }
     }

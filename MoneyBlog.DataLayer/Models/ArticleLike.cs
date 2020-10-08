@@ -12,12 +12,13 @@ namespace MoneyBlog.DataLayer.Models
     public class ArticleLike
     {
         [Key]
-        //public int LikeId { get; set; }
+        //public int LikeId { get; set; } 
+        public int Id { get; set; }
         public int Article_Id { get; set; }
         public string Email { get; set; }
         public bool Like { get; set; }
         public bool Dislike { get; set; }
-      
-        public Article Article { get; set; }
+ 
+        //public Article Article { get; set; }
     }
 }

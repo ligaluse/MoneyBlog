@@ -13,8 +13,8 @@
 }
 <p>@Model.Description</p>
 <p>Author: @Model.Email</p>
- @Html.ActionLink("Like", "Like", new { id = Model.Id })
+ @Html.ActionLink("Like", "Like", new { id = Model.Id, email = Model.Email })
 
-@Html.ActionLink("Dislike", "Dislike", new { id = Model.Id })
+@Html.ActionLink("Dislike", "Dislike", new { id = Model.Id, email = Model.Email })
 
 @*@{Html.RenderPartial("Comments");}*@

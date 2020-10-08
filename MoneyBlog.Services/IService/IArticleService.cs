@@ -20,7 +20,7 @@ namespace MoneyBlog.Services.IService
         void DeleteArticle(int id);
         //void CreateArticle(string title, string description, string email, byte[] image, DateTime createdOn);
         Article CreateArticle(Article article);
-        void Like(int id);
-        void Dislike(int id);
+        void Like(int id, string email);
+        void Dislike(int id, string email);
     }
 }

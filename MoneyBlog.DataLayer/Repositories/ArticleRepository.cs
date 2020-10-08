@@ -66,17 +66,41 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db.Articles.Remove(_db.Articles.Find(id));
             _db.SaveChanges();
+            
         }
-        public void Like(int id)
+
+        public void Like(int id, string email)
         {
             Article update = GetArticle(id);
             update.LikeCount += 1;
+            LikeSave(id, email);
             _db.SaveChanges();
         }
-        public void Dislike(int id)
+        public void LikeSave(int id, string email)
+        {
+            ArticleLike articleLike = new ArticleLike();
+            articleLike.Email = email;
+            articleLike.Article_Id = id;
+            articleLike.Dislike = false;
+            articleLike.Like = true;
+            _db.ArticleLikes.Add(articleLike);
+            _db.SaveChanges();
+        }
+        public void Dislike(int id, string email)
         {
             Article update = GetArticle(id);
             update.DislikeCount += 1;
+            DislikeSave(id, email);
+            _db.SaveChanges();
+        }
+        public void DislikeSave(int id, string email)
+        {
+            ArticleLike articleLike = new ArticleLike();
+            articleLike.Email = email;
+            articleLike.Article_Id = id;
+            articleLike.Dislike = true;
+            articleLike.Like = false;
+            _db.ArticleLikes.Add(articleLike);
             _db.SaveChanges();
         }
     }

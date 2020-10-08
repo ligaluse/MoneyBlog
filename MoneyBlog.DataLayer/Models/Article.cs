@@ -18,6 +18,7 @@ namespace MoneyBlog.DataLayer.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Email { get; set; }
+       
         public byte[] Image { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
