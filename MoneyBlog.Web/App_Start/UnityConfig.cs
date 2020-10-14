@@ -18,6 +18,13 @@ namespace MoneyBlog.Web
             container.RegisterType<MoneyBlog.DataLayer.IRepositories.IArticleRepository, MoneyBlog.DataLayer.Repositories.ArticleRepository>();
             container.RegisterType<MoneyBlog.Services.IService.IArticleService, MoneyBlog.Services.Service.ArticleService>();
 
+            container.RegisterType<MoneyBlog.DataLayer.IRepositories.IArticleLikeRepository, MoneyBlog.DataLayer.Repositories.ArticleLikeRepository>();
+            container.RegisterType<MoneyBlog.Services.IService.IArticleLikeService, MoneyBlog.Services.Service.ArticleLikeService>();
+
+            container.RegisterType<MoneyBlog.DataLayer.IRepositories.ICommentRepository, MoneyBlog.DataLayer.Repositories.CommentRepository>();
+            container.RegisterType<MoneyBlog.Services.IService.ICommentService, MoneyBlog.Services.Service.CommentService>();
+
+
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
 

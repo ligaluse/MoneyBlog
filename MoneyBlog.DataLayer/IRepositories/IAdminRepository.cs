@@ -10,7 +10,9 @@ namespace MoneyBlog.DataLayer.IRepositories
     public interface IAdminRepository
     {
         List<AspNetUser> AspNetUsers();
-        IEnumerable<UsersInRolesModel> UsersWithRoles();
         AspNetUser GetUser(string id);
+        AspNetRole GetUserRole(string id);
+        void UpdateUser(AspNetUser aspNetUser);
+        void DeleteUser(string id);
     }
 }

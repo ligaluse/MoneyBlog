@@ -5,8 +5,11 @@ using MoneyBlog.DataLayer.Constants;
 using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
 using MoneyBlog.Services.Service;
+using MoneyBlog.Web.ModelBuilders;
+using MoneyBlog.Web.ViewModels;
 using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -15,15 +18,15 @@ namespace MoneyBlog.Web.Controllers
     [Authorize(Roles = AdminConstants.AdminRole)]
     public class AdminController : Controller
     {
-        private IAdminService _iAdminService;
+        private readonly IAdminService _iAdminService;
         readonly DefaultConnection db = new DefaultConnection();
+        private readonly UserModelBuilder _modelBuilder;
 
 
-        public AdminController(IAdminService iAdminService /*ApplicationUserManager applicationUserManager*/)
+        public AdminController(IAdminService iAdminService, UserModelBuilder userModelBuilder)
         {
             _iAdminService = iAdminService;
-            //_userManager = applicationUserManager;
-
+            _modelBuilder = userModelBuilder;
         }
 
         ApplicationDbContext context = new ApplicationDbContext();
@@ -32,25 +35,28 @@ namespace MoneyBlog.Web.Controllers
         //{
         //    return View(db.AspNetUsers.ToList());
         //}
-        public ActionResult UserDetails(string id /*UsersInRolesModel model*/)
+        public ActionResult UserDetails(string id)
         {
-            var user = _iAdminService.GetUser(id);
-
-            return View(user);
+            var model = _modelBuilder.UserDetailsBuild(id);
+            return View(model);
         }
-    
+        [HttpGet]
         public ActionResult EditUser(string id)
         {
-           var user = _iAdminService.GetUser(id);
-            return View(user);
+            return View(_modelBuilder.GetUserForEditing(id));
         }
-        
+
         [HttpPost]
-        public ActionResult EditUser( UsersInRolesModel model /*AspNetUser aspNetUser*/)
+        public ActionResult EditUser(UserDetailsViewModel model)
         {
-            db.Entry(model).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("UsersWithRoles");
+            _modelBuilder.EditUserModel(model);
+
+            return View("Index");
+        }
+        public ActionResult Delete(string id)
+        {
+            _iAdminService.DeleteUser(id);
+            return RedirectToAction("UsersWithRoles", "Admin");
         }
         public ActionResult CreateUserRole()
         {
@@ -70,7 +76,7 @@ namespace MoneyBlog.Web.Controllers
             {
                 ModelState.AddModelError("error", "role already exists");
             }
-            return View("Index");
+            return RedirectToAction("UsersWithRoles", "Admin");
         }
         public ActionResult AssignUserRole()
         {
@@ -86,67 +92,23 @@ namespace MoneyBlog.Web.Controllers
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             userManager.AddToRole(user.Id, rolename);
 
-            return View("Index");
+            return RedirectToAction("UsersWithRoles", "Admin");
         }
         public ActionResult UsersWithRoles()
         {
-
-            var usersWithRoles = (from user in context.Users
-                                  select new
-                                  {
-                                      UserId = user.Id,
-                                      Username = user.UserName,
-                                      Email = user.Email,
-                                      RoleNames = (from userRole in user.Roles
-                                                   join role in context.Roles on userRole.RoleId
-                                                   equals role.Id
-                                                   select role.Name).ToList()
-                                  }).ToList().Select(p => new UsersInRolesModel()
-
-                                  {
-                                      UserId = p.UserId,
-                                      Email = p.Email,
-                                      Role = string.Join(",", p.RoleNames)
-                                  });
-
-
-            return View(usersWithRoles);
+            var model = _modelBuilder.BuildList();
+            return View(model);
         }
         [HttpPost]
-        public ActionResult UsersWithRoles(string searchText)
+        public ActionResult UsersWithRoles(string searching)
         {
-            var usersWithRoles = (from user in context.Users
-                                  select new
-                                  {
-                                      UserId = user.Id,
-                                      Username = user.UserName,
-                                      Email = user.Email,
-                                      RoleNames = (from userRole in user.Roles
-                                                   join role in context.Roles on userRole.RoleId
-                                                   equals role.Id
-                                                   select role.Name).ToList()
-                                  }).ToList().Select(p => new UsersInRolesModel()
-
-                                  {
-                                      UserId = p.UserId,
-                                      Email = p.Email,
-                                      Role = string.Join(",", p.RoleNames)
-                                  });
-            if (searchText != null)
+            var model = _modelBuilder.BuildList();
+            if (searching != null)
             {
-                var usersWithRole = (from user in context.Users
-                                 select new
-                                 {
-                                     UserId = user.Id,
-                                     Email = user.Email,
-                                     RoleNames = (from userRole in user.Roles
-                                                  join role in context.Roles on userRole.RoleId
-                                                  equals role.Id
-                                                  select role.Name).ToList()
-                                 }).Where(x => x.Email.Contains(searchText)).ToList();
-            };
-            return View(usersWithRoles);
-
+                model = _modelBuilder.BuildList().Where(x => x.Email.Contains(searching)).ToList();
+            }
+            
+            return View(model);
         }
 
     }

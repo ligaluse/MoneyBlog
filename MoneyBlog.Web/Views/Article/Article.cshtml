@@ -1,20 +1,55 @@
-﻿@model MoneyBlog.DataLayer.Models.Article
+﻿@model GetArticleViewModel
 @using MoneyBlog.Web.Controllers
 @using MoneyBlog.Web.ViewModels
 
 <h2>Article</h2>
 
-<img src="@Url.Action("DisplayImage", new{ id = Model.Id})" height=400 width=800 />
-<h2>@Model.Title</h2>
-<p>Created on:  @Model.CreatedOn.ToShortDateString()</p>
-@if (Model.ModifiedOn != null)
+<img src="@Url.Action("DisplayImage", new{ id = Model.Article.Id})" height=400 width=800 />
+<h2>@Model.Article.Title</h2>
+<p>Created on:  @Model.Article.CreatedOn.ToShortDateString()</p>
+@if (Model.Article.ModifiedOn != null)
 {
-    <p>Modified on:  @Model.ModifiedOn</p>
+    <p>Modified on:  @Model.Article.ModifiedOn</p>
 }
-<p>@Model.Description</p>
-<p>Author: @Model.Email</p>
- @Html.ActionLink("Like", "Like", new { id = Model.Id, email = Model.Email })
+<p>@Model.Article.Description</p>
+<p>Author: @Model.Article.Email</p>
+@Html.ActionLink("Like", "Like", new { id = Model.Article.Id, email = Model.Article.Email })
 
-@Html.ActionLink("Dislike", "Dislike", new { id = Model.Id, email = Model.Email })
+@Html.ActionLink("Dislike", "Dislike", new { id = Model.Article.Id, email = Model.Article.Email })
+@Html.ValidationMessage("error")
 
-@*@{Html.RenderPartial("Comments");}*@
+<p>Leave a comment:</p>
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(model => model.Comment.Body, new { @class = "control-label col-md-3" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Comment.Body, new { @class = "form-control", placeholder = "Article comment" })
+            @Html.ValidationMessageFor(model => model.Comment.Body)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(model => model.Comment.Email)
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(model => model.Comment.CreatedOn)
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(model => model.Comment.ArticleId)
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="CreateComment" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
+@foreach (var comment in Model.Comments)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => comment.Body)
+        </td>
+    </tr>
+}
+
+

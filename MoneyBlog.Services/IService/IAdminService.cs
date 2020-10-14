@@ -11,5 +11,8 @@ namespace MoneyBlog.Services.IService
     {
         List<AspNetUser> AspNetUsers();
         AspNetUser GetUser(string id);
+        AspNetRole GetUserRole(string id);
+        void UpdateUser(AspNetUser aspNetUser);
+        void DeleteUser(string id);
     }
 }

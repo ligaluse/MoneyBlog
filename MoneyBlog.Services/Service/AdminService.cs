@@ -25,16 +25,19 @@ namespace MoneyBlog.Services.Service
         {
             return _iAdminRepository.GetUser(id);
         }
-        //public IEnumerable<UsersInRolesModel> UsersWithRoles()
-        //{
-        //    var usersWithRoles = _iAdminRepository.UsersWithRoles().Select(p => new UsersInRolesModel()
-        //    {
-        //        UserId = p.UserId,
-        //        Email = p.Email,
-        //        Role = string.Join(",", p.RoleNames)
-        //    });
+        public AspNetRole GetUserRole(string id)
+        {
+            return _iAdminRepository.GetUserRole(id);
+        }
+        public void UpdateUser(AspNetUser aspNetUser)
+        {
+            _iAdminRepository.UpdateUser(aspNetUser);
+        }
+        public void DeleteUser(string id)
+        {
+            _iAdminRepository.DeleteUser(id);
+        }
 
-        //    return usersWithRoles;
-        //}
+
     }
 }

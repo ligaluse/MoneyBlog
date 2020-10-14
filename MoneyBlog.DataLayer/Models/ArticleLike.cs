@@ -18,7 +18,5 @@ namespace MoneyBlog.DataLayer.Models
         public string Email { get; set; }
         public bool Like { get; set; }
         public bool Dislike { get; set; }
- 
-        //public Article Article { get; set; }
     }
 }

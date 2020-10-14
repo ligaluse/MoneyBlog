@@ -11,11 +11,9 @@ namespace MoneyBlog.DataLayer.IRepositories
     {
         List<Article> GetAllArticles();
         Article GetArticle(int id);
-        List<Article> GetArticleByUser(string email);
         byte[] GetImageFromDataBase(int Id);
-        void CreateArticle(string title, string description, byte[] image, string email, DateTime createdOn, int likeCount, int dislikeCount);
+        Article CreateArticle(Article article);
         void DeleteArticle(int id);
-        void Like(int id, string email);
-        void Dislike(int id, string email);
+
     }
 }

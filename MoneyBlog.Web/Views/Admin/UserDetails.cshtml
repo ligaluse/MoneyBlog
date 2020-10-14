@@ -1,5 +1,4 @@
-﻿@model MoneyBlog.DataLayer.Models.AspNetUser
-
+﻿@model MoneyBlog.Web.ViewModels.UserDetailsModel
 
     @{
         ViewBag.Title = "Details";
@@ -9,12 +8,18 @@
 
     <tr>
         <td>
-            @Model.Id
+            @Model.UserId
         </td>
     </tr>
     <tr>
         <td>
             @Model.Email
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            @Model.RoleName
         </td>
 
     </tr>

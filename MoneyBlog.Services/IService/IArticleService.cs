@@ -19,8 +19,7 @@ namespace MoneyBlog.Services.IService
         byte[] GetImageFromDataBase(int Id);
         void DeleteArticle(int id);
         //void CreateArticle(string title, string description, string email, byte[] image, DateTime createdOn);
-        Article CreateArticle(Article article);
-        void Like(int id, string email);
-        void Dislike(int id, string email);
+        Article CreateArticle(string title, string description, byte[] image, string email, int likeCount, int dislikeCount);
+
     }
 }

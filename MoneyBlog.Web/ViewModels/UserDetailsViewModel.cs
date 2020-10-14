@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoneyBlog.DataLayer.Models
+namespace MoneyBlog.Web.ViewModels
 {
-    public class UserDetailsModel
+    public class UserDetailsViewModel
     {
-        public string Id { get; set; }
+        public string UserId { get; set; }
         public string Email { get; set; }
         public string UserRole_Id { get; set; }
-        public string Name { get; set; }
+        public string RoleName { get; set; }
     }
 }

@@ -1,12 +1,12 @@
-﻿@model IEnumerable<MoneyBlog.DataLayer.Models.UsersInRolesModel>
+﻿@model List<MoneyBlog.Web.ViewModels.UserDetailsModel>
 @using MoneyBlog.DataLayer.Models
 @{
     ViewBag.Title = "Users With Roles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using (Html.BeginForm("UsersWithRoles", "Admin", FormMethod.Get))
+@using (Html.BeginForm("UsersWithRoles", "Admin", FormMethod.Post))
 {
-    @Html.TextBox("search")
+    @Html.TextBox("searching")
     <input type="submit" value="Search" />
 }
 <button type="button">
@@ -32,12 +32,12 @@
 
                 <tr>
                     <td>@user.Email</td>
-                    <td>@user.Role</td>
+                    <td>@user.RoleName</td>
                     <td>
-                            @Html.ActionLink("Edit", "EditUser", new { id = user.UserId }) |
-                            @Html.ActionLink("Details", "UserDetails", new { id = user.UserId }) |
-                            @Html.ActionLink("Delete", "DeleteUser", new { id = user.UserId })
-                        </td>
+                        @Html.ActionLink("Edit", "EditUser", new { id = user.UserId }) |
+                        @Html.ActionLink("Details", "UserDetails", new { id = user.UserId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = user.UserId })
+                    </td>
 
                 </tr>
 

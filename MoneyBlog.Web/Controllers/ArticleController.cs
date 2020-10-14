@@ -8,6 +8,7 @@ using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services;
 using MoneyBlog.Services.IService;
 using MoneyBlog.Services.Service;
+using MoneyBlog.Web.ModelBuilders;
 using MoneyBlog.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -23,14 +24,19 @@ namespace MoneyBlog.Web.Controllers
     public class ArticleController : Controller
     {
         private readonly IArticleService _iArticleService;
-
-        private readonly IArticleRepository _iArticleRepository;
+        private readonly IArticleLikeService _iArticleLikeService;
         readonly DefaultConnection db = new DefaultConnection();
+        private readonly ArticleModelBuilder _articleModelBuilder;
+        private readonly ICommentService _iCommentService;
 
-        public ArticleController(IArticleService iArticleService, IArticleRepository iArticleRepository)
+        public ArticleController
+        (IArticleService iArticleService,IArticleLikeService iArticleLikeService, 
+        ArticleModelBuilder addNewModelBuilder,ICommentService iCommentService)
         {
             _iArticleService = iArticleService;
-            _iArticleRepository = iArticleRepository;
+            _iArticleLikeService = iArticleLikeService;
+            _articleModelBuilder = addNewModelBuilder;
+            _iCommentService = iCommentService;
         }
 
         public ActionResult Index()
@@ -54,54 +60,49 @@ namespace MoneyBlog.Web.Controllers
             };
             return View(model);
         }
-        public ActionResult Article(int id)
+        public ActionResult Article(int articleId)
         {
-            var article = _iArticleService.GetArticle(id);
-            return View(article);
+            var articleModel = _articleModelBuilder.BuildArticleModel(articleId);
+       
+            articleModel.AspNetUser.Email = User.Identity.GetUserName();
+            return View(articleModel);
         }
         
         [Authorize]
         public ActionResult MyArticles()
         {
-            var articles = _iArticleService.GetArticleByUser(User.Identity.GetUserName());
+            return View(_iArticleService.GetArticleByUser(User.Identity.GetUserName()));
+        }
 
-            return View(articles);
+        [HttpPost]
+        public ActionResult CreateComment(int articleId, string userId, string comment)
+        {
+            return View(_iCommentService.CreateComment(articleId, userId, comment));
         }
 
         [HttpGet]
-        //public ActionResult AddNewArticle()
-        //{
-        //    var articleModel = new ArticleValidationViewModel();
-        //    return View(articleModel);
-        //}
         public ActionResult AddNewArticle()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddNewArticle(HttpPostedFileBase file, ArticleValidationViewModel model)
+        public ActionResult AddNewArticle(HttpPostedFileBase file, Article article)
         {
-            //pirms tam nepievienoja article, jo bija tas model state is valid
-            model.Email = User.Identity.GetUserName();
-            model.CreatedOn = DateTime.Now;
-            model.ModifiedOn = null;
-            model.Image = _iArticleService.ConvertToBytes(file);
-            //model.LikeCount = 0;
-            //model.DislikeCount = 0;
-            //if (ModelState.IsValid)
-            //{
-            _iArticleRepository.CreateArticle
-                (model.Title, model.Description, model.Image, model.Email, model.CreatedOn, model.LikeCount, model.DislikeCount);
-            //};
-            return View(model);
+            //japievieno validators
+            article.Email = User.Identity.GetUserName();
+            article.Image = _iArticleService.ConvertToBytes(file);
+
+            _iArticleService.CreateArticle
+              (article.Title, article.Description, article.Image, article.Email, article.LikeCount, article.DislikeCount);
+            
+            return View(article);
         }
+
 
         public ActionResult EditArticle(int id)
         {
-            var article = _iArticleService.GetArticle(id);
-
-            return View(article);
+            return View(_iArticleService.GetArticle(id));
         }
         [HttpPost]
         public ActionResult EditArticle(HttpPostedFileBase file, Article article)
@@ -119,15 +120,9 @@ namespace MoneyBlog.Web.Controllers
                 db.SaveChanges();
             }
 
-
-            //var _article = db.Articles.Where(s => s.Id == article.Id).FirstOrDefault();
-            //db.Articles.Remove(_article);
-            //db.Articles.Add(_article);
-
-
-            return RedirectToAction("MyArticles");
+            return RedirectToAction("MyArticles", "Article");
         }
-        [HttpGet]
+        
         public ActionResult Delete(int id)
         {
             _iArticleService.DeleteArticle(id);
@@ -143,14 +138,31 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult Like(int id)
         {
             var email = User.Identity.GetUserName();
-            _iArticleService.Like(id, email);
-            return RedirectToAction("Index");
+            var articleLike = _iArticleLikeService.GetArticleLike(id, email);
+            if (articleLike !=null)
+            {
+                ModelState.AddModelError("error", "you already voted");
+            }
+            else
+            {
+                _iArticleLikeService.Like(id, email);
+            }
+           
+            return RedirectToAction("Index", "Article");
         }
         public ActionResult Dislike(int id)
         {
             var email = User.Identity.GetUserName();
-            _iArticleService.Dislike(id, email);
-            return RedirectToAction("Index");
+            var articleLike = _iArticleLikeService.GetArticleLike(id, email);
+            if (articleLike != null)
+            {
+                ModelState.AddModelError("error", "you already voted");
+            }
+            else
+            {
+                _iArticleLikeService.Dislike(id, email);
+            }
+            return RedirectToAction("Index", "Article");
         }
     }
 }

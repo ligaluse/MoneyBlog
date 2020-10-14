@@ -14,16 +14,13 @@ namespace MoneyBlog.Services.Service
 {
     public class ArticleService : IArticleService
     {
-        readonly DefaultConnection _db;
-        public ArticleService(DefaultConnection db)
-        {
-            _db = db;
-        }
         public IArticleRepository _iArticleRepository;
+        public ICommentService _iCommentService;
 
-        public ArticleService(IArticleRepository iArticleRepository)
+        public ArticleService(IArticleRepository iArticleRepository, ICommentService iCommentService)
         {
             _iArticleRepository = iArticleRepository;
+            _iCommentService = iCommentService;
         }
         public List<Article> GetAllArticles()
         {
@@ -52,33 +49,34 @@ namespace MoneyBlog.Services.Service
         {
             return _iArticleRepository.GetArticle(id);
         }
+        
         public List<Article> GetArticleByUser(string email)
         {
-            return _iArticleRepository.GetArticleByUser(email);
+            var userArticles = _iArticleRepository.GetAllArticles().Where(u => u.Email == email).ToList();
+            return userArticles;
         }
-        //public Article CreateArticle(Article article)
-        //{
-        //    return _iArticleRepository.CreateArticle(article);
-        //}
-        public Article CreateArticle(Article article)
+        
+        public Article CreateArticle
+            (string title, string description, byte[] image, string email, int likeCount, int dislikeCount)
         {
-            _db.Articles.Add(article);
-            _db.SaveChanges();
+            Article article = new Article()
+            {
+                Title = title,
+                Description = description,
+                Email = email,
+                Image = image,
+                LikeCount = 0,
+                DislikeCount = 0,
+                CreatedOn = DateTime.Now,
+                ModifiedOn = null,
+            };
+            _iArticleRepository.CreateArticle(article);
             return article;
         }
-
 
         public void DeleteArticle(int id)
         {
             _iArticleRepository.DeleteArticle(id);
-        }
-        public void Like(int id, string email)
-        {
-            _iArticleRepository.Like(id, email);
-        }
-        public void Dislike(int id, string email)
-        {
-            _iArticleRepository.Dislike(id, email);
         }
 
         public byte[] ConvertToBytes(HttpPostedFileBase image)
