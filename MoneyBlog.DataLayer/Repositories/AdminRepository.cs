@@ -8,24 +8,23 @@ namespace MoneyBlog.DataLayer.Repositories
 {
     public class AdminRepository : IAdminRepository
     {
-        ApplicationDbContext context = new ApplicationDbContext();
-        DefaultConnection db = new DefaultConnection();
+        readonly DefaultConnection db = new DefaultConnection();
         public List<AspNetUser> AspNetUsers()
         {
             List<AspNetUser> AspNetUsers = db.AspNetUsers.ToList();
             return AspNetUsers;
         }
-        public AspNetUser GetUser(string id)
+        public AspNetUser Get(string id)
         {
             var user = db.AspNetUsers.FirstOrDefault(i => i.Id == id);
             return user;
         }
-        public void UpdateUser(AspNetUser aspNetUser)
+        public void Update(AspNetUser aspNetUser)
         {
            db.AspNetUsers.AddOrUpdate(aspNetUser);
            db.SaveChanges();
         }
-        public void DeleteUser(string id)
+        public void Delete(string id)
         {
             db.AspNetUsers.Remove(db.AspNetUsers.Find(id));
             db.SaveChanges();
@@ -35,6 +34,5 @@ namespace MoneyBlog.DataLayer.Repositories
             var role = db.AspNetRoles.FirstOrDefault(i => i.Id == id);
             return role;
         }
-       
     }
 }

@@ -8,7 +8,6 @@ namespace MoneyBlog.DataLayer.Constants
 {
     public static class AdminConstants
     {
-        //adminconstants
         public const string AdminRole = "SuperAdmin";
         public const string AdminEmail = "gzibovska.liga@gmail.com";
         public const string AdminUserName = "gzibovska.liga@gmail.com";

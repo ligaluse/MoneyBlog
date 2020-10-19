@@ -1,43 +1,38 @@
 ﻿using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
+using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services.IService;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoneyBlog.Services.Service
 {
     public class AdminService : IAdminService
     {
-        public IAdminRepository _iAdminRepository;
+        public IAdminRepository _adminRepository;
 
-        public AdminService(IAdminRepository iAdminRepository)
+        public AdminService(AdminRepository adminRepository)
         {
-            _iAdminRepository = iAdminRepository;
+            _adminRepository = adminRepository;
         }
         public List<AspNetUser> AspNetUsers()
         {
-            return _iAdminRepository.AspNetUsers();
+            return _adminRepository.AspNetUsers();
         }
-        public AspNetUser GetUser(string id)
+        public AspNetUser Get(string id)
         {
-            return _iAdminRepository.GetUser(id);
+            return _adminRepository.Get(id);
         }
         public AspNetRole GetUserRole(string id)
         {
-            return _iAdminRepository.GetUserRole(id);
+            return _adminRepository.GetUserRole(id);
         }
-        public void UpdateUser(AspNetUser aspNetUser)
+        public void Update(AspNetUser aspNetUser)
         {
-            _iAdminRepository.UpdateUser(aspNetUser);
+            _adminRepository.Update(aspNetUser);
         }
-        public void DeleteUser(string id)
+        public void Delete(string id)
         {
-            _iAdminRepository.DeleteUser(id);
+            _adminRepository.Delete(id);
         }
-
-
     }
 }

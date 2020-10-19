@@ -9,10 +9,10 @@ namespace MoneyBlog.Services.IService
 {
     public interface IArticleLikeService
     {
-        void Like(int id, string email);
-        void Dislike(int id, string email);
-        ArticleLike LikeSave(int id, string email);
-        ArticleLike DislikeSave(int id, string email);
-        ArticleLike GetArticleLike(int id, string email);
+        void UpdateWithLike(int id, string email);
+        void UpdateWithDislike(int id, string email);
+        ArticleLike IsLiked(int id, string email);
+        ArticleLike IsDisliked(int id, string email);
+        ArticleLike Get(int id, string email);
     }
 }

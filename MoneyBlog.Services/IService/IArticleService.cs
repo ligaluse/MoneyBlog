@@ -10,16 +10,18 @@ namespace MoneyBlog.Services.IService
 {
     public interface IArticleService
     {
-        List<Article> GetAllArticles();
-        List<Article> GetFirstArticles();
-        List<Article> GetArticlesByName(string searching);
-        Article GetArticle(int id);
-        List<Article> GetArticleByUser(string email);
+        List<Article> GetAll();
+        List<Article> GetFirst();
+        List<Article> GetByName(string searching);
+        Article Get(int id);
+        List<Article> GetByUser(string email);
         byte[] ConvertToBytes(HttpPostedFileBase image);
         byte[] GetImageFromDataBase(int Id);
-        void DeleteArticle(int id);
+        void Delete(int id);
+        void Update(Article article);
+        Article EditModel(HttpPostedFileBase file, Article article);
         //void CreateArticle(string title, string description, string email, byte[] image, DateTime createdOn);
-        Article CreateArticle(string title, string description, byte[] image, string email, int likeCount, int dislikeCount);
+        Article Create(string title, string description, byte[] image, string email, int likeCount, int dislikeCount);
 
     }
 }

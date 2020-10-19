@@ -1,31 +1,29 @@
 ﻿using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
+using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services.IService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoneyBlog.Services.Service
 {
     public class ArticleLikeService : IArticleLikeService
     {
-        public IArticleLikeRepository _iArticleLikeRepository;
-        public ICommentService _iCommentService;
-        public IArticleService _iArticleService;
+        public IArticleLikeRepository _articleLikeRepository;
+        public ICommentService _commentService;
+        public IArticleService _articleService;
 
-        public ArticleLikeService(IArticleLikeRepository iArticleLikeRepository, ICommentService iCommentService)
+        public ArticleLikeService(ArticleLikeRepository articleLikeRepository,
+        CommentService commentService, ArticleService articleService)
         {
-            _iArticleLikeRepository = iArticleLikeRepository;
-            _iCommentService = iCommentService;
+            _articleLikeRepository = articleLikeRepository;
+            _commentService = commentService;
+            _articleService = articleService;
         }
 
-        public ArticleLike GetArticleLike(int id, string email)
+        public ArticleLike Get(int id, string email)
         {
-            return _iArticleLikeRepository.GetArticleLike(id, email);
+            return _articleLikeRepository.Get(id, email);
         }
-        public ArticleLike LikeSave(int id, string email)
+        public ArticleLike IsLiked(int id, string email)
         {
             ArticleLike articleLike = new ArticleLike()
             {
@@ -34,25 +32,24 @@ namespace MoneyBlog.Services.Service
                 Dislike = false,
                 Like = true,
             };
-            _iArticleLikeRepository.LikeDislikeSave(articleLike);
+            _articleLikeRepository.LikeDislikeSave(articleLike);
             return articleLike;
         }
-        public void Like(int id, string email)
+        public void UpdateWithLike(int id, string email)
         {
-            Article update = _iArticleService.GetArticle(id);
+            Article update = _articleService.Get(id);
             update.LikeCount += 1;
-            LikeSave(id, email);
-            _iArticleLikeRepository.SaveChanges();
-
+            IsLiked(id, email);
+            _articleLikeRepository.SaveChanges();
         }
-        public void Dislike(int id, string email)
+        public void UpdateWithDislike(int id, string email)
         {
-            Article update = _iArticleService.GetArticle(id);
+            Article update = _articleService.Get(id);
             update.DislikeCount += 1;
-            DislikeSave(id, email);
-            _iArticleLikeRepository.SaveChanges();
+            IsDisliked(id, email);
+            _articleLikeRepository.SaveChanges();
         }
-        public ArticleLike DislikeSave(int id, string email)
+        public ArticleLike IsDisliked(int id, string email)
         {
             ArticleLike articleLike = new ArticleLike()
             {
@@ -61,9 +58,7 @@ namespace MoneyBlog.Services.Service
                 Dislike = true,
                 Like = false,
             };
-
-            _iArticleLikeRepository.LikeDislikeSave(articleLike);
-
+            _articleLikeRepository.LikeDislikeSave(articleLike);
             return articleLike;
         }
     }

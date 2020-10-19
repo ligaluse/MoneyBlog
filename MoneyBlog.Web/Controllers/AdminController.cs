@@ -43,19 +43,20 @@ namespace MoneyBlog.Web.Controllers
         [HttpGet]
         public ActionResult EditUser(string id)
         {
-            return View(_modelBuilder.GetUserForEditing(id));
+            return View(_modelBuilder.UserDetailsBuild(id));
         }
 
         [HttpPost]
         public ActionResult EditUser(UserDetailsViewModel model)
         {
+            ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
             _modelBuilder.EditUserModel(model);
 
             return View("Index");
         }
         public ActionResult Delete(string id)
         {
-            _iAdminService.DeleteUser(id);
+            _iAdminService.Delete(id);
             return RedirectToAction("UsersWithRoles", "Admin");
         }
         public ActionResult CreateUserRole()

@@ -9,7 +9,7 @@ namespace MoneyBlog.DataLayer.IRepositories
 {
    public interface IArticleLikeRepository
     {
-        ArticleLike GetArticleLike(int id, string email);
+        ArticleLike Get(int id, string email);
         void SaveChanges();
         ArticleLike LikeDislikeSave(ArticleLike articleLike);
 

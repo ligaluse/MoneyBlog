@@ -9,11 +9,12 @@ namespace MoneyBlog.DataLayer.IRepositories
 {
     public interface IArticleRepository
     {
-        List<Article> GetAllArticles();
-        Article GetArticle(int id);
+        List<Article> GetAll();
+        Article Get(int id);
         byte[] GetImageFromDataBase(int Id);
-        Article CreateArticle(Article article);
-        void DeleteArticle(int id);
+        Article Create(Article article);
+        void Delete(int id);
+        void Update(Article article);
 
     }
 }

@@ -28,13 +28,14 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.HiddenFor(model => model.Comment.Email)
+        @Html.HiddenFor(model => model.AspNetUser.Email)
     </div>
     <div class="form-group">
+        @*šo vispar nevajag uz serviu vai kontr*@
         @Html.HiddenFor(model => model.Comment.CreatedOn)
     </div>
     <div class="form-group">
-        @Html.HiddenFor(model => model.Comment.ArticleId)
+        @Html.HiddenFor(model => model.Article.Id)
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

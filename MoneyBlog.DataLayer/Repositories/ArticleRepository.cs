@@ -1,16 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using MoneyBlog.DataLayer.IRepositories;
+﻿using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.IO;
+using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace MoneyBlog.DataLayer.Repositories
 {
@@ -21,24 +13,28 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
-        public List<Article> GetAllArticles()
+        public List<Article> GetAll()
         {
             var article = _db.Articles.ToList();
 
             return article;
         }
-        public Article GetArticle(int id)
+        public Article Get(int id)
         {
             var article = _db.Articles.FirstOrDefault(i => i.Id == id);
             return article;
         }
-
-        public Article CreateArticle(Article article)
+        public Article Create(Article article)
         {
             _db.Articles.Add(article);
             _db.SaveChanges();
 
             return article;
+        }
+        public void Update(Article article)
+        {
+            _db.Articles.AddOrUpdate(article);
+            _db.SaveChanges();
         }
         public byte[] GetImageFromDataBase(int Id)
         {
@@ -46,13 +42,11 @@ namespace MoneyBlog.DataLayer.Repositories
             byte[] cover = q.First();
             return cover;
         }
-        public void DeleteArticle(int id)
+        public void Delete(int id)
         {
             _db.Articles.Remove(_db.Articles.Find(id));
             _db.SaveChanges();
         }
-
     }
-
 }
 

@@ -22,9 +22,9 @@ namespace MoneyBlog.DataLayer.Models
         public byte[] Image { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
-        [DefaultValue(0)]
+
         public int LikeCount { get; set; }
-        [DefaultValue(0)]
+
         public int DislikeCount { get; set; }
     }
 }

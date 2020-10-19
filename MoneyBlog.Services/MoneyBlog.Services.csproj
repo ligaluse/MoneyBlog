@@ -49,8 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddNewArticleViewModel.cs" />
-    <Compile Include="EditArticleViewModel.cs" />
     <Compile Include="IService\IAdminService.cs" />
     <Compile Include="IService\IArticleService.cs" />
     <Compile Include="IService\IArticleLikeService.cs" />
@@ -60,8 +58,6 @@
     <Compile Include="Service\ArticleLikeService.cs" />
     <Compile Include="Service\ArticleService.cs" />
     <Compile Include="Service\CommentService.cs" />
-    <Compile Include="Validation\UploadImageSizeAttribute.cs" />
-    <Compile Include="Validation\UploadImageTypeAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MoneyBlog.DataLayer\MoneyBlog.DataLayer.csproj">

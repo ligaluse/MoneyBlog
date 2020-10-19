@@ -1,62 +1,57 @@
-﻿using MoneyBlog.DataLayer;
-using MoneyBlog.DataLayer.IRepositories;
+﻿using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
+using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services.IService;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace MoneyBlog.Services.Service
 {
     public class ArticleService : IArticleService
     {
-        public IArticleRepository _iArticleRepository;
-        public ICommentService _iCommentService;
+        public IArticleRepository _articleRepository;
+        public ICommentService _commentService;
 
-        public ArticleService(IArticleRepository iArticleRepository, ICommentService iCommentService)
+        public ArticleService(ArticleRepository articleRepository, CommentService commentService)
         {
-            _iArticleRepository = iArticleRepository;
-            _iCommentService = iCommentService;
+            _articleRepository = articleRepository;
+            _commentService = commentService;
         }
-        public List<Article> GetAllArticles()
+        public List<Article> GetAll()
         {
-            return _iArticleRepository.GetAllArticles().ToList();
+            return _articleRepository.GetAll().ToList();
         }
         public byte[] GetImageFromDataBase(int Id)
         {
-            return _iArticleRepository.GetImageFromDataBase(Id);
+            return _articleRepository.GetImageFromDataBase(Id);
         }
-        public List<Article> GetFirstArticles()
+        public List<Article> GetFirst()
         {
-            return _iArticleRepository.GetAllArticles().OrderByDescending(i => i.CreatedOn)
+            return _articleRepository.GetAll().OrderByDescending(i => i.CreatedOn)
             .Take(5).ToList(); 
         }
-        public List<Article> GetArticlesByName(string searching)
+        public List<Article> GetByName(string searching)
         {
-            var articles = _iArticleRepository.GetAllArticles();
+            var articles = _articleRepository.GetAll();
             if (searching != null)
             {
-                articles = _iArticleRepository.GetAllArticles().Where(x => x.Title.Contains(searching)).ToList();
+                articles = _articleRepository.GetAll().Where(x => x.Title.Contains(searching)).ToList();
             }
             return articles;
         }
-
-        public Article GetArticle(int id)
+        public Article Get(int id)
         {
-            return _iArticleRepository.GetArticle(id);
+            return _articleRepository.Get(id);
         }
-        
-        public List<Article> GetArticleByUser(string email)
+        public List<Article> GetByUser(string email)
         {
-            var userArticles = _iArticleRepository.GetAllArticles().Where(u => u.Email == email).ToList();
+            var userArticles = _articleRepository.GetAll().Where(u => u.Email == email).ToList();
             return userArticles;
         }
-        
-        public Article CreateArticle
+        public Article Create
             (string title, string description, byte[] image, string email, int likeCount, int dislikeCount)
         {
             Article article = new Article()
@@ -70,21 +65,60 @@ namespace MoneyBlog.Services.Service
                 CreatedOn = DateTime.Now,
                 ModifiedOn = null,
             };
-            _iArticleRepository.CreateArticle(article);
+            _articleRepository.Create(article);
             return article;
         }
-
-        public void DeleteArticle(int id)
+        public void Delete(int id)
         {
-            _iArticleRepository.DeleteArticle(id);
+            _articleRepository.Delete(id);
         }
-
+        public void Update(Article article)
+        {
+            _articleRepository.Update(article);
+        }
         public byte[] ConvertToBytes(HttpPostedFileBase image)
         {
             byte[] imageBytes = null;
             BinaryReader reader = new BinaryReader(image.InputStream);
             imageBytes = reader.ReadBytes((int)image.ContentLength);
             return imageBytes;
+        }
+        public Article EditModel(HttpPostedFileBase file, Article article)
+        {
+            string permittedType = "image/jpg,image/jpeg,image/png";
+            int permittedSizeInBytes = 40000;
+
+            article.ModifiedOn = DateTime.Now;
+
+            var articleForEditing = Get(article.Id);
+
+            if (file != null)
+            {
+                if(file.ContentLength > permittedSizeInBytes)
+                {
+                    if(permittedType.Split(",".ToCharArray()).Contains(file.ContentType))
+                    {
+                        article.Image = ConvertToBytes(file);
+                        articleForEditing.Image = article.Image;
+                    }
+                    else
+                    {
+                        //error - only jpg/jpeg/png are allowed
+                    }
+                }
+                else
+                {
+                    //error - too large file
+                } 
+            }
+
+            articleForEditing.Title = article.Title;
+            articleForEditing.Description = article.Description;
+            articleForEditing.ModifiedOn = article.ModifiedOn;
+
+            Update(articleForEditing);
+
+            return article;
         }
     }
 }

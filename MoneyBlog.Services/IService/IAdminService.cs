@@ -10,9 +10,9 @@ namespace MoneyBlog.Services.IService
     public interface IAdminService
     {
         List<AspNetUser> AspNetUsers();
-        AspNetUser GetUser(string id);
+        AspNetUser Get(string id);
         AspNetRole GetUserRole(string id);
-        void UpdateUser(AspNetUser aspNetUser);
-        void DeleteUser(string id);
+        void Update(AspNetUser aspNetUser);
+        void Delete(string id);
     }
 }

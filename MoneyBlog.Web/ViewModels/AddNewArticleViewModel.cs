@@ -1,15 +1,14 @@
 ﻿using MoneyBlog.Services.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
-namespace MoneyBlog.Services
+namespace MoneyBlog.Web.ViewModels
 {
-    public class EditArticleViewModel
+    public class AddNewArticleViewModel
     {
         public int Id { get; set; }
         [DataType(DataType.Text)]
@@ -27,8 +26,10 @@ namespace MoneyBlog.Services
         [UploadImageType("jpg,jpeg,png")]
         public HttpPostedFileBase File { get; set; }
         public byte[] Image { get; set; }
-
+        [DefaultValue(0)]
         public int LikeCount { get; set; }
+        [DefaultValue(0)]
         public int DislikeCount { get; set; }
-    }
+    
+     }
 }
