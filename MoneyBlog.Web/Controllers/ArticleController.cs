@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNet.Identity;
-using MoneyBlog.DataLayer;
 using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
+using MoneyBlog.Services.Service;
 using MoneyBlog.Web.ModelBuilders;
 using MoneyBlog.Web.ViewModels;
+using System;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,24 +12,24 @@ namespace MoneyBlog.Web.Controllers
 {
     public class ArticleController : Controller
     {
-        private readonly IArticleService _iArticleService;
-        private readonly IArticleLikeService _iArticleLikeService;
+        private readonly IArticleService _articleService;
+        private readonly IArticleLikeService _articleLikeService;
         private readonly ArticleModelBuilder _articleModelBuilder;
-        private readonly ICommentService _iCommentService;
+        private readonly ICommentService _commentService;
 
         public ArticleController
-        (IArticleService iArticleService,IArticleLikeService iArticleLikeService, 
-        ArticleModelBuilder addNewModelBuilder,ICommentService iCommentService)
+        (ArticleService articleService,ArticleLikeService articleLikeService, 
+        ArticleModelBuilder addNewModelBuilder,CommentService commentService)
         {
-            _iArticleService = iArticleService;
-            _iArticleLikeService = iArticleLikeService;
+            _articleService = articleService;
+            _articleLikeService = articleLikeService;
             _articleModelBuilder = addNewModelBuilder;
-            _iCommentService = iCommentService;
+            _commentService = commentService;
         }
 
         public ActionResult Index()
         {
-            var articles = _iArticleService.GetFirst();
+            var articles = _articleService.GetFirst();
             
             var model = new ArticlesViewModel()
             {
@@ -40,31 +41,59 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult Index(string searching)
         {
-            var articles = _iArticleService.GetByName(searching);
+            var articles = _articleService.GetByName(searching);
             var model = new ArticlesViewModel()
             {
                 Articles = articles
             };
             return View(model);
         }
-        public ActionResult Article(int articleId)
+        [HttpGet]
+        public ActionResult Article(int Id)
         {
-            var articleModel = _articleModelBuilder.BuildArticleModel(articleId);
-       
-            articleModel.AspNetUser.Email = User.Identity.GetUserName();
-            return View(articleModel);
+            //var articleModel = _articleModelBuilder.BuildArticleModel(articleId);
+
+            //articleModel.AspNetUser.Email = User.Identity.GetUserName();
+            //return View(articleModel);
+
+
+            GetArticleViewModel model = new GetArticleViewModel(); 
+            model.Article = _articleService.Get(Id);
+            model.Comments = _commentService.GetAllArticle(Id);
+
+            return View(model);
         }
         
         [Authorize]
         public ActionResult MyArticles()
         {
-            return View(_iArticleService.GetByUser(User.Identity.GetUserName()));
+            return View(_articleService.GetByUser(User.Identity.GetUserName()));
         }
 
+        //[HttpPost]
+        //public ActionResult CreateComment(int articleId, string userId, string comment)
+        //{
+        //    return View(_commentService.Create(articleId, userId, comment));
+        //}
         [HttpPost]
-        public ActionResult CreateComment(int articleId, string userId, string comment)
+        public JsonResult CreateComment(CommentViewModel model)
         {
-            return View(_iCommentService.CreateComment(articleId, userId, comment));
+            JsonResult result = new JsonResult();
+            try
+            {
+                var comment = new Comment();
+                comment.Body = model.Body;
+                comment.ArticleId = model.ArticleId;
+                comment.CreatedOn = DateTime.Now;
+
+                var res = _commentService.Create(comment);
+            }
+            catch(Exception ex)
+            { 
+                result.Data = new { Succes = false, Message = ex.Message };
+
+            }
+            return result;
         }
 
         [HttpGet]
@@ -78,9 +107,12 @@ namespace MoneyBlog.Web.Controllers
         {
             //japievieno validators, kaa?
             article.Email = User.Identity.GetUserName();
-            article.Image = _iArticleService.ConvertToBytes(file);
 
-            _iArticleService.Create
+            //pārnest uz servisu
+            article.Image = _articleService.ConvertToBytes(file);
+
+            //uz create parnest nevis article.image bet file
+            _articleService.Create
               (article.Title, article.Description, article.Image, article.Email, article.LikeCount, article.DislikeCount);
             
             return View(article);
@@ -89,38 +121,38 @@ namespace MoneyBlog.Web.Controllers
 
         public ActionResult EditArticle(int id)
         {
-            return View(_iArticleService.Get(id));
+            return View(_articleService.Get(id));
         }
         [HttpPost]
         public ActionResult EditArticle(HttpPostedFileBase file, Article article)
         {
-            var editArticle = _iArticleService.EditModel(file, article);
+            var editArticle = _articleService.EditModel(file, article);
             return View(editArticle);
         }
         
         public ActionResult Delete(int id)
         {
-            _iArticleService.Delete(id);
+            _articleService.Delete(id);
             return RedirectToAction("MyArticles");
         }
 
         public ActionResult DisplayImage(int id)
         {
-            byte[] cover = _iArticleService.GetImageFromDataBase(id);
+            byte[] cover = _articleService.GetImageFromDataBase(id);
             return File(cover, "image/jpg");
         }
 
         public ActionResult Like(int id)
         {
             var email = User.Identity.GetUserName();
-            var articleLike = _iArticleLikeService.Get(id, email);
+            var articleLike = _articleLikeService.Get(id, email);
             if (articleLike !=null)
             {
                 ModelState.AddModelError("error", "you already voted");
             }
             else
             {
-                _iArticleLikeService.UpdateWithLike(id, email);
+                _articleLikeService.UpdateWithLike(id, email);
             }
            
             return RedirectToAction("Index", "Article");
@@ -128,14 +160,14 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult Dislike(int id)
         {
             var email = User.Identity.GetUserName();
-            var articleLike = _iArticleLikeService.Get(id, email);
+            var articleLike = _articleLikeService.Get(id, email);
             if (articleLike != null)
             {
                 ModelState.AddModelError("error", "you already voted");
             }
             else
             {
-                _iArticleLikeService.UpdateWithDislike(id, email);
+                _articleLikeService.UpdateWithDislike(id, email);
             }
             return RedirectToAction("Index", "Article");
         }

@@ -54,7 +54,8 @@ namespace MoneyBlog.Services.Service
         public Article Create
             (string title, string description, byte[] image, string email, int likeCount, int dislikeCount)
         {
-            Article article = new Article()
+            //if (image != null && IsImageValid(im))
+                Article article = new Article()
             {
                 Title = title,
                 Description = description,
@@ -83,35 +84,33 @@ namespace MoneyBlog.Services.Service
             imageBytes = reader.ReadBytes((int)image.ContentLength);
             return imageBytes;
         }
-        public Article EditModel(HttpPostedFileBase file, Article article)
+
+        private bool IsImageValid (HttpPostedFileBase file)
         {
             string permittedType = "image/jpg,image/jpeg,image/png";
             int permittedSizeInBytes = 40000;
+            if (file.ContentLength > permittedSizeInBytes)
+            {
+                if (permittedType.Split(",".ToCharArray()).Contains(file.ContentType))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public Article EditModel(HttpPostedFileBase file, Article article)
+        {
 
             article.ModifiedOn = DateTime.Now;
 
             var articleForEditing = Get(article.Id);
 
-            if (file != null)
+            if (file != null&& IsImageValid(file))
             {
-                if(file.ContentLength > permittedSizeInBytes)
-                {
-                    if(permittedType.Split(",".ToCharArray()).Contains(file.ContentType))
-                    {
-                        article.Image = ConvertToBytes(file);
-                        articleForEditing.Image = article.Image;
-                    }
-                    else
-                    {
-                        //error - only jpg/jpeg/png are allowed
-                    }
-                }
-                else
-                {
-                    //error - too large file
-                } 
+                article.Image = ConvertToBytes(file);
+                articleForEditing.Image = article.Image;
             }
-
+                
             articleForEditing.Title = article.Title;
             articleForEditing.Description = article.Description;
             articleForEditing.ModifiedOn = article.ModifiedOn;

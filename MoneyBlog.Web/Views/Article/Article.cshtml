@@ -19,38 +19,48 @@
 @Html.ValidationMessage("error")
 
 <p>Leave a comment:</p>
-<div class="form-horizontal">
+<form id="commentForm">
+    <input type="hidden" name="ArticleId" value="@Model.Article.Id" />
     <div class="form-group">
-        @Html.LabelFor(model => model.Comment.Body, new { @class = "control-label col-md-3" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Comment.Body, new { @class = "form-control", placeholder = "Article comment" })
-            @Html.ValidationMessageFor(model => model.Comment.Body)
-        </div>
+        <label>write comment</label>
+        <textarea class="form-control" rows="3" name="Text" placeholder="write your comment here"></textarea>
     </div>
-    <div class="form-group">
-        @Html.HiddenFor(model => model.AspNetUser.Email)
-    </div>
-    <div class="form-group">
-        @*šo vispar nevajag uz serviu vai kontr*@
-        @Html.HiddenFor(model => model.Comment.CreatedOn)
-    </div>
-    <div class="form-group">
-        @Html.HiddenFor(model => model.Article.Id)
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="CreateComment" class="btn btn-default" />
-        </div>
-    </div>
-</div>
+    <button class="btn btn-success" id="btnComment" value="Post" type="button">Leave your comment</button>
+</form>
 
-@foreach (var comment in Model.Comments)
+@if (Model.Comments != null && Model.Comments.Count > 0)
 {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => comment.Body)
-        </td>
-    </tr>
+    foreach (var comment in Model.Comments)
+    {
+        <p>@comment.Body</p>
+        <small class="text-muted">
+            Posted by @comment.Email on @comment.CreatedOn
+        </small>
+    }
 }
+else
+{
+    <p>There are no comments on this article</p>
+}
+<script>
+    $("#btnComment").click(function () {
+        $.ajax({
+            url: "@Url.Action("CreateComment", "Article")",
+            type: "post",
+            data: $("#commentForm").serialize()
+        }).done(function (response) {
+            debugger;
+            if (response.Success)
+            {
+                window.location.reload();
+            }
+            else {
+                swal("Error!", response.Message, "error");
+            }
+        }).fail(function () {
+            swal("Error!", "Error Occured. Please try again later", "error");
+        });
+    });
+</script>
 
 

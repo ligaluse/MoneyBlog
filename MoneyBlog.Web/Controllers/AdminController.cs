@@ -2,15 +2,14 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using MoneyBlog.DataLayer;
 using MoneyBlog.DataLayer.Constants;
-using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
 using MoneyBlog.Services.Service;
 using MoneyBlog.Web.ModelBuilders;
 using MoneyBlog.Web.ViewModels;
 using System;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace MoneyBlog.Web.Controllers
@@ -18,28 +17,39 @@ namespace MoneyBlog.Web.Controllers
     [Authorize(Roles = AdminConstants.AdminRole)]
     public class AdminController : Controller
     {
-        private readonly IAdminService _iAdminService;
+        private readonly IAdminService _adminService;
         readonly DefaultConnection db = new DefaultConnection();
         private readonly UserModelBuilder _modelBuilder;
-
-
-        public AdminController(IAdminService iAdminService, UserModelBuilder userModelBuilder)
+        private ApplicationUserManager _userManager;
+        public AdminController(AdminService adminService, UserModelBuilder userModelBuilder)
         {
-            _iAdminService = iAdminService;
+            _adminService = adminService;
             _modelBuilder = userModelBuilder;
+  
         }
 
         ApplicationDbContext context = new ApplicationDbContext();
 
-        //public ActionResult Index()
+        //public ActionResult UserDetails(string id)
         //{
-        //    return View(db.AspNetUsers.ToList());
+        //    var model = _modelBuilder.UserDetailsBuild(id);
+        //    return View(model);
         //}
-        public ActionResult UserDetails(string id)
+
+        [HttpGet]
+        public async Task<ActionResult> UserDetails(string id)
         {
-            var model = _modelBuilder.UserDetailsBuild(id);
-            return View(model);
+            if (id == null)
+            {
+             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = await _userManager.FindByIdAsync(id);
+
+            ViewBag.RoleNames = await _userManager.GetRolesAsync(user.Id);
+
+            return View(user);
         }
+
         [HttpGet]
         public ActionResult EditUser(string id)
         {
@@ -56,7 +66,7 @@ namespace MoneyBlog.Web.Controllers
         }
         public ActionResult Delete(string id)
         {
-            _iAdminService.Delete(id);
+            _adminService.Delete(id);
             return RedirectToAction("UsersWithRoles", "Admin");
         }
         public ActionResult CreateUserRole()

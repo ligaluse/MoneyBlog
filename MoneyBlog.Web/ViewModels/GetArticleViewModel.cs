@@ -1,8 +1,5 @@
 ﻿using MoneyBlog.DataLayer.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MoneyBlog.Web.ViewModels
 {
@@ -10,7 +7,9 @@ namespace MoneyBlog.Web.ViewModels
     {
 
         public Article Article { get; set; }
-        public AspNetUser AspNetUser { get; set; }
         public List<Comment>Comments { get; set; }
+        public AspNetUser AspNetUser { get; set; }
+        public List<AspNetUser> AspNetUsers { get; set; }
+
     }
 }

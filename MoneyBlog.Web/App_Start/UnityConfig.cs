@@ -1,3 +1,6 @@
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using MoneyBlog.DataLayer;
 using MoneyBlog.Web.Controllers;
 using System.Web.Mvc;
 using Unity;
@@ -27,6 +30,9 @@ namespace MoneyBlog.Web
 
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
+            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>("DefaultConnection");
+
+
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

@@ -9,17 +9,17 @@ namespace MoneyBlog.Web.ModelBuilders
     public class ArticleModelBuilder
     {
         public IArticleService _articleService;
-        public ICommentService _iCommentService;
+        public ICommentService _commentService;
       
-        public ArticleModelBuilder(ArticleService articleService, ICommentService iCommentService)
+        public ArticleModelBuilder(ArticleService articleService, CommentService commentService)
         {
             _articleService = articleService;
-            _iCommentService = iCommentService;
+            _commentService = commentService;
         }
         public GetArticleViewModel BuildArticleModel(int articleId)
         {
             var article = _articleService.Get(articleId);
-            List<Comment> comments = _iCommentService.GetAllArticleComments(articleId);
+            List<Comment> comments = _commentService.GetAllArticle(articleId);
 
             GetArticleViewModel model = new GetArticleViewModel();
             model.Article = article;

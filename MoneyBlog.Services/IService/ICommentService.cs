@@ -1,17 +1,14 @@
 ﻿using MoneyBlog.DataLayer.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoneyBlog.Services.IService
 {
-   public interface ICommentService
+    public interface ICommentService
     {
-        Comment CreateComment(int articleId, string body, string email);
-        Comment GetComment(int id);
-        List<Comment> GetAllComments();
-        List<Comment> GetAllArticleComments(int articleId);
+        //Comment Create(int articleId, string body, string email);
+        bool Create(Comment comment);
+        Comment Get(int id);
+        List<Comment> GetAll();
+        List<Comment> GetAllArticle(int articleId);
     }
 }

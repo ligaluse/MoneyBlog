@@ -1,10 +1,7 @@
 ﻿using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoneyBlog.DataLayer.Repositories
 {
@@ -15,24 +12,24 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
-        public Comment CreateComment(Comment comment)
+        public bool Create(Comment comment)
         {
             _db.Comments.Add(comment);
-            _db.SaveChanges();
+            //_db.SaveChanges();
 
-            return comment;
+            return _db.SaveChanges() > 0;
         }
-        public Comment GetComment(int id)
+        public Comment Get(int id)
         {
             return _db.Comments.FirstOrDefault(x => x.Id == id);
         }
-        public List<Comment> GetAllComments()
+        public List<Comment> GetAll()
         {
             return _db.Comments.ToList();
         }
-        public List<Comment> GetAllArticleComments(int articleId)
+        public List<Comment> GetAllArticle(int articleId)
         {
-            return GetAllComments().Where(x => x.ArticleId == articleId).ToList();
+            return GetAll().Where(x => x.ArticleId == articleId).ToList();
         }
     }
 }
