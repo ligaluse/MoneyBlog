@@ -12,12 +12,18 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
-        public bool Create(Comment comment)
+        //public bool Create(Comment comment)
+        //{
+        //    _db.Comments.Add(comment);
+        //    //_db.SaveChanges();
+
+        //    return _db.SaveChanges() > 0;
+        //}
+        public Comment Create(Comment comment)
         {
             _db.Comments.Add(comment);
-            //_db.SaveChanges();
-
-            return _db.SaveChanges() > 0;
+            _db.SaveChanges();
+            return comment;
         }
         public Comment Get(int id)
         {

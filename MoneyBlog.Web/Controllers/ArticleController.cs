@@ -16,15 +16,17 @@ namespace MoneyBlog.Web.Controllers
         private readonly IArticleLikeService _articleLikeService;
         private readonly ArticleModelBuilder _articleModelBuilder;
         private readonly ICommentService _commentService;
+        private readonly IAdminService _adminService;
 
         public ArticleController
         (ArticleService articleService,ArticleLikeService articleLikeService, 
-        ArticleModelBuilder addNewModelBuilder,CommentService commentService)
+        ArticleModelBuilder addNewModelBuilder,CommentService commentService,AdminService adminService)
         {
             _articleService = articleService;
             _articleLikeService = articleLikeService;
             _articleModelBuilder = addNewModelBuilder;
             _commentService = commentService;
+            _adminService = adminService;
         }
 
         public ActionResult Index()
@@ -51,16 +53,9 @@ namespace MoneyBlog.Web.Controllers
         [HttpGet]
         public ActionResult Article(int Id)
         {
-            //var articleModel = _articleModelBuilder.BuildArticleModel(articleId);
-
-            //articleModel.AspNetUser.Email = User.Identity.GetUserName();
-            //return View(articleModel);
-
-
             GetArticleViewModel model = new GetArticleViewModel(); 
             model.Article = _articleService.Get(Id);
             model.Comments = _commentService.GetAllArticle(Id);
-
             return View(model);
         }
         
@@ -70,30 +65,14 @@ namespace MoneyBlog.Web.Controllers
             return View(_articleService.GetByUser(User.Identity.GetUserName()));
         }
 
-        //[HttpPost]
-        //public ActionResult CreateComment(int articleId, string userId, string comment)
-        //{
-        //    return View(_commentService.Create(articleId, userId, comment));
-        //}
         [HttpPost]
-        public JsonResult CreateComment(CommentViewModel model)
+        public ActionResult CreateComment(int articleId, string userId, string email, string comment)
         {
-            JsonResult result = new JsonResult();
-            try
-            {
-                var comment = new Comment();
-                comment.Body = model.Body;
-                comment.ArticleId = model.ArticleId;
-                comment.CreatedOn = DateTime.Now;
+            userId = User.Identity.GetUserId();
+            email = User.Identity.GetUserName();
+            _commentService.Create(articleId, userId, email, comment);
 
-                var res = _commentService.Create(comment);
-            }
-            catch(Exception ex)
-            { 
-                result.Data = new { Succes = false, Message = ex.Message };
-
-            }
-            return result;
+            return Json("Comment Created", comment);
         }
 
         [HttpGet]

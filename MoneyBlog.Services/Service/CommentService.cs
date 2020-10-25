@@ -15,22 +15,23 @@ namespace MoneyBlog.Services.Service
         {
             _commentRepository = commentRepository;
         }
-        //public Comment Create(int articleId, string body, string email)
-        //{
-        //    Comment comment = new Comment()
-        //    {
-        //        ArticleId = articleId,
-        //        Body = body,
-        //        Email = email,
-        //        CreatedOn = DateTime.Now
-        //    };
-        //    _commentRepository.Create(comment);
-        //    return comment;
-        //}
-        public bool Create(Comment comment)
+        public Comment Create(int articleId, string userId, string email, string body)
         {
-            return _commentRepository.Create(comment);
+            Comment comment = new Comment()
+            {
+                ArticleId = articleId,
+                UserId = userId,
+                Email = email,
+                Body = body,
+                CreatedOn = DateTime.Now
+            };
+            _commentRepository.Create(comment);
+            return comment;
         }
+        //public bool Create(Comment comment)
+        //{
+        //    return _commentRepository.Create(comment);
+        //}
         public Comment Get(int id)
         {
             return _commentRepository.Get(id);

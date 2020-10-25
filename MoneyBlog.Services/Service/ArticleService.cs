@@ -102,7 +102,6 @@ namespace MoneyBlog.Services.Service
         {
 
             article.ModifiedOn = DateTime.Now;
-
             var articleForEditing = Get(article.Id);
 
             if (file != null&& IsImageValid(file))

@@ -16,17 +16,13 @@
 @Html.ActionLink("Like", "Like", new { id = Model.Article.Id, email = Model.Article.Email })
 
 @Html.ActionLink("Dislike", "Dislike", new { id = Model.Article.Id, email = Model.Article.Email })
-@Html.ValidationMessage("error")
 
 <p>Leave a comment:</p>
-<form id="commentForm">
-    <input type="hidden" name="ArticleId" value="@Model.Article.Id" />
-    <div class="form-group">
-        <label>write comment</label>
-        <textarea class="form-control" rows="3" name="Text" placeholder="write your comment here"></textarea>
-    </div>
-    <button class="btn btn-success" id="btnComment" value="Post" type="button">Leave your comment</button>
-</form>
+<span id="CommentCreated"></span>
+<input id="Comment" class="form-control" placeholder="write your comment here" rows="3" />
+<input type="hidden" id="ArticleId" value="@Model.Article.Id" />
+<button class="btn btn-success" id="buttonComment" value="Post" type="button">Click here to post</button>
+
 
 @if (Model.Comments != null && Model.Comments.Count > 0)
 {
@@ -42,25 +38,7 @@ else
 {
     <p>There are no comments on this article</p>
 }
-<script>
-    $("#btnComment").click(function () {
-        $.ajax({
-            url: "@Url.Action("CreateComment", "Article")",
-            type: "post",
-            data: $("#commentForm").serialize()
-        }).done(function (response) {
-            debugger;
-            if (response.Success)
-            {
-                window.location.reload();
-            }
-            else {
-                swal("Error!", response.Message, "error");
-            }
-        }).fail(function () {
-            swal("Error!", "Error Occured. Please try again later", "error");
-        });
-    });
-</script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="@Url.Content("/Scripts/ajax-comment.js")"></script>
 

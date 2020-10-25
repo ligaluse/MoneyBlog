@@ -8,6 +8,7 @@ namespace MoneyBlog.Web.ViewModels
 
         public Article Article { get; set; }
         public List<Comment>Comments { get; set; }
+        public string Body { get; set; }
         public AspNetUser AspNetUser { get; set; }
         public List<AspNetUser> AspNetUsers { get; set; }
 
