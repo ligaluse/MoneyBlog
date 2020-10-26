@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MoneyBlog.DataLayer;
+using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Web.ViewModels;
 using MoneyBlog.Web.ViewModels.AccountViewModels;
 using static MoneyBlog.Web.EmailService;
@@ -20,6 +21,7 @@ namespace MoneyBlog.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        ApplicationDbContext context = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -156,7 +158,11 @@ namespace MoneyBlog.Web.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    
                     UserManager.AddToRole(user.Id, "Junior");
+                    //user.UserRole_Id = "d5ffaa68-3952-47fe-a0dd-6f322747f062";
+                   
+
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

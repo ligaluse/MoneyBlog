@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using MoneyBlog.DataLayer;
 using MoneyBlog.DataLayer.Constants;
+using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
 using MoneyBlog.Services.Service;
 using MoneyBlog.Web.ModelBuilders;
@@ -74,7 +75,7 @@ namespace MoneyBlog.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateUserRole(FormCollection form)
+        public ActionResult CreateUserRole(FormCollection form, AspNetUser user)
         {
             string roleName = form["RoleName"];
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
@@ -82,6 +83,7 @@ namespace MoneyBlog.Web.Controllers
             {
                 var role = new IdentityRole(roleName);
                 roleManager.Create(role);
+                //user.UserRole_Id = role;
             }
             else
             {

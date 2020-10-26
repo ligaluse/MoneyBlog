@@ -10,8 +10,7 @@
             type: 'POST',
             datatype: "JSON",
             data: { articleId: ArticleId, userId: UserId, email: Email, comment: Comment },
-            success: function (result) {
-                $('#CommentCreated').html(result);
+            success: function (result) {html(result);
             }
         });
     });

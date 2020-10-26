@@ -90,6 +90,15 @@
     <Compile Include="IRepositories\IArticleRepository.cs" />
     <Compile Include="IRepositories\IArticleLikeRepository.cs" />
     <Compile Include="IRepositories\ICommentRepository.cs" />
+    <Compile Include="Migrations\202010252028107_InitialCreate.cs" />
+    <Compile Include="Migrations\202010252028107_InitialCreate.Designer.cs">
+      <DependentUpon>202010252028107_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010252031307_AddedUserRelatedFields.cs" />
+    <Compile Include="Migrations\202010252031307_AddedUserRelatedFields.Designer.cs">
+      <DependentUpon>202010252031307_AddedUserRelatedFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleLike.cs" />
     <Compile Include="Models\AspNetRole.cs" />
@@ -106,7 +115,14 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202010252028107_InitialCreate.resx">
+      <DependentUpon>202010252028107_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010252031307_AddedUserRelatedFields.resx">
+      <DependentUpon>202010252031307_AddedUserRelatedFields.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

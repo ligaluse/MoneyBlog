@@ -72,7 +72,7 @@ namespace MoneyBlog.Web.Controllers
             email = User.Identity.GetUserName();
             _commentService.Create(articleId, userId, email, comment);
 
-            return Json("Comment Created", comment);
+            return Json(comment);
         }
 
         [HttpGet]
