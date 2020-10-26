@@ -6,7 +6,6 @@ namespace MoneyBlog.Services.IService
     public interface ICommentService
     {
         Comment Create(int articleId, string userId, string email, string body);
-        //bool Create(Comment comment);
         Comment Get(int id);
         List<Comment> GetAll();
         List<Comment> GetAllArticle(int articleId);

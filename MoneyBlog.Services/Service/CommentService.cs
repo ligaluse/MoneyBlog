@@ -28,10 +28,6 @@ namespace MoneyBlog.Services.Service
             _commentRepository.Create(comment);
             return comment;
         }
-        //public bool Create(Comment comment)
-        //{
-        //    return _commentRepository.Create(comment);
-        //}
         public Comment Get(int id)
         {
             return _commentRepository.Get(id);
