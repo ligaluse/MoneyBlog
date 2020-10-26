@@ -23,7 +23,8 @@ namespace MoneyBlog.Services.Service
                 UserId = userId,
                 Email = email,
                 Body = body,
-                CreatedOn = DateTime.Now
+                CreatedOn = DateTime.Now,
+                ReportCount = 0
             };
             _commentRepository.Create(comment);
             return comment;
@@ -39,6 +40,37 @@ namespace MoneyBlog.Services.Service
         public List<Comment> GetAllArticle(int articleId)
         {
             return _commentRepository.GetAllArticle(articleId);
+        }
+        public CommentReport GetReport(int id, string email)
+        {
+            return _commentRepository.GetReport(id, email);
+        }
+        public CommentReport IsReported(int id, string email)
+        {
+            CommentReport commentReport = new CommentReport()
+            {
+                CommentId = id,
+                Email = email,
+                Report = true,
+                ReportedOn = DateTime.Now
+            };
+            _commentRepository.SaveReport(commentReport);
+            return commentReport;
+        }
+        public void UpdateWithReport(int id, string email)
+        {
+            Comment update = Get(id);
+            update.ReportCount += 1;
+            IsReported(id, email);
+            _commentRepository.SaveChanges();
+        }
+        public void Delete(int id)
+        {
+            _commentRepository.Delete(id);
+        }
+        public void DeleteReport(int id)
+        {
+            _commentRepository.Delete(id);
         }
     }
 }

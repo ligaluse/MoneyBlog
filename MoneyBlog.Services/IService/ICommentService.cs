@@ -9,5 +9,10 @@ namespace MoneyBlog.Services.IService
         Comment Get(int id);
         List<Comment> GetAll();
         List<Comment> GetAllArticle(int articleId);
+        CommentReport GetReport(int id, string email);
+        CommentReport IsReported(int id, string email);
+        void UpdateWithReport(int id, string email);
+        void Delete(int id);
+        void DeleteReport(int id);
     }
 }

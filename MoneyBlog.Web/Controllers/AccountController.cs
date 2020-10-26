@@ -154,14 +154,14 @@ namespace MoneyBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole_Id = "d5ffaa68-3952-47fe-a0dd-6f322747f062" };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     
                     UserManager.AddToRole(user.Id, "Junior");
-                    //user.UserRole_Id = "d5ffaa68-3952-47fe-a0dd-6f322747f062";
-                   
+
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 

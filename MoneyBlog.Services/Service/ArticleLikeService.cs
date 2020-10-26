@@ -1,4 +1,5 @@
-﻿using MoneyBlog.DataLayer.IRepositories;
+﻿using MoneyBlog.DataLayer;
+using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
 using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services.IService;
@@ -10,13 +11,15 @@ namespace MoneyBlog.Services.Service
         public IArticleLikeRepository _articleLikeRepository;
         public ICommentService _commentService;
         public IArticleService _articleService;
+        public DefaultConnection _db;
 
         public ArticleLikeService(ArticleLikeRepository articleLikeRepository,
-        CommentService commentService, ArticleService articleService)
+        CommentService commentService, ArticleService articleService, DefaultConnection db)
         {
             _articleLikeRepository = articleLikeRepository;
             _commentService = commentService;
             _articleService = articleService;
+            _db = db;
         }
 
         public ArticleLike Get(int id, string email)
@@ -40,14 +43,18 @@ namespace MoneyBlog.Services.Service
             Article update = _articleService.Get(id);
             update.LikeCount += 1;
             IsLiked(id, email);
-            _articleLikeRepository.SaveChanges();
+            //_articleLikeRepository.SaveChanges();
+            
+            _db.SaveChanges();
+
         }
         public void UpdateWithDislike(int id, string email)
         {
             Article update = _articleService.Get(id);
             update.DislikeCount += 1;
             IsDisliked(id, email);
-            _articleLikeRepository.SaveChanges();
+            //_articleLikeRepository.SaveChanges();
+            _db.SaveChanges();
         }
         public ArticleLike IsDisliked(int id, string email)
         {

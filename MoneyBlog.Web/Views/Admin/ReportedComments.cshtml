@@ -1,0 +1,20 @@
+﻿@model List<MoneyBlog.DataLayer.Models.Comment>
+@{
+    ViewBag.Title = "ReportedComments";
+}
+
+<h2>ReportedComments</h2>
+
+@foreach (var comment in Model)
+{
+    if (comment.ReportCount > 0)
+    {
+        <p>@comment.Body</p>
+        <small class="text-muted">
+            Posted by @comment.Email on @comment.CreatedOn
+        </small>
+        <p>  @Html.ActionLink("Delete Comment", "DeleteComment", new { id = comment.Id })</p>
+        <p>@Html.ActionLink("Delete Report", "DeleteReport", new { id = comment.Id })</p>
+    }
+
+}

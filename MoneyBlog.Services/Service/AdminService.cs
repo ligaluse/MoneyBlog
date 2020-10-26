@@ -1,8 +1,12 @@
-﻿using MoneyBlog.DataLayer.IRepositories;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using MoneyBlog.DataLayer;
+using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
 using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services.IService;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace MoneyBlog.Services.Service
 {
@@ -14,6 +18,7 @@ namespace MoneyBlog.Services.Service
         {
             _adminRepository = adminRepository;
         }
+        ApplicationDbContext context = new ApplicationDbContext();
         public List<AspNetUser> AspNetUsers()
         {
             return _adminRepository.AspNetUsers();
@@ -34,5 +39,6 @@ namespace MoneyBlog.Services.Service
         {
             _adminRepository.Delete(id);
         }
+      
     }
 }

@@ -20,6 +20,7 @@ namespace MoneyBlog.DataLayer
         public DbSet<AspNetRole> AspNetRoles { get; set; }
         public DbSet<ArticleLike> ArticleLikes { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<CommentReport> CommentReports { get; set; }
 
 
     }

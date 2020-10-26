@@ -56,6 +56,7 @@ namespace MoneyBlog.Web.Controllers
             GetArticleViewModel model = new GetArticleViewModel(); 
             model.Article = _articleService.Get(Id);
             model.Comments = _commentService.GetAllArticle(Id);
+            
             return View(model);
         }
         
@@ -68,6 +69,7 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult CreateComment(int articleId, string userId, string email, string comment)
         {
+            //userid un email prom
             userId = User.Identity.GetUserId();
             email = User.Identity.GetUserName();
             _commentService.Create(articleId, userId, email, comment);
@@ -121,19 +123,25 @@ namespace MoneyBlog.Web.Controllers
             return File(cover, "image/jpg");
         }
 
+        public ActionResult ReportComment(int id)
+        {
+            var email = User.Identity.GetUserName();
+            var commentReport = _commentService.GetReport(id, email);
+            if (commentReport == null)
+            {
+                _commentService.UpdateWithReport(id, email);
+            }
+            return RedirectToAction("Index", "Article");
+        }
         public ActionResult Like(int id)
         {
             var email = User.Identity.GetUserName();
             var articleLike = _articleLikeService.Get(id, email);
-            if (articleLike !=null)
-            {
-                ModelState.AddModelError("error", "you already voted");
-            }
-            else
+            if (articleLike == null)
             {
                 _articleLikeService.UpdateWithLike(id, email);
             }
-           
+
             return RedirectToAction("Index", "Article");
         }
         public ActionResult Dislike(int id)

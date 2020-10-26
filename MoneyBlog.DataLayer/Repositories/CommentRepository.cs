@@ -12,13 +12,6 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
-        //public bool Create(Comment comment)
-        //{
-        //    _db.Comments.Add(comment);
-        //    //_db.SaveChanges();
-
-        //    return _db.SaveChanges() > 0;
-        //}
         public Comment Create(Comment comment)
         {
             _db.Comments.Add(comment);
@@ -36,6 +29,31 @@ namespace MoneyBlog.DataLayer.Repositories
         public List<Comment> GetAllArticle(int articleId)
         {
             return GetAll().Where(x => x.ArticleId == articleId).ToList();
+        }
+        public CommentReport GetReport(int id, string email)
+        {
+            var commentReport = _db.CommentReports.Where(x => x.Email == email && x.CommentId == id).FirstOrDefault();
+            return commentReport;
+        }
+        public void SaveChanges()
+        {
+            _db.SaveChanges();
+        }
+        public CommentReport SaveReport(CommentReport commentReport)
+        {
+            _db.CommentReports.Add(commentReport);
+            _db.SaveChanges();
+            return commentReport;
+        }
+        public void Delete(int id)
+        {
+            _db.Comments.Remove(_db.Comments.Find(id));
+            _db.SaveChanges();
+        }
+        public void DeleteReport(int id)
+        {
+            _db.CommentReports.Remove(_db.CommentReports.Find(id));
+            _db.SaveChanges();
         }
     }
 }

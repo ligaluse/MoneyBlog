@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using IdentitySample.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MoneyBlog.DataLayer;
 using MoneyBlog.DataLayer.Constants;
-using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
 using MoneyBlog.Services.Service;
 using MoneyBlog.Web.ModelBuilders;
@@ -22,20 +22,16 @@ namespace MoneyBlog.Web.Controllers
         readonly DefaultConnection db = new DefaultConnection();
         private readonly UserModelBuilder _modelBuilder;
         private ApplicationUserManager _userManager;
-        public AdminController(AdminService adminService, UserModelBuilder userModelBuilder)
+        private readonly ICommentService _commentService;
+        public AdminController(AdminService adminService, UserModelBuilder userModelBuilder, CommentService commentService)
         {
             _adminService = adminService;
             _modelBuilder = userModelBuilder;
+            _commentService = commentService;
   
         }
 
         ApplicationDbContext context = new ApplicationDbContext();
-
-        //public ActionResult UserDetails(string id)
-        //{
-        //    var model = _modelBuilder.UserDetailsBuild(id);
-        //    return View(model);
-        //}
 
         [HttpGet]
         public async Task<ActionResult> UserDetails(string id)
@@ -75,7 +71,7 @@ namespace MoneyBlog.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateUserRole(FormCollection form, AspNetUser user)
+        public ActionResult CreateUserRole(FormCollection form)
         {
             string roleName = form["RoleName"];
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
@@ -91,6 +87,7 @@ namespace MoneyBlog.Web.Controllers
             }
             return RedirectToAction("UsersWithRoles", "Admin");
         }
+
         public ActionResult AssignUserRole()
         {
             ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
@@ -122,6 +119,20 @@ namespace MoneyBlog.Web.Controllers
             }
             
             return View(model);
+        }
+        public ActionResult ReportedComments()
+        {
+            return View(_commentService.GetAll());
+        }
+        public ActionResult DeleteComment(int id)
+        {
+            _commentService.Delete(id);
+            return RedirectToAction("ReportedComments", "Admin");
+        }
+        public ActionResult DeleteReport(int id)
+        {
+            _commentService.DeleteReport(id);
+            return RedirectToAction("ReportedComments", "Admin");
         }
 
     }
