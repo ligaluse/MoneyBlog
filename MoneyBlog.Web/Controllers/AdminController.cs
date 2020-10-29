@@ -17,8 +17,9 @@ namespace MoneyBlog.Web.Controllers
         private readonly UserModelBuilder _modelBuilder;
         private readonly ICommentService _commentService;
         private readonly IRoleService _roleService;
-        readonly ApplicationUser _applicationUser;
-        public AdminController(AdminService adminService, UserModelBuilder userModelBuilder, CommentService commentService, RoleService roleService)
+        public AdminController
+            (AdminService adminService, UserModelBuilder userModelBuilder, 
+            CommentService commentService, RoleService roleService)
         {
             _adminService = adminService;
             _modelBuilder = userModelBuilder;
@@ -26,9 +27,9 @@ namespace MoneyBlog.Web.Controllers
             _roleService = roleService;
         }
 
-        public ActionResult UserDetails(string id)
+        public ActionResult UserDetails(string id, string email)
         {
-            var model = _modelBuilder.UserDetailsBuild(id);
+            var model = _modelBuilder.UserDetailsBuilder(id, email);
             return View(model);
         }
 

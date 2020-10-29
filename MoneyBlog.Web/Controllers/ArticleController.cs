@@ -20,11 +20,11 @@ namespace MoneyBlog.Web.Controllers
 
         public ArticleController
         (ArticleService articleService,ArticleLikeService articleLikeService, 
-        ArticleModelBuilder addNewModelBuilder,CommentService commentService,AdminService adminService)
+        ArticleModelBuilder articleModelBuilder,CommentService commentService,AdminService adminService)
         {
             _articleService = articleService;
             _articleLikeService = articleLikeService;
-            _articleModelBuilder = addNewModelBuilder;
+            _articleModelBuilder = articleModelBuilder;
             _commentService = commentService;
             _adminService = adminService;
         }
@@ -53,14 +53,12 @@ namespace MoneyBlog.Web.Controllers
         [HttpGet]
         public ActionResult Article(int Id)
         {
-            GetArticleViewModel model = new GetArticleViewModel();
-            //model.AspNetUser.Id = User.Identity.GetUserId();
-            //var role = 
+            //GetArticleViewModel model = new GetArticleViewModel();
 
-
-            model.Article = _articleService.Get(Id);
-            model.Comments = _commentService.GetAllArticle(Id);
-            
+            //model.Article = _articleService.Get(Id);
+            //model.Comments = _commentService.GetAllArticle(Id);
+            var model = _articleModelBuilder.BuildArticleModel(Id);
+           
             return View(model);
         }
         
@@ -76,6 +74,7 @@ namespace MoneyBlog.Web.Controllers
             //userid un email prom
             userId = User.Identity.GetUserId();
             email = User.Identity.GetUserName();
+            
             _commentService.Create(articleId, userId, email, comment);
 
             return Json(comment);

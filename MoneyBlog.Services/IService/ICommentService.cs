@@ -14,5 +14,6 @@ namespace MoneyBlog.Services.IService
         void UpdateWithReport(int id, string email);
         void Delete(int id);
         void DeleteReport(int id);
+        List<Comment> GetByUser(string email);
     }
 }

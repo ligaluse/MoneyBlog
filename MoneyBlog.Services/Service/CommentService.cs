@@ -4,6 +4,7 @@ using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services.IService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MoneyBlog.Services.Service
 {
@@ -40,6 +41,11 @@ namespace MoneyBlog.Services.Service
         public List<Comment> GetAllArticle(int articleId)
         {
             return _commentRepository.GetAllArticle(articleId);
+        }
+        public List<Comment> GetByUser(string email)
+        {
+            var userComments = _commentRepository.GetAll().Where(u => u.Email == email).ToList();
+            return userComments;
         }
         public CommentReport GetReport(int id, string email)
         {

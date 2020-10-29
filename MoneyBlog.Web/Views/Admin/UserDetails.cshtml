@@ -1,26 +1,60 @@
 ﻿@model MoneyBlog.Web.ViewModels.UserDetailsViewModel
 
-    @{
-        ViewBag.Title = "Details";
+<h2>Details</h2>
+<table class="table">
+    <tr>
+        <td>
+            user Id : @Model.UserId
+        </td>
+    </tr>
+    <tr>
+        <td>
+            User Email:  @Model.Email
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            User's role : @Model.RoleName
+        </td>
+
+    </tr>
+</table>
+
+<h2>User articles:</h2>
+<table class="table">
+    @foreach (var article in Model.Articles)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => article.Title)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Article", "Article", new { id = article.Id }) |
+                @Html.ActionLink("Delete", "Delete", "Article", new { id = article.Id })
+            </td>
+        </tr>
     }
 
-    <h2>Details</h2>
-    <table class="table">
-        <tr>
-            <td>
-                user Id : @Model.UserId
-            </td>
-        </tr>
-        <tr>
-            <td>
-               User Email:  @Model.Email
-            </td>
+</table>
+<h2>User comments:</h2>
+<table class="table">
+    @foreach (var comment in Model.Comments)
+    {
+    <tr>
+        <td>
+          text:  @Html.DisplayFor(modelItem => comment.Body)
+        </td>
+        <td>
+            created on : @Html.DisplayFor(modelItem => comment.CreatedOn)
+        </td>
+        <td>
+           article id: @Html.DisplayFor(modelItem => comment.ArticleId)
+        </td>
+        <td>
+            < @Html.ActionLink("Delete Comment", "DeleteComment", new { id = comment.Id })
+        </td>
+    </tr>
+    }
 
-        </tr>
-        <tr>
-            <td>
-                User's role : @Model.RoleName
-            </td>
-
-        </tr>
-        </table>
+</table>

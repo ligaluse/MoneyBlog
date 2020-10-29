@@ -18,25 +18,22 @@ namespace MoneyBlog.Web.ModelBuilders
             _commentService = commentService;
             _roleService = roleService;
         }
-        public GetArticleViewModel BuildArticleModel(int articleId)
+        public GetArticleViewModel BuildArticleModel(int id)
         {
-            var article = _articleService.Get(articleId);
-            List<Comment> comments = _commentService.GetAllArticle(articleId);
+            var article = _articleService.Get(id);
+            var user = System.Web.HttpContext.Current.User.Identity.Name;
+
+            List <Comment> comments = _commentService.GetAllArticle(id);
 
             GetArticleViewModel model = new GetArticleViewModel();
             model.Article = article;
             model.Comments = comments;
+            //model.AspNetUser.Email = user;
+            //model.AspNetUser.UserRole_Id = Convert.ToInt32(_roleService.Get(user).Id);
+            
 
             return model;
-        }
-        public RoleViewModel RoleBuild(int id)
-        {
-            var RoleViewModel = new RoleViewModel();
 
-            RoleViewModel.Id = _roleService.Get(id).Id;
-            RoleViewModel.RoleName = _roleService.Get(id).RoleName;
-            
-            return RoleViewModel;
         }
        
     }
