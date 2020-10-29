@@ -16,11 +16,11 @@ namespace MoneyBlog.DataLayer.Repositories
             var articleLike = _db.ArticleLikes.Where(x => x.Email == email && x.Article_Id == id).FirstOrDefault();
             return articleLike;
         }
-        //public void SaveChanges()
-        //{
-        //    //te truukst kkas. update table
-        //    _db.SaveChanges();
-        //} 
+        public void SaveChanges()
+        {
+            //te truukst kkas. update table
+            _db.SaveChanges();
+        }
         public ArticleLike LikeDislikeSave(ArticleLike articleLike)
         {
             _db.ArticleLikes.Add(articleLike);

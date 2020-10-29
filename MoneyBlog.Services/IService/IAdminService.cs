@@ -14,5 +14,6 @@ namespace MoneyBlog.Services.IService
         AspNetRole GetUserRole(string id);
         void Update(AspNetUser aspNetUser);
         void Delete(string id);
+        AspNetUser EditUser(AspNetUser aspNetUser);
     }
 }

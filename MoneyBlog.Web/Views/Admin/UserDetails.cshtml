@@ -1,64 +1,26 @@
-﻿@model MoneyBlog.DataLayer.Models.AspNetUser
-@*@model MoneyBlog.Web.ViewModels.UserDetailsViewModel*@
+﻿@model MoneyBlog.Web.ViewModels.UserDetailsViewModel
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-    </dl>
-</div>
-<h4>List of roles for this user</h4>
-@if (ViewBag.RoleNames.Count == 0)
-{
-    <hr />
-    <p>No roles found for this user.</p>
-}
-
-<table class="table">
-
-    @foreach (var item in ViewBag.RoleNames)
-    {
-        <tr>
-            <td>
-                @item
-            </td>
-        </tr>
-    }
-</table>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-
-
-
-
-    @*@{
+    @{
         ViewBag.Title = "Details";
     }
 
     <h2>Details</h2>
+    <table class="table">
+        <tr>
+            <td>
+                user Id : @Model.UserId
+            </td>
+        </tr>
+        <tr>
+            <td>
+               User Email:  @Model.Email
+            </td>
 
-    <tr>
-        <td>
-            @Model.UserId
-        </td>
-    </tr>
-    <tr>
-        <td>
-            @Model.Email
-        </td>
+        </tr>
+        <tr>
+            <td>
+                User's role : @Model.RoleName
+            </td>
 
-    </tr>
-    <tr>
-        <td>
-            @Model.RoleName
-        </td>
-
-    </tr>*@
+        </tr>
+        </table>

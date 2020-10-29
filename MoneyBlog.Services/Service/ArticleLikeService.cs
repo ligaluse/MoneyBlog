@@ -43,10 +43,7 @@ namespace MoneyBlog.Services.Service
             Article update = _articleService.Get(id);
             update.LikeCount += 1;
             IsLiked(id, email);
-            //_articleLikeRepository.SaveChanges();
-            
-            _db.SaveChanges();
-
+            _articleLikeRepository.SaveChanges();
         }
         public void UpdateWithDislike(int id, string email)
         {

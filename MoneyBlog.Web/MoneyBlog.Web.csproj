@@ -235,6 +235,7 @@
     <Compile Include="ViewModels\ManageViewModels\ManageLoginsViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="ViewModels\RoleViewModel.cs" />
     <Compile Include="ViewModels\UserDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

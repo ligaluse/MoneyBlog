@@ -27,6 +27,9 @@ namespace MoneyBlog.Web
             container.RegisterType<MoneyBlog.DataLayer.IRepositories.ICommentRepository, MoneyBlog.DataLayer.Repositories.CommentRepository>();
             container.RegisterType<MoneyBlog.Services.IService.ICommentService, MoneyBlog.Services.Service.CommentService>();
 
+            container.RegisterType<MoneyBlog.DataLayer.IRepositories.IRoleRepository, MoneyBlog.DataLayer.Repositories.RoleRepository>();
+            container.RegisterType<MoneyBlog.Services.IService.IRoleService, MoneyBlog.Services.Service.RoleService>();
+
 
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());

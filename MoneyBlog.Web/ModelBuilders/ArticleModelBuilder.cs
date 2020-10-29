@@ -10,11 +10,13 @@ namespace MoneyBlog.Web.ModelBuilders
     {
         public IArticleService _articleService;
         public ICommentService _commentService;
-      
-        public ArticleModelBuilder(ArticleService articleService, CommentService commentService)
+        public IRoleService _roleService;
+
+        public ArticleModelBuilder(ArticleService articleService, CommentService commentService, RoleService roleService)
         {
             _articleService = articleService;
             _commentService = commentService;
+            _roleService = roleService;
         }
         public GetArticleViewModel BuildArticleModel(int articleId)
         {
@@ -27,6 +29,15 @@ namespace MoneyBlog.Web.ModelBuilders
 
             return model;
         }
-        
+        public RoleViewModel RoleBuild(int id)
+        {
+            var RoleViewModel = new RoleViewModel();
+
+            RoleViewModel.Id = _roleService.Get(id).Id;
+            RoleViewModel.RoleName = _roleService.Get(id).RoleName;
+            
+            return RoleViewModel;
+        }
+       
     }
 }

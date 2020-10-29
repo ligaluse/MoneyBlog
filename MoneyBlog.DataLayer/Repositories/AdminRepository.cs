@@ -9,6 +9,7 @@ namespace MoneyBlog.DataLayer.Repositories
     public class AdminRepository : IAdminRepository
     {
         readonly DefaultConnection db = new DefaultConnection();
+        readonly ApplicationUser applicationUser = new ApplicationUser();
         public List<AspNetUser> AspNetUsers()
         {
             List<AspNetUser> AspNetUsers = db.AspNetUsers.ToList();
@@ -34,5 +35,6 @@ namespace MoneyBlog.DataLayer.Repositories
             var role = db.AspNetRoles.FirstOrDefault(i => i.Id == id);
             return role;
         }
+
     }
 }

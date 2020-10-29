@@ -1,16 +1,10 @@
-﻿using IdentitySample.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using MoneyBlog.DataLayer;
+﻿using MoneyBlog.DataLayer;
 using MoneyBlog.DataLayer.Constants;
+using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
 using MoneyBlog.Services.Service;
 using MoneyBlog.Web.ModelBuilders;
-using MoneyBlog.Web.ViewModels;
-using System;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace MoneyBlog.Web.Controllers
@@ -21,45 +15,38 @@ namespace MoneyBlog.Web.Controllers
         private readonly IAdminService _adminService;
         readonly DefaultConnection db = new DefaultConnection();
         private readonly UserModelBuilder _modelBuilder;
-        private ApplicationUserManager _userManager;
         private readonly ICommentService _commentService;
-        public AdminController(AdminService adminService, UserModelBuilder userModelBuilder, CommentService commentService)
+        private readonly IRoleService _roleService;
+        readonly ApplicationUser _applicationUser;
+        public AdminController(AdminService adminService, UserModelBuilder userModelBuilder, CommentService commentService, RoleService roleService)
         {
             _adminService = adminService;
             _modelBuilder = userModelBuilder;
             _commentService = commentService;
-  
+            _roleService = roleService;
         }
 
-        ApplicationDbContext context = new ApplicationDbContext();
-
-        [HttpGet]
-        public async Task<ActionResult> UserDetails(string id)
+        public ActionResult UserDetails(string id)
         {
-            if (id == null)
-            {
-             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var user = await _userManager.FindByIdAsync(id);
-
-            ViewBag.RoleNames = await _userManager.GetRolesAsync(user.Id);
-
-            return View(user);
+            var model = _modelBuilder.UserDetailsBuild(id);
+            return View(model);
         }
 
-        [HttpGet]
         public ActionResult EditUser(string id)
         {
-            return View(_modelBuilder.UserDetailsBuild(id));
+            var user = _adminService.Get(id);
+            var getRoleList = _roleService.GetAll();
+             ViewBag.roleList  = new SelectList(getRoleList, "Id", "RoleName");
+           
+            return View(user);
         }
-
         [HttpPost]
-        public ActionResult EditUser(UserDetailsViewModel model)
+        public ActionResult EditUser(AspNetUser user)
         {
-            ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
-            _modelBuilder.EditUserModel(model);
+            var aspNetUser = _adminService.EditUser(user);
+    
+            return RedirectToAction("UsersWithRoles", "Admin");
 
-            return View("Index");
         }
         public ActionResult Delete(string id)
         {
@@ -70,40 +57,16 @@ namespace MoneyBlog.Web.Controllers
         {
             return View();
         }
+       
         [HttpPost]
-        public ActionResult CreateUserRole(FormCollection form)
+        public ActionResult CreateUserRole(Role role)
         {
-            string roleName = form["RoleName"];
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            if (!roleManager.RoleExists(roleName))
-            {
-                var role = new IdentityRole(roleName);
-                roleManager.Create(role);
-                //user.UserRole_Id = role;
-            }
-            else
-            {
-                ModelState.AddModelError("error", "role already exists");
-            }
-            return RedirectToAction("UsersWithRoles", "Admin");
+           
+            _roleService.Create(role.RoleName);
+
+            return View(role);
         }
 
-        public ActionResult AssignUserRole()
-        {
-            ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
-            return View();
-        }
-        [HttpPost]
-        public ActionResult AssignUserRole(FormCollection form)
-        {
-            string username = form["txtUserName"];
-            string rolename = form[FormConstants.formRoleName];
-            ApplicationUser user = context.Users.Where(u => u.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            userManager.AddToRole(user.Id, rolename);
-
-            return RedirectToAction("UsersWithRoles", "Admin");
-        }
         public ActionResult UsersWithRoles()
         {
             var model = _modelBuilder.BuildList();

@@ -90,6 +90,7 @@
     <Compile Include="IRepositories\IArticleRepository.cs" />
     <Compile Include="IRepositories\IArticleLikeRepository.cs" />
     <Compile Include="IRepositories\ICommentRepository.cs" />
+    <Compile Include="IRepositories\IRoleRepository.cs" />
     <Compile Include="Migrations\202010252028107_InitialCreate.cs" />
     <Compile Include="Migrations\202010252028107_InitialCreate.Designer.cs">
       <DependentUpon>202010252028107_InitialCreate.cs</DependentUpon>
@@ -97,6 +98,10 @@
     <Compile Include="Migrations\202010252031307_AddedUserRelatedFields.cs" />
     <Compile Include="Migrations\202010252031307_AddedUserRelatedFields.Designer.cs">
       <DependentUpon>202010252031307_AddedUserRelatedFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010281115527_UserDetails2.cs" />
+    <Compile Include="Migrations\202010281115527_UserDetails2.Designer.cs">
+      <DependentUpon>202010281115527_UserDetails2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Article.cs" />
@@ -106,11 +111,13 @@
     <Compile Include="Models\AspNetUserRole.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CommentReport.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AdminRepository.cs" />
     <Compile Include="Repositories\ArticleRepository.cs" />
     <Compile Include="Repositories\ArticleLikeRepository.cs" />
     <Compile Include="Repositories\CommentRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -122,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010252031307_AddedUserRelatedFields.resx">
       <DependentUpon>202010252031307_AddedUserRelatedFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010281115527_UserDetails2.resx">
+      <DependentUpon>202010281115527_UserDetails2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

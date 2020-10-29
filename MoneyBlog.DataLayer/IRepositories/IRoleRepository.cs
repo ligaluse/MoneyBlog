@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace MoneyBlog.DataLayer.IRepositories
 {
-   public interface IArticleLikeRepository
+   public interface IRoleRepository
     {
-        ArticleLike Get(int id, string email);
-        void SaveChanges();
-        ArticleLike LikeDislikeSave(ArticleLike articleLike);
-
+        List<Role> GetAll();
+        Role Get(int roleId);
+        Role Create(Role role);
     }
 }

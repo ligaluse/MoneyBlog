@@ -154,7 +154,7 @@ namespace MoneyBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole_Id = "d5ffaa68-3952-47fe-a0dd-6f322747f062" };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole_Id = 3 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

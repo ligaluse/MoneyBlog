@@ -39,6 +39,15 @@ namespace MoneyBlog.Services.Service
         {
             _adminRepository.Delete(id);
         }
-      
+        public AspNetUser EditUser(AspNetUser aspNetUser)
+        {
+            var userForEditing = Get(aspNetUser.Id);
+
+            userForEditing.UserRole_Id = aspNetUser.UserRole_Id;
+
+            Update(userForEditing);
+
+            return aspNetUser;
+        }
     }
 }

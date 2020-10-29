@@ -53,7 +53,11 @@ namespace MoneyBlog.Web.Controllers
         [HttpGet]
         public ActionResult Article(int Id)
         {
-            GetArticleViewModel model = new GetArticleViewModel(); 
+            GetArticleViewModel model = new GetArticleViewModel();
+            //model.AspNetUser.Id = User.Identity.GetUserId();
+            //var role = 
+
+
             model.Article = _articleService.Get(Id);
             model.Comments = _commentService.GetAllArticle(Id);
             

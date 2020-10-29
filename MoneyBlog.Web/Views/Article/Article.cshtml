@@ -17,10 +17,13 @@
 
 @Html.ActionLink("Dislike", "Dislike", new { id = Model.Article.Id, email = Model.Article.Email })
 
-<p>Leave a comment:</p>
-<input id="Comment" class="form-control" placeholder="write your comment here" rows="3" />
-<input type="hidden" id="ArticleId" value="@Model.Article.Id" />
-<button class="btn btn-success" id="buttonComment" value="Post" type="button">Click here to post</button>
+
+    <p>Leave a comment:</p>
+    <input id="Comment" class="form-control" placeholder="write your comment here" rows="3" />
+    <input type="hidden" id="ArticleId" value="@Model.Article.Id" />
+    <button class="btn btn-success" id="buttonComment" value="Post" type="button">Click here to post</button>
+
+
 
 
 @if (Model.Comments != null && Model.Comments.Count > 0)
