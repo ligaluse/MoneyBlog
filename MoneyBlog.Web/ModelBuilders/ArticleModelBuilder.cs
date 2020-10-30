@@ -11,12 +11,14 @@ namespace MoneyBlog.Web.ModelBuilders
         public IArticleService _articleService;
         public ICommentService _commentService;
         public IRoleService _roleService;
+        public IAdminService _adminService;
 
-        public ArticleModelBuilder(ArticleService articleService, CommentService commentService, RoleService roleService)
+        public ArticleModelBuilder(ArticleService articleService, CommentService commentService, RoleService roleService, AdminService adminService)
         {
             _articleService = articleService;
             _commentService = commentService;
             _roleService = roleService;
+            _adminService = adminService;
         }
         public GetArticleViewModel BuildArticleModel(int id)
         {
@@ -28,9 +30,9 @@ namespace MoneyBlog.Web.ModelBuilders
             GetArticleViewModel model = new GetArticleViewModel();
             model.Article = article;
             model.Comments = comments;
-            //model.AspNetUser.Email = user;
-            //model.AspNetUser.UserRole_Id = Convert.ToInt32(_roleService.Get(user).Id);
-            
+            //model.AspNetUser.Email = _adminService.Get(user).Email;
+            //model.AspNetUser.UserRole_Id = _roleService.Get(model.AspNetUser.Email).Id;
+
 
             return model;
 

@@ -20,7 +20,6 @@ namespace MoneyBlog.Services.IService
         void Delete(int id);
         void Update(Article article);
         Article EditModel(HttpPostedFileBase file, Article article);
-        //void CreateArticle(string title, string description, string email, byte[] image, DateTime createdOn);
         Article Create(string title, string description, byte[] image, string email, int likeCount, int dislikeCount);
 
     }

@@ -9,7 +9,7 @@ namespace MoneyBlog.DataLayer.Repositories
     public class AdminRepository : IAdminRepository
     {
         readonly DefaultConnection db = new DefaultConnection();
-        readonly ApplicationUser applicationUser = new ApplicationUser();
+
         public List<AspNetUser> AspNetUsers()
         {
             List<AspNetUser> AspNetUsers = db.AspNetUsers.ToList();

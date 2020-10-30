@@ -10,7 +10,7 @@ namespace MoneyBlog.Services.Service
 {
     public class CommentService : ICommentService
     {
-        private ICommentRepository _commentRepository;
+        private readonly ICommentRepository _commentRepository;
 
         public CommentService(CommentRepository commentRepository)
         {

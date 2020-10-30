@@ -1,5 +1,4 @@
-﻿using MoneyBlog.DataLayer;
-using MoneyBlog.DataLayer.IRepositories;
+﻿using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
 using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services.IService;
@@ -9,17 +8,13 @@ namespace MoneyBlog.Services.Service
     public class ArticleLikeService : IArticleLikeService
     {
         public IArticleLikeRepository _articleLikeRepository;
-        public ICommentService _commentService;
         public IArticleService _articleService;
-        public DefaultConnection _db;
 
         public ArticleLikeService(ArticleLikeRepository articleLikeRepository,
-        CommentService commentService, ArticleService articleService, DefaultConnection db)
+        ArticleService articleService)
         {
             _articleLikeRepository = articleLikeRepository;
-            _commentService = commentService;
             _articleService = articleService;
-            _db = db;
         }
 
         public ArticleLike Get(int id, string email)
@@ -38,20 +33,19 @@ namespace MoneyBlog.Services.Service
             _articleLikeRepository.LikeDislikeSave(articleLike);
             return articleLike;
         }
-        public void UpdateWithLike(int id, string email)
+        public void UpdateWithLike(Article article)
         {
-            Article update = _articleService.Get(id);
+            Article update = _articleService.Get(article.Id);
             update.LikeCount += 1;
-            IsLiked(id, email);
-            _articleLikeRepository.SaveChanges();
+            IsLiked(article.Id, article.Email);
+            _articleService.Update(update);
         }
-        public void UpdateWithDislike(int id, string email)
+        public void UpdateWithDislike(Article article)
         {
-            Article update = _articleService.Get(id);
+            Article update = _articleService.Get(article.Id);
             update.DislikeCount += 1;
-            IsDisliked(id, email);
-            //_articleLikeRepository.SaveChanges();
-            _db.SaveChanges();
+            IsDisliked(article.Id, article.Email);
+            _articleService.Update(update);
         }
         public ArticleLike IsDisliked(int id, string email)
         {

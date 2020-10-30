@@ -136,18 +136,7 @@ namespace MoneyBlog.Web.Controllers
             }
             return RedirectToAction("Index", "Article");
         }
-        public ActionResult Like(int id)
-        {
-            var email = User.Identity.GetUserName();
-            var articleLike = _articleLikeService.Get(id, email);
-            if (articleLike == null)
-            {
-                _articleLikeService.UpdateWithLike(id, email);
-            }
-
-            return RedirectToAction("Index", "Article");
-        }
-        public ActionResult Dislike(int id)
+        public ActionResult Like(int id, Article article)
         {
             var email = User.Identity.GetUserName();
             var articleLike = _articleLikeService.Get(id, email);
@@ -157,7 +146,22 @@ namespace MoneyBlog.Web.Controllers
             }
             else
             {
-                _articleLikeService.UpdateWithDislike(id, email);
+                _articleLikeService.UpdateWithLike(article);
+            }
+
+            return RedirectToAction("Index", "Article");
+        }
+        public ActionResult Dislike(int id, Article article)
+        {
+            var email = User.Identity.GetUserName();
+            var articleLike = _articleLikeService.Get(id, email);
+            if (articleLike != null)
+            {
+                ModelState.AddModelError("error", "you already voted");
+            }
+            else
+            {
+                _articleLikeService.UpdateWithDislike(article);
             }
             return RedirectToAction("Index", "Article");
         }

@@ -13,12 +13,10 @@ namespace MoneyBlog.Services.Service
     public class ArticleService : IArticleService
     {
         public IArticleRepository _articleRepository;
-        public ICommentService _commentService;
 
-        public ArticleService(ArticleRepository articleRepository, CommentService commentService)
+        public ArticleService(ArticleRepository articleRepository)
         {
             _articleRepository = articleRepository;
-            _commentService = commentService;
         }
         public List<Article> GetAll()
         {
