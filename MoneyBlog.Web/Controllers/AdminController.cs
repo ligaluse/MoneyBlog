@@ -6,10 +6,10 @@ using MoneyBlog.Services.Service;
 using MoneyBlog.Web.ModelBuilders;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace MoneyBlog.Web.Controllers
 {
-    [Authorize(Roles = AdminConstants.AdminRole)]
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;

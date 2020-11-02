@@ -3,6 +3,7 @@ using MoneyBlog.Services.IService;
 using MoneyBlog.Services.Service;
 using MoneyBlog.Web.ViewModels;
 using System.Collections.Generic;
+using System;
 
 namespace MoneyBlog.Web.ModelBuilders
 {
@@ -21,21 +22,22 @@ namespace MoneyBlog.Web.ModelBuilders
             _roleService = roleService;
             _adminService = adminService;
         }
-        public GetArticleViewModel BuildArticleModel(int id)
+        public GetArticleViewModel BuildArticleModel(int id, string userId)
         {
             var article = _articleService.Get(id);
-            var user = System.Web.HttpContext.Current.User.Identity.Name;
+            var user = _adminService.Get(userId);
 
             List <Comment> comments = _commentService.GetAllForArticle(id);
 
             GetArticleViewModel model = new GetArticleViewModel();
             model.Article = article;
             model.Comments = comments;
-            model.AspNetUser = _adminService.Get(user);
-            if(model.AspNetUser.UserRole_Id > 1)
-            {
+            model.AspNetUser = user;
+            //model.AspNetUser = _adminService.Get(user);
+            //if(model.AspNetUser.UserRole_Id > 1)
+            //{
 
-            }
+            //}
             //model.AspNetUser.Email = _adminService.Get(user).Email;
             //model.AspNetUser.UserRole_Id = _roleService.Get(model.AspNetUser.Email).Id;
 

@@ -14,10 +14,11 @@
 <p>@Model.Article.Description</p>
 <p>Author: @Model.Article.Email</p>
 
+@if (Model.AspNetUser != null)
+        {
+            Html.ActionLink("Like", "Like", new { id = Model.Article.Id, email = Model.Article.Email });
 
-@Html.ActionLink("Like", "Like", new { id = Model.Article.Id, email = Model.Article.Email })
-
-@Html.ActionLink("Dislike", "Dislike", new { id = Model.Article.Id, email = Model.Article.Email })
+            Html.ActionLink("Dislike", "Dislike", new { id = Model.Article.Id, email = Model.Article.Email });
 
 
     <p>Leave a comment:</p>
@@ -26,7 +27,7 @@
     <button class="btn btn-success" id="buttonComment" value="Post" type="button">Click here to post</button>
 
 
-
+}
 
 @if (Model.Comments != null && Model.Comments.Count > 0)
 {
@@ -36,12 +37,15 @@
         <small class="text-muted">
             Posted by @comment.Email on @comment.CreatedOn
         </small>
-        @Html.ActionLink("Report", "ReportComment", new { id = comment.Id })
+        if (Model.AspNetUser != null)
+        {
+            @Html.ActionLink("Report", "ReportComment", new { id = comment.Id })
+        }
     }
 }
 else
 {
-    <p>There are no comments on this article</p>
+    <p>There are no comments on this article </p>
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

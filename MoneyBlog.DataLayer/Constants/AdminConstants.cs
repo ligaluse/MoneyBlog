@@ -12,5 +12,7 @@ namespace MoneyBlog.DataLayer.Constants
         public const string AdminEmail = "gzibovska.liga@gmail.com";
         public const string AdminUserName = "gzibovska.liga@gmail.com";
         public const string AdminPassword = "Test1234!";
+        public const int AdminRoleId = 1;
+        public const int JuniorRoleId = 3;
     }
 }

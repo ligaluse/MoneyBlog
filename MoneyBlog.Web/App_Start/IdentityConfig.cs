@@ -10,11 +10,19 @@ using System.Configuration;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace MoneyBlog.Web
 {
+    public static class IdentityExtensions
+    {
+        public static int GetUserRoleId(this IIdentity identity)
+        {
+            return Convert.ToInt32(((ClaimsIdentity)identity).FindFirst("UserRole_Id").Value);
+        }
+    }
     public class EmailService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)

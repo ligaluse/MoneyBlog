@@ -56,11 +56,8 @@ namespace MoneyBlog.Web.Controllers
         [HttpGet]
         public ActionResult Article(int Id)
         {
-            //GetArticleViewModel model = new GetArticleViewModel();
-
-            //model.Article = _articleService.Get(Id);
-            //model.Comments = _commentService.GetAllArticle(Id);
-            var model = _articleModelBuilder.BuildArticleModel(Id);
+            var userId = User.Identity.GetUserId();
+            var model = _articleModelBuilder.BuildArticleModel(Id, userId);
            
             return View(model);
         }
@@ -86,7 +83,11 @@ namespace MoneyBlog.Web.Controllers
         [HttpGet]
         public ActionResult AddNewArticle()
         {
-            return View();
+            if(User.Identity.GetUserRoleId() != MoneyBlog.DataLayer.Constants.AdminConstants.JuniorRoleId)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Article");
         }
 
         [HttpPost]

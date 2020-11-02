@@ -1,18 +1,12 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MoneyBlog.DataLayer;
-using MoneyBlog.DataLayer.Models;
-using MoneyBlog.Web.ViewModels;
 using MoneyBlog.Web.ViewModels.AccountViewModels;
-using static MoneyBlog.Web.EmailService;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace MoneyBlog.Web.Controllers
 {
@@ -154,7 +148,7 @@ namespace MoneyBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole_Id = 3 };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole_Id = MoneyBlog.DataLayer.Constants.AdminConstants.JuniorRoleId };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

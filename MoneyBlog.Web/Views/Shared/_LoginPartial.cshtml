@@ -9,8 +9,15 @@
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
-        <li>@Html.ActionLink("My articles", "MyArticles", "Article")</li>
-        <li>@Html.ActionLink("Add new article", "AddNewArticle", "Article")</li>
+        @if (User.Identity.GetUserRoleId() != MoneyBlog.DataLayer.Constants.AdminConstants.JuniorRoleId)
+        {
+            <li>@Html.ActionLink("My articles", "MyArticles", "Article")</li>
+            <li>@Html.ActionLink("Add new article", "AddNewArticle", "Article")</li>
+        }
+        @if (User.Identity.GetUserRoleId() == MoneyBlog.DataLayer.Constants.AdminConstants.AdminRoleId)
+        {
+            <li>@Html.ActionLink("Admin", "UsersWithRoles", "Admin")</li>
+        }
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
     }
