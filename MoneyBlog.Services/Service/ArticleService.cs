@@ -43,6 +43,18 @@ namespace MoneyBlog.Services.Service
             }
             return articles;
         }
+        public List<Article> GetArticlesByNewestComment()
+        {
+            List<Article> articlesWithNewestComments = new List<Article>();
+            var newestComments = _commentService.GetNewest();
+            foreach(var comment in newestComments)
+            {
+                var article = _articleRepository.Get(comment.ArticleId);
+                articlesWithNewestComments.Add(article);
+            }
+
+            return articlesWithNewestComments.Take(3).ToList();
+        }
         public Article Get(int id)
         {
             return _articleRepository.Get(id);

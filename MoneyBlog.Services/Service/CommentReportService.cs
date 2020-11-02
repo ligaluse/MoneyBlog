@@ -37,8 +37,7 @@ namespace MoneyBlog.Services.Service
             {
                 CommentId = id,
                 Email = email,
-                Reported = true,
-                ReportedOn = DateTime.Now
+                Reported = true
             };
             _commentReportRepository.SaveReport(commentReport);
             return commentReport;

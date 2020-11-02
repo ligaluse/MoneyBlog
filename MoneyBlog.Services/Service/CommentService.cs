@@ -43,6 +43,10 @@ namespace MoneyBlog.Services.Service
         {
             return _commentRepository.GetAll();
         }
+        public List<Comment> GetNewest()
+        {
+            return _commentRepository.GetAll().OrderByDescending(x=>x.CreatedOn).ToList();
+        }
         public List<Comment> GetAllForArticle(int articleId)
         {
             return GetAll().Where(x => x.ArticleId == articleId).ToList();
@@ -61,6 +65,5 @@ namespace MoneyBlog.Services.Service
             }
             _commentRepository.Delete(id);
         }
-
     }
 }

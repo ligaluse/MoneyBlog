@@ -30,9 +30,9 @@ namespace MoneyBlog.Web.Controllers
             _roleService = roleService;
         }
 
-        public ActionResult UserDetails(string id, string email)
+        public ActionResult UserDetails(string id)
         {
-            var model = _modelBuilder.SingleUserDetailsBuild(id, email);
+            var model = _modelBuilder.SingleUserDetailsBuild(id);
             return View(model);
         }
 

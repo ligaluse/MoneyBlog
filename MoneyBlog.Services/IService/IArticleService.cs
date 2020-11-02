@@ -21,6 +21,6 @@ namespace MoneyBlog.Services.IService
         void Update(Article article);
         Article EditModel(HttpPostedFileBase file, Article article);
         Article Create(string title, string description, byte[] image, string email, int likeCount, int dislikeCount);
-
+        List<Article> GetArticlesByNewestComment();
     }
 }

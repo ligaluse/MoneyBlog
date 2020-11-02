@@ -11,5 +11,6 @@ namespace MoneyBlog.Services.IService
         List<Comment> GetAllForArticle(int articleId);
         void Delete(int id);
         List<Comment> GetByUser(string email);
+        List<Comment> GetNewest();
     }
 }

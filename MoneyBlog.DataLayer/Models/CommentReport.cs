@@ -13,6 +13,5 @@ namespace MoneyBlog.DataLayer.Models
         public string Email { get; set; }
         public bool Reported { get; set; }
         public string UserId { get; set; }
-        public DateTime ReportedOn { get; set; }
     }
 }

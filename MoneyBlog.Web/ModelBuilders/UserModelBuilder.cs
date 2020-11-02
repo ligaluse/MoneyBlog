@@ -13,17 +13,17 @@ namespace MoneyBlog.Web.ModelBuilders
         public IArticleService _articleService;
         public ICommentService _commentService;
 
-        public UserModelBuilder(AdminService adminService, RoleService roleService, ArticleService articleService, CommentService commentService)
+        public UserModelBuilder(AdminService adminService, RoleService roleService, 
+            ArticleService articleService, CommentService commentService)
         {
             _adminService = adminService;
             _roleService = roleService;
             _articleService = articleService;
             _commentService = commentService;
         }
-        public UserDetailsViewModel SingleUserDetailsBuild(string id, string email)
+        public UserDetailsViewModel SingleUserDetailsBuild(string id)
         {
             var UserDetailsViewModel = new UserDetailsViewModel();
-
 
             UserDetailsViewModel.UserId = _adminService.Get(id).Id;
             UserDetailsViewModel.Email = _adminService.Get(id).Email;
@@ -36,25 +36,12 @@ namespace MoneyBlog.Web.ModelBuilders
             return UserDetailsViewModel;
 
         }
-        public UserDetailsViewModel AllUserListBuild(string id)
-        {
-            var UserDetailsViewModel = new UserDetailsViewModel();
-
-            UserDetailsViewModel.UserId = _adminService.Get(id).Id;
-            UserDetailsViewModel.Email = _adminService.Get(id).Email;
-            UserDetailsViewModel.UserRole_Id = _adminService.Get(id).UserRole_Id;
-            //UserDetailsViewModel.RoleName = _adminService.GetUserRole(UserDetailsViewModel.UserRole_Id).Name;
-            UserDetailsViewModel.RoleName = _roleService.Get(UserDetailsViewModel.UserRole_Id).RoleName;
-   
-            return UserDetailsViewModel;
-
-        }
         public List<UserDetailsViewModel> BuildList()
         {
             List<UserDetailsViewModel> userList = new List<UserDetailsViewModel>();
             foreach(var user in _adminService.GetAll())
             {
-                userList.Add(AllUserListBuild(user.Id));
+                userList.Add(SingleUserDetailsBuild(user.Id));
             }
             return userList;
         }

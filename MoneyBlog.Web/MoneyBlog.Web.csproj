@@ -224,6 +224,7 @@
     <Compile Include="ViewModels\ArticlesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\GetAllArticlesViewModel.cs" />
     <Compile Include="ViewModels\GetArticleViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\ChangePasswordViewModel.cs" />

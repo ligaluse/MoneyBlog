@@ -13,6 +13,8 @@
 }
 <p>@Model.Article.Description</p>
 <p>Author: @Model.Article.Email</p>
+
+
 @Html.ActionLink("Like", "Like", new { id = Model.Article.Id, email = Model.Article.Email })
 
 @Html.ActionLink("Dislike", "Dislike", new { id = Model.Article.Id, email = Model.Article.Email })

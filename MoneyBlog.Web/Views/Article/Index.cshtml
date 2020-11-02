@@ -7,7 +7,7 @@
 {
     @Html.TextBox("searching") <input type="submit" value="Search"/>
 }
-
+<p>Last 5 articles:</p>
         @foreach (var article in Model.Articles)
         {
             <div class="col-sm-6 col-md-3">
@@ -17,17 +17,14 @@
                         <p>
                             <a href="@Url.Action("Article","Article",new { id = article.Id })">
                                 <br />
-
                                 <span>@article.Title</span>
                             </a>
                         </p>
                        @Html.DisplayFor(modelItem => article.LikeCount) <span class="glyphicon glyphicon-thumbs-up"></span>
                         @Html.DisplayFor(modelItem => article.DislikeCount) <span class="glyphicon glyphicon-thumbs-down"></span>
-                         
-
-
-
                     </div>
                 </div>
             </div>
         }
+<p>Last 3 commented articles</p>
+<p>top 3 articles by rank</p>
