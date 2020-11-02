@@ -6,7 +6,7 @@ namespace MoneyBlog.DataLayer.IRepositories
     {
         ArticleLike Get(int id, string email);
 
-        ArticleLike LikeDislikeSave(ArticleLike articleLike);
+        ArticleLike SaveLikeDislike(ArticleLike articleLike);
 
     }
 }

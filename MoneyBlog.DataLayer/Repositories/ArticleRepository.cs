@@ -8,7 +8,7 @@ namespace MoneyBlog.DataLayer.Repositories
 {
     public class ArticleRepository : IArticleRepository
     {
-        readonly DefaultConnection _db;
+       private readonly DefaultConnection _db;
         public ArticleRepository(DefaultConnection db)
         {
             _db = db;
@@ -38,9 +38,9 @@ namespace MoneyBlog.DataLayer.Repositories
         }
         public byte[] GetImageFromDataBase(int Id)
         {
-            var q = from temp in _db.Articles where temp.Id == Id select temp.Image;
-            byte[] cover = q.First();
-            return cover;
+            var image = from temp in _db.Articles where temp.Id == Id select temp.Image;
+            byte[] convertedImage = image.First();
+            return convertedImage;
         }
         public void Delete(int id)
         {

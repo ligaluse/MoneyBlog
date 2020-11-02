@@ -84,11 +84,11 @@
     <Compile Include="Constants\DataConstants.cs" />
     <Compile Include="DefaultConnection.cs" />
     <Compile Include="Constants\AdminConstants.cs" />
-    <Compile Include="Constants\FormConstants.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="IRepositories\IAdminRepository.cs" />
     <Compile Include="IRepositories\IArticleRepository.cs" />
     <Compile Include="IRepositories\IArticleLikeRepository.cs" />
+    <Compile Include="IRepositories\ICommentReportRepository.cs" />
     <Compile Include="IRepositories\ICommentRepository.cs" />
     <Compile Include="IRepositories\IRoleRepository.cs" />
     <Compile Include="Migrations\202010252028107_InitialCreate.cs" />
@@ -106,9 +106,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleLike.cs" />
-    <Compile Include="Models\AspNetRole.cs" />
     <Compile Include="Models\AspNetUser.cs" />
-    <Compile Include="Models\AspNetUserRole.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CommentReport.cs" />
     <Compile Include="Models\Role.cs" />
@@ -116,6 +114,7 @@
     <Compile Include="Repositories\AdminRepository.cs" />
     <Compile Include="Repositories\ArticleRepository.cs" />
     <Compile Include="Repositories\ArticleLikeRepository.cs" />
+    <Compile Include="Repositories\CommentReportRepository.cs" />
     <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
   </ItemGroup>

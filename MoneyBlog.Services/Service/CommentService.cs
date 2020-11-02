@@ -11,10 +11,15 @@ namespace MoneyBlog.Services.Service
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository;
+        private readonly ICommentReportRepository _commentReportRepository;
+        private readonly ICommentReportService _commentReportService;
 
-        public CommentService(CommentRepository commentRepository)
+        public CommentService(CommentRepository commentRepository, CommentReportRepository commentReportRepository,
+            CommentReportService commentReportService)
         {
             _commentRepository = commentRepository;
+            _commentReportRepository = commentReportRepository;
+            _commentReportService = commentReportService;
         }
         public Comment Create(int articleId, string userId, string email, string body)
         {
@@ -38,45 +43,24 @@ namespace MoneyBlog.Services.Service
         {
             return _commentRepository.GetAll();
         }
-        public List<Comment> GetAllArticle(int articleId)
+        public List<Comment> GetAllForArticle(int articleId)
         {
-            return _commentRepository.GetAllArticle(articleId);
+            return GetAll().Where(x => x.ArticleId == articleId).ToList();
         }
         public List<Comment> GetByUser(string email)
         {
             var userComments = _commentRepository.GetAll().Where(u => u.Email == email).ToList();
             return userComments;
         }
-        public CommentReport GetReport(int id, string email)
-        {
-            return _commentRepository.GetReport(id, email);
-        }
-        public CommentReport IsReported(int id, string email)
-        {
-            CommentReport commentReport = new CommentReport()
-            {
-                CommentId = id,
-                Email = email,
-                Report = true,
-                ReportedOn = DateTime.Now
-            };
-            _commentRepository.SaveReport(commentReport);
-            return commentReport;
-        }
-        public void UpdateWithReport(int id, string email)
-        {
-            Comment update = Get(id);
-            update.ReportCount += 1;
-            IsReported(id, email);
-            _commentRepository.SaveChanges();
-        }
         public void Delete(int id)
         {
+            var reportToDelete = _commentReportService.GetAllForComment(id);
+            foreach(var report in reportToDelete)
+            {
+                _commentReportService.DeleteReport(report.Id);
+            }
             _commentRepository.Delete(id);
         }
-        public void DeleteReport(int id)
-        {
-            _commentRepository.Delete(id);
-        }
+
     }
 }

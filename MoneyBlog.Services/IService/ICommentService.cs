@@ -8,12 +8,8 @@ namespace MoneyBlog.Services.IService
         Comment Create(int articleId, string userId, string email, string body);
         Comment Get(int id);
         List<Comment> GetAll();
-        List<Comment> GetAllArticle(int articleId);
-        CommentReport GetReport(int id, string email);
-        CommentReport IsReported(int id, string email);
-        void UpdateWithReport(int id, string email);
+        List<Comment> GetAllForArticle(int articleId);
         void Delete(int id);
-        void DeleteReport(int id);
         List<Comment> GetByUser(string email);
     }
 }

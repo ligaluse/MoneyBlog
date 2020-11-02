@@ -3,19 +3,8 @@
     ViewBag.Title = "AddNewArticle";
 }
 
-<script src="~/ckeditor/ckeditor.js"></script>
-<script src="~/ckeditor/adapters/jquery.js"></script>
-
 <h2>Add new article</h2>
 
-<script type="text/javascript">
-    function fileCheck(obj) {
-        var fileExtension = ['jpeg', 'jpg', 'png'];
-        if ($.inArray($(obj).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-            alert("Only '.jpeg','.jpg', '.png', formats are allowed.");
-        }
-    }
-</script>
 
 @using (Html.BeginForm("AddNewArticle", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

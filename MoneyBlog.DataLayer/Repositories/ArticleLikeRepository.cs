@@ -6,7 +6,7 @@ namespace MoneyBlog.DataLayer.Repositories
 {
     public class ArticleLikeRepository : IArticleLikeRepository
     {
-        readonly DefaultConnection _db;
+        private readonly DefaultConnection _db;
         public ArticleLikeRepository(DefaultConnection db)
         {
             _db = db;
@@ -16,7 +16,7 @@ namespace MoneyBlog.DataLayer.Repositories
             var articleLike = _db.ArticleLikes.Where(x => x.Email == email && x.Article_Id == id).FirstOrDefault();
             return articleLike;
         }
-        public ArticleLike LikeDislikeSave(ArticleLike articleLike)
+        public ArticleLike SaveLikeDislike(ArticleLike articleLike)
         {
             _db.ArticleLikes.Add(articleLike);
             _db.SaveChanges();

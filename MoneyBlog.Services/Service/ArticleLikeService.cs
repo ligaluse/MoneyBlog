@@ -7,8 +7,8 @@ namespace MoneyBlog.Services.Service
 {
     public class ArticleLikeService : IArticleLikeService
     {
-        public IArticleLikeRepository _articleLikeRepository;
-        public IArticleService _articleService;
+        private readonly IArticleLikeRepository _articleLikeRepository;
+        private readonly IArticleService _articleService;
 
         public ArticleLikeService(ArticleLikeRepository articleLikeRepository,
         ArticleService articleService)
@@ -21,7 +21,7 @@ namespace MoneyBlog.Services.Service
         {
             return _articleLikeRepository.Get(id, email);
         }
-        public ArticleLike IsLiked(int id, string email)
+        public ArticleLike IsArticleLiked(int id, string email)
         {
             ArticleLike articleLike = new ArticleLike()
             {
@@ -30,24 +30,24 @@ namespace MoneyBlog.Services.Service
                 Dislike = false,
                 Like = true,
             };
-            _articleLikeRepository.LikeDislikeSave(articleLike);
+            _articleLikeRepository.SaveLikeDislike(articleLike);
             return articleLike;
         }
-        public void UpdateWithLike(Article article)
+        public void UpdateArticleWithLike(Article article)
         {
             Article update = _articleService.Get(article.Id);
             update.LikeCount += 1;
-            IsLiked(article.Id, article.Email);
+            IsArticleLiked(article.Id, article.Email);
             _articleService.Update(update);
         }
-        public void UpdateWithDislike(Article article)
+        public void UpdateArticleWithDislike(Article article)
         {
             Article update = _articleService.Get(article.Id);
             update.DislikeCount += 1;
-            IsDisliked(article.Id, article.Email);
+            IsArticleDisliked(article.Id, article.Email);
             _articleService.Update(update);
         }
-        public ArticleLike IsDisliked(int id, string email)
+        public ArticleLike IsArticleDisliked(int id, string email)
         {
             ArticleLike articleLike = new ArticleLike()
             {
@@ -56,7 +56,7 @@ namespace MoneyBlog.Services.Service
                 Dislike = true,
                 Like = false,
             };
-            _articleLikeRepository.LikeDislikeSave(articleLike);
+            _articleLikeRepository.SaveLikeDislike(articleLike);
             return articleLike;
         }
     }

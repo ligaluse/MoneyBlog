@@ -16,16 +16,19 @@ namespace MoneyBlog.Web.Controllers
         private readonly IArticleLikeService _articleLikeService;
         private readonly ArticleModelBuilder _articleModelBuilder;
         private readonly ICommentService _commentService;
+        private readonly ICommentReportService _commentReportService;
         private readonly IAdminService _adminService;
 
         public ArticleController
-        (ArticleService articleService,ArticleLikeService articleLikeService, 
-        ArticleModelBuilder articleModelBuilder,CommentService commentService,AdminService adminService)
+        (ArticleService articleService, ArticleLikeService articleLikeService, 
+        ArticleModelBuilder articleModelBuilder,CommentService commentService,
+        CommentReportService commentReportService, AdminService adminService)
         {
             _articleService = articleService;
             _articleLikeService = articleLikeService;
             _articleModelBuilder = articleModelBuilder;
             _commentService = commentService;
+            _commentReportService = commentReportService;
             _adminService = adminService;
         }
 
@@ -129,10 +132,10 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult ReportComment(int id)
         {
             var email = User.Identity.GetUserName();
-            var commentReport = _commentService.GetReport(id, email);
+            var commentReport = _commentReportService.GetReport(id, email);
             if (commentReport == null)
             {
-                _commentService.UpdateWithReport(id, email);
+                _commentReportService.UpdateCommentWithReport(id, email);
             }
             return RedirectToAction("Index", "Article");
         }
@@ -146,7 +149,7 @@ namespace MoneyBlog.Web.Controllers
             }
             else
             {
-                _articleLikeService.UpdateWithLike(article);
+                _articleLikeService.UpdateArticleWithLike(article);
             }
 
             return RedirectToAction("Index", "Article");
@@ -161,7 +164,7 @@ namespace MoneyBlog.Web.Controllers
             }
             else
             {
-                _articleLikeService.UpdateWithDislike(article);
+                _articleLikeService.UpdateArticleWithDislike(article);
             }
             return RedirectToAction("Index", "Article");
         }

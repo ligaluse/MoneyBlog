@@ -25,7 +25,7 @@ namespace MoneyBlog.Web.ModelBuilders
             var article = _articleService.Get(id);
             var user = System.Web.HttpContext.Current.User.Identity.Name;
 
-            List <Comment> comments = _commentService.GetAllArticle(id);
+            List <Comment> comments = _commentService.GetAllForArticle(id);
 
             GetArticleViewModel model = new GetArticleViewModel();
             model.Article = article;

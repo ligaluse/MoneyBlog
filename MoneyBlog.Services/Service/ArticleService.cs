@@ -1,4 +1,5 @@
-﻿using MoneyBlog.DataLayer.IRepositories;
+﻿using MoneyBlog.DataLayer.Constants;
+using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
 using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services.IService;
@@ -12,11 +13,13 @@ namespace MoneyBlog.Services.Service
 {
     public class ArticleService : IArticleService
     {
-        public IArticleRepository _articleRepository;
+        private readonly IArticleRepository _articleRepository;
+        private readonly ICommentService _commentService;
 
-        public ArticleService(ArticleRepository articleRepository)
+        public ArticleService(ArticleRepository articleRepository, CommentService commentService)
         {
             _articleRepository = articleRepository;
+            _commentService = commentService;
         }
         public List<Article> GetAll()
         {
@@ -69,6 +72,11 @@ namespace MoneyBlog.Services.Service
         }
         public void Delete(int id)
         {
+            var commentToDelete = _commentService.GetAllForArticle(id);
+            foreach(var comment in commentToDelete)
+            {
+                _commentService.Delete(comment.Id);
+            }
             _articleRepository.Delete(id);
         }
         public void Update(Article article)
@@ -85,8 +93,8 @@ namespace MoneyBlog.Services.Service
 
         private bool IsImageValid (HttpPostedFileBase file)
         {
-            string permittedType = "image/jpg,image/jpeg,image/png";
-            int permittedSizeInBytes = 40000;
+            string permittedType = DataConstants.PermittedImageTypes;
+            int permittedSizeInBytes = DataConstants.PermittedImageSize;
             if (file.ContentLength > permittedSizeInBytes)
             {
                 if (permittedType.Split(",".ToCharArray()).Contains(file.ContentType))

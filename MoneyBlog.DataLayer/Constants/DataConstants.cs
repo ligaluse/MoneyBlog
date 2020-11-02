@@ -10,5 +10,8 @@ namespace MoneyBlog.DataLayer.Constants
     {
         public const string Deleted = "Data deleted!";
         public const string Updated = "Data Updated";
+        public const string PermittedImageTypes = "image/jpg,image/jpeg,image/png";
+        public const int PermittedImageSize = 40000;
+
     }
 }

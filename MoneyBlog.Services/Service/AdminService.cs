@@ -1,5 +1,4 @@
-﻿using MoneyBlog.DataLayer;
-using MoneyBlog.DataLayer.IRepositories;
+﻿using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
 using MoneyBlog.DataLayer.Repositories;
 using MoneyBlog.Services.IService;
@@ -9,24 +8,19 @@ namespace MoneyBlog.Services.Service
 {
     public class AdminService : IAdminService
     {
-        public IAdminRepository _adminRepository;
+        private readonly IAdminRepository _adminRepository;
 
         public AdminService(AdminRepository adminRepository)
         {
             _adminRepository = adminRepository;
         }
-        ApplicationDbContext context = new ApplicationDbContext();
-        public List<AspNetUser> AspNetUsers()
+        public List<AspNetUser> GetAll()
         {
-            return _adminRepository.AspNetUsers();
+            return _adminRepository.GetAll();
         }
         public AspNetUser Get(string id)
         {
             return _adminRepository.Get(id);
-        }
-        public AspNetRole GetUserRole(string id)
-        {
-            return _adminRepository.GetUserRole(id);
         }
         public void Update(AspNetUser aspNetUser)
         {

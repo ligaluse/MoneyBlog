@@ -26,7 +26,5 @@ namespace MoneyBlog.DataLayer.Models
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
         public int UserRole_Id { get; set; }
-
-
     }
 }

@@ -13,23 +13,26 @@ namespace MoneyBlog.Web.Controllers
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;
-        readonly DefaultConnection db = new DefaultConnection();
+       private readonly DefaultConnection _db;
         private readonly UserModelBuilder _modelBuilder;
         private readonly ICommentService _commentService;
+        private readonly ICommentReportService _commentReportService;
         private readonly IRoleService _roleService;
         public AdminController
-            (AdminService adminService, UserModelBuilder userModelBuilder, 
-            CommentService commentService, RoleService roleService)
+            (AdminService adminService, DefaultConnection db, UserModelBuilder userModelBuilder, 
+            CommentService commentService, CommentReportService commentReportService, RoleService roleService)
         {
             _adminService = adminService;
+            _db = db;
             _modelBuilder = userModelBuilder;
             _commentService = commentService;
+            _commentReportService = commentReportService;
             _roleService = roleService;
         }
 
         public ActionResult UserDetails(string id, string email)
         {
-            var model = _modelBuilder.UserDetailsBuilder(id, email);
+            var model = _modelBuilder.SingleUserDetailsBuild(id, email);
             return View(model);
         }
 
@@ -45,9 +48,7 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult EditUser(AspNetUser user)
         {
             var aspNetUser = _adminService.EditUser(user);
-    
             return RedirectToAction("UsersWithRoles", "Admin");
-
         }
         public ActionResult Delete(string id)
         {
@@ -62,9 +63,7 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult CreateUserRole(Role role)
         {
-           
             _roleService.Create(role.RoleName);
-
             return View(role);
         }
 
@@ -95,9 +94,8 @@ namespace MoneyBlog.Web.Controllers
         }
         public ActionResult DeleteReport(int id)
         {
-            _commentService.DeleteReport(id);
+            _commentReportService.DeleteReport(id);
             return RedirectToAction("ReportedComments", "Admin");
         }
-
     }
 }

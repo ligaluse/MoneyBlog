@@ -11,7 +11,7 @@ namespace MoneyBlog.DataLayer.Repositories
     public class RoleRepository : IRoleRepository
 
     {
-        readonly DefaultConnection _db;
+        private readonly DefaultConnection _db;
         public RoleRepository(DefaultConnection db)
         {
             _db = db;
@@ -27,12 +27,10 @@ namespace MoneyBlog.DataLayer.Repositories
             var role = _db.Role.FirstOrDefault(i => i.Id == roleId);
             return role;
         }
-
         public Role Create(Role role)
         {
             _db.Role.Add(role);
             _db.SaveChanges();
-
             return role;
         }
     }

@@ -8,33 +8,30 @@ namespace MoneyBlog.DataLayer.Repositories
 {
     public class AdminRepository : IAdminRepository
     {
-        readonly DefaultConnection db = new DefaultConnection();
-
-        public List<AspNetUser> AspNetUsers()
+        private readonly DefaultConnection _db;
+        public AdminRepository(DefaultConnection db)
         {
-            List<AspNetUser> AspNetUsers = db.AspNetUsers.ToList();
+            _db = db;
+        }
+        public List<AspNetUser>GetAll()
+        {
+            List<AspNetUser> AspNetUsers = _db.AspNetUsers.ToList();
             return AspNetUsers;
         }
         public AspNetUser Get(string id)
         {
-            var user = db.AspNetUsers.FirstOrDefault(i => i.Id == id);
+            var user = _db.AspNetUsers.FirstOrDefault(i => i.Id == id);
             return user;
         }
         public void Update(AspNetUser aspNetUser)
         {
-           db.AspNetUsers.AddOrUpdate(aspNetUser);
-           db.SaveChanges();
+           _db.AspNetUsers.AddOrUpdate(aspNetUser);
+           _db.SaveChanges();
         }
         public void Delete(string id)
         {
-            db.AspNetUsers.Remove(db.AspNetUsers.Find(id));
-            db.SaveChanges();
+            _db.AspNetUsers.Remove(_db.AspNetUsers.Find(id));
+            _db.SaveChanges();
         }
-        public AspNetRole GetUserRole(string id)
-        {
-            var role = db.AspNetRoles.FirstOrDefault(i => i.Id == id);
-            return role;
-        }
-
     }
 }

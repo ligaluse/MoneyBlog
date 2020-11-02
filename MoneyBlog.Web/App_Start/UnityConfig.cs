@@ -30,6 +30,9 @@ namespace MoneyBlog.Web
             container.RegisterType<MoneyBlog.DataLayer.IRepositories.IRoleRepository, MoneyBlog.DataLayer.Repositories.RoleRepository>();
             container.RegisterType<MoneyBlog.Services.IService.IRoleService, MoneyBlog.Services.Service.RoleService>();
 
+            container.RegisterType<MoneyBlog.DataLayer.IRepositories.ICommentReportRepository, MoneyBlog.DataLayer.Repositories.CommentReportRepository>();
+            container.RegisterType<MoneyBlog.Services.IService.ICommentReportService, MoneyBlog.Services.Service.CommentReportService>();
+
 
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());

@@ -8,11 +8,7 @@ namespace MoneyBlog.DataLayer.IRepositories
         Comment Create(Comment comment);
         Comment Get(int id);
         List<Comment> GetAll();
-        List<Comment> GetAllArticle(int articleId);
-        CommentReport GetReport(int id, string email);
-        void SaveChanges();
-        CommentReport SaveReport(CommentReport commentReport);
         void Delete(int id);
-        void DeleteReport(int id);
+        void UpdateComment();
     }
 }

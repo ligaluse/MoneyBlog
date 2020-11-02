@@ -20,14 +20,15 @@ namespace MoneyBlog.Web.ModelBuilders
             _articleService = articleService;
             _commentService = commentService;
         }
-        public UserDetailsViewModel UserDetailsBuilder(string id, string email)
+        public UserDetailsViewModel SingleUserDetailsBuild(string id, string email)
         {
             var UserDetailsViewModel = new UserDetailsViewModel();
+
 
             UserDetailsViewModel.UserId = _adminService.Get(id).Id;
             UserDetailsViewModel.Email = _adminService.Get(id).Email;
             UserDetailsViewModel.UserRole_Id = _adminService.Get(id).UserRole_Id;
-            //UserDetailsViewModel.RoleName = _adminService.GetUserRole(UserDetailsViewModel.UserRole_Id).Name;
+
             UserDetailsViewModel.RoleName = _roleService.Get(UserDetailsViewModel.UserRole_Id).RoleName;
             UserDetailsViewModel.Articles = _articleService.GetByUser(UserDetailsViewModel.Email);
             UserDetailsViewModel.Comments = _commentService.GetByUser(UserDetailsViewModel.Email);
@@ -35,7 +36,7 @@ namespace MoneyBlog.Web.ModelBuilders
             return UserDetailsViewModel;
 
         }
-        public UserDetailsViewModel UserDetailsBuild(string id)
+        public UserDetailsViewModel AllUserListBuild(string id)
         {
             var UserDetailsViewModel = new UserDetailsViewModel();
 
@@ -51,9 +52,9 @@ namespace MoneyBlog.Web.ModelBuilders
         public List<UserDetailsViewModel> BuildList()
         {
             List<UserDetailsViewModel> userList = new List<UserDetailsViewModel>();
-            foreach(var user in _adminService.AspNetUsers())
+            foreach(var user in _adminService.GetAll())
             {
-                userList.Add(UserDetailsBuild(user.Id));
+                userList.Add(AllUserListBuild(user.Id));
             }
             return userList;
         }

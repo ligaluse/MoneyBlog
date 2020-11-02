@@ -5,9 +5,8 @@ namespace MoneyBlog.DataLayer.IRepositories
 {
     public interface IAdminRepository
     {
-        List<AspNetUser> AspNetUsers();
+        List<AspNetUser> GetAll();
         AspNetUser Get(string id);
-        AspNetRole GetUserRole(string id);
         void Update(AspNetUser aspNetUser);
         void Delete(string id);
     }
