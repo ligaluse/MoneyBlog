@@ -71,11 +71,10 @@ namespace MoneyBlog.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateComment(int articleId, string userId, string email, string comment)
+        public ActionResult CreateComment(int articleId, string comment)
         {
-            //userid un email prom
-            userId = User.Identity.GetUserId();
-            email = User.Identity.GetUserName();
+            var userId = User.Identity.GetUserId();
+            var email = User.Identity.GetUserName();
             
             _commentService.Create(articleId, userId, email, comment);
 
@@ -113,7 +112,12 @@ namespace MoneyBlog.Web.Controllers
             var editArticle = _articleService.EditModel(file, article);
             return View(editArticle);
         }
-        
+        public ActionResult DeleteComment(int id)
+        {
+            _commentService.Delete(id);
+            return RedirectToAction("Index", "Article");
+        }
+
         public ActionResult Delete(int id)
         {
             _articleService.Delete(id);
