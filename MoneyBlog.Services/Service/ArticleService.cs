@@ -29,10 +29,15 @@ namespace MoneyBlog.Services.Service
         {
             return _articleRepository.GetImageFromDataBase(Id);
         }
-        public List<Article> GetFirst()
+        public List<Article> GetNewest()
         {
             return _articleRepository.GetAll().OrderByDescending(i => i.CreatedOn)
             .Take(5).ToList(); 
+        }
+        public List<Article> GetTopArticles()
+        {
+            return _articleRepository.GetAll().OrderByDescending(i => i.LikeCount)
+            .Take(3).ToList();
         }
         public List<Article> GetByName(string searching)
         {
@@ -65,9 +70,13 @@ namespace MoneyBlog.Services.Service
             return userArticles;
         }
         public Article Create
-            (string title, string description, byte[] image, string email, int likeCount, int dislikeCount)
+            ( string title, string description, string email, int likeCount, int dislikeCount, HttpPostedFileBase file)
         {
-            //if (image != null && IsImageValid(im))
+           var image = ConvertToBytes(file);
+            if (image != null && IsImageValid(file))
+            {
+
+            }
                 Article article = new Article()
             {
                 Title = title,

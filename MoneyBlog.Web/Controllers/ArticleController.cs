@@ -34,12 +34,13 @@ namespace MoneyBlog.Web.Controllers
 
         public ActionResult Index()
         {
-            var articles = _articleService.GetFirst();
-            
-            var model = new ArticlesViewModel()
-            {
-                Articles = articles
-            };
+            var model = _articleModelBuilder.GetArticlesByPropertyBuild();
+            //var articles = _articleService.GetNewest();
+
+            //var model = new ArticlesViewModel()
+            //{
+            //    Articles = articles
+            //};
 
             return View(model);
         }
@@ -47,10 +48,11 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult Index(string searching)
         {
             var articles = _articleService.GetByName(searching);
-            var model = new ArticlesViewModel()
-            {
-                Articles = articles
-            };
+            var model = _articleModelBuilder.GetArticlesByPropertyBuild();
+            //var model = new ArticlesViewModel()
+            //{
+            //    Articles = articles
+            //};
             return View(model);
         }
         [HttpGet]
@@ -93,15 +95,9 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult AddNewArticle(HttpPostedFileBase file, Article article)
         {
-            //japievieno validators, kaa?
             article.Email = User.Identity.GetUserName();
-
-            //pārnest uz servisu
-            article.Image = _articleService.ConvertToBytes(file);
-
-            //uz create parnest nevis article.image bet file
             _articleService.Create
-              (article.Title, article.Description, article.Image, article.Email, article.LikeCount, article.DislikeCount);
+              (article.Title, article.Description, article.Email, article.LikeCount, article.DislikeCount, file);
             
             return View(article);
         }

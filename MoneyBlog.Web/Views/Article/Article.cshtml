@@ -16,9 +16,9 @@
 
 @if (Model.AspNetUser != null)
         {
-            Html.ActionLink("Like", "Like", new { id = Model.Article.Id, email = Model.Article.Email });
+            @Html.ActionLink("Like", "Like", new { id = Model.Article.Id, email = Model.Article.Email })
 
-            Html.ActionLink("Dislike", "Dislike", new { id = Model.Article.Id, email = Model.Article.Email });
+            @Html.ActionLink("Dislike", "Dislike", new { id = Model.Article.Id, email = Model.Article.Email })
 
 
     <p>Leave a comment:</p>

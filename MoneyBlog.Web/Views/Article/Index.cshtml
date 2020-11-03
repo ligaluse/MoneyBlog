@@ -5,26 +5,71 @@
 
 @using (Html.BeginForm("Index", "Article", FormMethod.Post))
 {
-    @Html.TextBox("searching") <input type="submit" value="Search"/>
+    @Html.TextBox("searching")
+    <input type="submit" value="Search" />
 }
 <p>Last 5 articles:</p>
-        @foreach (var article in Model.Articles)
-        {
-            <div class="col-sm-6 col-md-3">
-                <div class="thumbnail">
-                    <img src="/Article/DisplayImage/@article.Id" alt="" height=100 width=200 />
-                    <div class="caption">
-                        <p>
-                            <a href="@Url.Action("Article","Article",new { id = article.Id })">
-                                <br />
-                                <span>@article.Title</span>
-                            </a>
-                        </p>
-                       @Html.DisplayFor(modelItem => article.LikeCount) <span class="glyphicon glyphicon-thumbs-up"></span>
-                        @Html.DisplayFor(modelItem => article.DislikeCount) <span class="glyphicon glyphicon-thumbs-down"></span>
-                    </div>
+<div class="row">
+    @foreach (var article in Model.NewestArticles)
+    {
+        <div class="col-md-2">
+            <div class="thumbnail">
+                <img src="/Article/DisplayImage/@article.Id" alt="" height=50 width=100 />
+                <div class="caption">
+                    <p>
+                        <a href="@Url.Action("Article","Article",new { id = article.Id })">
+                            <br />
+                            <span>@article.Title</span>
+                        </a>
+                    </p>
+                    @Html.DisplayFor(modelItem => article.LikeCount) <span class="glyphicon glyphicon-thumbs-up"></span>
+                    @Html.DisplayFor(modelItem => article.DislikeCount) <span class="glyphicon glyphicon-thumbs-down"></span>
                 </div>
             </div>
-        }
+        </div>
+    }
+</div>
 <p>Last 3 commented articles</p>
+<div class="row">
+    @foreach (var article in Model.LastCommentedArticles)
+    {
+        <div class="col-md-2">
+            <div class="thumbnail">
+                <img src="/Article/DisplayImage/@article.Id" alt="" height=50 width=100 />
+                <div class="caption">
+                    <p>
+                        <a href="@Url.Action("Article","Article",new { id = article.Id })">
+                            <br />
+                            <span>@article.Title</span>
+                        </a>
+                    </p>
+                    @Html.DisplayFor(modelItem => article.LikeCount) <span class="glyphicon glyphicon-thumbs-up"></span>
+                    @Html.DisplayFor(modelItem => article.DislikeCount) <span class="glyphicon glyphicon-thumbs-down"></span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
 <p>top 3 articles by rank</p>
+<div class="row">
+    @foreach (var article in Model.TopArticles)
+    {
+        <div class="col-md-2">
+            <div class="thumbnail">
+                <img src="/Article/DisplayImage/@article.Id" alt="" height=50 width=100 />
+                <div class="caption">
+                    <p>
+                        <a href="@Url.Action("Article","Article",new { id = article.Id })">
+                            <br />
+                            <span>@article.Title</span>
+                        </a>
+                    </p>
+                    @Html.DisplayFor(modelItem => article.LikeCount) <span class="glyphicon glyphicon-thumbs-up"></span>
+                    @Html.DisplayFor(modelItem => article.DislikeCount) <span class="glyphicon glyphicon-thumbs-down"></span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

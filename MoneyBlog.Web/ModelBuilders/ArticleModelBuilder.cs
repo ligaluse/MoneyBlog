@@ -33,17 +33,18 @@ namespace MoneyBlog.Web.ModelBuilders
             model.Article = article;
             model.Comments = comments;
             model.AspNetUser = user;
-            //model.AspNetUser = _adminService.Get(user);
-            //if(model.AspNetUser.UserRole_Id > 1)
-            //{
-
-            //}
-            //model.AspNetUser.Email = _adminService.Get(user).Email;
-            //model.AspNetUser.UserRole_Id = _roleService.Get(model.AspNetUser.Email).Id;
-
 
             return model;
-
+        }
+        public ArticlesViewModel GetArticlesByPropertyBuild()
+        {
+            ArticlesViewModel articlesViewModel = new ArticlesViewModel()
+            {
+                NewestArticles = _articleService.GetNewest(),
+                LastCommentedArticles = _articleService.GetArticlesByNewestComment(),
+                TopArticles = _articleService.GetTopArticles()
+            };
+            return articlesViewModel;
         }
        
     }
