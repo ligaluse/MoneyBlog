@@ -1,4 +1,4 @@
-﻿@model MoneyBlog.Web.ViewModels.ArticlesViewModel
+﻿@model MoneyBlog.Web.ViewModels.ArticlesByPropertyViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -8,34 +8,37 @@
     @Html.TextBox("searching")
     <input type="submit" value="Search" />
 }
-<p>Last 5 articles:</p>
+<div class="titleproperty">THE LATEST ON BLOG</div>
 <div class="row">
     @foreach (var article in Model.NewestArticles)
-    {
-        <div class="col-md-2">
-            <div class="thumbnail">
-                <img src="/Article/DisplayImage/@article.Id" alt="" height=50 width=100 />
-                <div class="caption">
-                    <p>
-                        <a href="@Url.Action("Article","Article",new { id = article.Id })">
-                            <br />
-                            <span>@article.Title</span>
-                        </a>
-                    </p>
-                    @Html.DisplayFor(modelItem => article.LikeCount) <span class="glyphicon glyphicon-thumbs-up"></span>
-                    @Html.DisplayFor(modelItem => article.DislikeCount) <span class="glyphicon glyphicon-thumbs-down"></span>
-                </div>
+    { 
+        <div class="col-md-3">
+            <div class="rowlatest">
+                <div class="thumbnail">
+                    <img src="/Article/DisplayImage/@article.Id" alt="" />
+                    <div class="caption">
+                        <p>
+                            <a href="@Url.Action("Article","Article",new { id = article.Id })">
+                                <br />
+                                <span>@article.Title</span>
+                            </a>
+                        </p>
+            @Html.DisplayFor(modelItem => article.LikeCount) <span class="glyphicon glyphicon-thumbs-up"></span>
+            @Html.DisplayFor(modelItem => article.DislikeCount) <span class="glyphicon glyphicon-thumbs-down"></span>
+                     </div>
+                 </div>
             </div>
-        </div>
+         </div>
     }
 </div>
-<p>Last 3 commented articles</p>
+<div class="titleproperty">LAST COMMENTED</div>
 <div class="row">
     @foreach (var article in Model.LastCommentedArticles)
     {
-        <div class="col-md-2">
+    <div class="col-md-3">
+        <div class="rowindex">
             <div class="thumbnail">
-                <img src="/Article/DisplayImage/@article.Id" alt="" height=50 width=100 />
+                <img src="/Article/DisplayImage/@article.Id" alt="" />
                 <div class="caption">
                     <p>
                         <a href="@Url.Action("Article","Article",new { id = article.Id })">
@@ -48,17 +51,18 @@
                 </div>
             </div>
         </div>
-    }
-</div>
+    </div>
+        }
+    </div>
 
-
-<p>top 3 articles by rank</p>
+<div class="titleproperty">MOST LIKED</div>
 <div class="row">
     @foreach (var article in Model.TopArticles)
     {
-        <div class="col-md-2">
+    <div class="col-md-3">
+        <div class="rowindex">
             <div class="thumbnail">
-                <img src="/Article/DisplayImage/@article.Id" alt="" height=50 width=100 />
+                <img src="/Article/DisplayImage/@article.Id" alt=""/>
                 <div class="caption">
                     <p>
                         <a href="@Url.Action("Article","Article",new { id = article.Id })">
@@ -71,5 +75,6 @@
                 </div>
             </div>
         </div>
-    }
-</div>
+    </div>
+     }
+    </div>

@@ -5,6 +5,7 @@ using MoneyBlog.Services.Service;
 using MoneyBlog.Web.ModelBuilders;
 using MoneyBlog.Web.ViewModels;
 using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -48,12 +49,16 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult Index(string searching)
         {
             var articles = _articleService.GetByName(searching);
-            var model = _articleModelBuilder.GetArticlesByPropertyBuild();
-            //var model = new ArticlesViewModel()
+            //var model = _articleModelBuilder.GetArticlesByPropertyBuild().Articles;
+            //if(searching!=null)
             //{
-            //    Articles = articles
-            //};
-            return View(model);
+            //    model = _articleModelBuilder.GetArticlesByPropertyBuild().Articles.Where(x => x.Title.Contains(searching)).ToList();
+            //}
+            var model = new ArticlesByPropertyViewModel()
+            {
+                Articles = articles
+            };
+            return View(model.Articles);
         }
         [HttpGet]
         public ActionResult Article(int Id)
@@ -63,7 +68,10 @@ namespace MoneyBlog.Web.Controllers
            
             return View(model);
         }
-        
+        public ActionResult AllArticles()
+        {
+            return View(_articleService.GetAllByDate());
+        }
         [Authorize]
         public ActionResult MyArticles()
         {
@@ -100,7 +108,6 @@ namespace MoneyBlog.Web.Controllers
             
             return View(article);
         }
-
 
         public ActionResult EditArticle(int id)
         {

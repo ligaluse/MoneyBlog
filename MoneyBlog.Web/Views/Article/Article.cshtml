@@ -1,18 +1,20 @@
-﻿@model GetArticleViewModel
+﻿@model ArticleDetailsViewModel
 @using MoneyBlog.Web.Controllers
 @using MoneyBlog.Web.ViewModels
 
-<h2>Article</h2>
+    <h5 class="text-danger">@Html.ValidationSummary()</h5>
 
+<div class="articletitle">@Model.Article.Title</div>
 <img src="@Url.Action("DisplayImage", new{ id = Model.Article.Id})" height=400 width=800 />
-<h2>@Model.Article.Title</h2>
-<p>Created on:  @Model.Article.CreatedOn.ToShortDateString()</p>
+
+<div class="datetime">Created on:  @Model.Article.CreatedOn.ToShortDateString()</div>
 @if (Model.Article.ModifiedOn != null)
 {
-    <p>Modified on:  @Model.Article.ModifiedOn</p>
+<div class="datetime">Modified on:  @Model.Article.ModifiedOn</div>
 }
-<p>@Model.Article.Description</p>
 <p>Author: @Model.Article.Email</p>
+<p class="articlebody">@Model.Article.Description</p>
+
 
 @if (Model.AspNetUser != null)
 {
@@ -28,6 +30,10 @@
 
 
 }
+else
+{
+    <p>If you want to comment, please sign in</p>
+}
 
 @if (Model.Comments != null && Model.Comments.Count > 0)
 {
@@ -37,19 +43,19 @@
         <small class="text-muted">
             Posted by @comment.Email on @comment.CreatedOn
         </small>
-        if (comment.Email == Model.AspNetUser.Email)
+        if (comment.Email == Model.AspNetUser.Email && Model.AspNetUser.Email != null)
         {
-         @Html.ActionLink("Delete", "DeleteComment", new { id = comment.Id })
+            @Html.ActionLink("Delete", "DeleteComment", new { id = comment.Id })
         }
-if (Model.AspNetUser != null)
-{
-@Html.ActionLink("Report", "ReportComment", new { id = comment.Id })
-}
-}
+        if (Model.AspNetUser != null)
+        {
+            @Html.ActionLink("Report", "ReportComment", new { id = comment.Id })
+        }
+    }
 }
 else
 {
-<p>There are no comments on this article </p>
+    <p>There are no comments on this article </p>
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

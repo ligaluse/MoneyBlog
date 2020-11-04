@@ -6,7 +6,7 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li>
+        <li class="welcomeuser">
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         @if (User.Identity.GetUserRoleId() != MoneyBlog.DataLayer.Constants.AdminConstants.JuniorRoleId)

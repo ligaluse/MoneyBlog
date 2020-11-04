@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MoneyBlog.Web.ViewModels
 {
-    public class GetArticleViewModel
+    public class ArticleDetailsViewModel
     {
         public Article Article { get; set; }
         public List<Comment>Comments { get; set; }

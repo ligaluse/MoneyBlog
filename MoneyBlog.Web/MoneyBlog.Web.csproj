@@ -221,11 +221,10 @@
     <Compile Include="ViewModels\AccountViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\VerifyCodeViewModel.cs" />
-    <Compile Include="ViewModels\ArticlesViewModel.cs" />
+    <Compile Include="ViewModels\ArticlesByPropertyViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\GetAllArticlesViewModel.cs" />
-    <Compile Include="ViewModels\GetArticleViewModel.cs" />
+    <Compile Include="ViewModels\ArticleDetailsViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\ConfigureTwoFactorViewModel.cs" />
@@ -245,6 +244,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\logo.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="libman.json" />
@@ -275,8 +275,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -309,9 +307,11 @@
     <Content Include="Views\Admin\UsersWithRoles.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\Admin\ReportedComments.cshtml" />
+    <Content Include="Views\Article\AllArticles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

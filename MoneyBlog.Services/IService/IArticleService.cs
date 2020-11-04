@@ -11,6 +11,7 @@ namespace MoneyBlog.Services.IService
     public interface IArticleService
     {
         List<Article> GetAll();
+        List<Article> GetAllByDate();
         List<Article> GetNewest();
        List<Article> GetTopArticles();
         List<Article> GetByName(string searching);

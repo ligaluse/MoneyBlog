@@ -25,6 +25,11 @@ namespace MoneyBlog.Services.Service
         {
             return _articleRepository.GetAll().ToList();
         }
+        public List<Article> GetAllByDate()
+        {
+            return _articleRepository.GetAll().OrderByDescending(i => i.CreatedOn)
+            .ToList();
+        }
         public byte[] GetImageFromDataBase(int Id)
         {
             return _articleRepository.GetImageFromDataBase(Id);
@@ -123,6 +128,10 @@ namespace MoneyBlog.Services.Service
                     return true;
                 }
             }
+            else
+            {
+ throw new Exception("image size exceeded");
+            }
             return false;
         }
         public Article EditModel(HttpPostedFileBase file, Article article)
@@ -135,6 +144,11 @@ namespace MoneyBlog.Services.Service
             {
                 article.Image = ConvertToBytes(file);
                 articleForEditing.Image = article.Image;
+            }
+            else if(!IsImageValid(file))
+            {
+
+                throw new Exception("image size exceeded");
             }
                 
             articleForEditing.Title = article.Title;

@@ -22,25 +22,25 @@ namespace MoneyBlog.Web.ModelBuilders
             _roleService = roleService;
             _adminService = adminService;
         }
-        public GetArticleViewModel BuildArticleModel(int id, string userId)
+        public ArticleDetailsViewModel BuildArticleModel(int id, string userId)
         {
             var article = _articleService.Get(id);
             var user = _adminService.Get(userId);
 
             List <Comment> comments = _commentService.GetAllForArticle(id);
 
-            GetArticleViewModel model = new GetArticleViewModel();
+            ArticleDetailsViewModel model = new ArticleDetailsViewModel();
             model.Article = article;
             model.Comments = comments;
             model.AspNetUser = user;
 
             return model;
         }
-        public ArticlesViewModel GetArticlesByPropertyBuild()
+        public ArticlesByPropertyViewModel GetArticlesByPropertyBuild()
         {
-            ArticlesViewModel articlesViewModel = new ArticlesViewModel()
+            ArticlesByPropertyViewModel articlesViewModel = new ArticlesByPropertyViewModel()
             {
-                //ArticlesByName = _articleService.GetByName(),
+                 Articles = _articleService.GetAll(),
                 NewestArticles = _articleService.GetNewest(),
                 LastCommentedArticles = _articleService.GetArticlesByNewestComment(),
                 TopArticles = _articleService.GetTopArticles()

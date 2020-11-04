@@ -22,4 +22,45 @@ select,
 textarea {
     max-width: 280px;
 }
+.titleproperty {
+   text-align: center;
+    color: #3bcba8;
+    font-family: 'Lucida Console', monospace;
+    font-size: 30px;
+}
+.rowlatest:hover {
+    border: 1px solid #777;
+}
+
+.rowlatest img {
+    width: 100%;
+    height: 250px;
+}
+.rowindex:hover{
+    border:1px solid #777;
+}
+.rowindex img{
+    width: 70%;
+    height: 100px;
+}
+.welcomeuser{
+    font-size: 15px;
+}
+.articletitle{
+    font-weight:600;
+    font-family: Arial;
+    color: #31a476;
+    text-transform:inherit;
+    font-size: 30px;
+}
+.articlebody {
+    font-weight: 400;
+    color: #31a476;
+    text-transform: inherit;
+    font-size: 20px;
+}
+.datetime{
+    font-style:italic;
+}
+
 
