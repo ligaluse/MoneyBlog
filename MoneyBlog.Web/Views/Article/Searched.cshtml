@@ -1,16 +1,14 @@
 ﻿@model List<MoneyBlog.DataLayer.Models.Article>
 @{
-    ViewBag.Title = "All Articles";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Searched";
 }
 
-<h2>All Articles</h2>
-@using (Html.BeginForm("AllArticles", "Article", FormMethod.Post))
+<h2>Searched</h2>
+@using (Html.BeginForm("Index", "Article", FormMethod.Post))
 {
     @Html.TextBox("searching")
     <input type="submit" value="Search" />
 }
-
 @foreach (var article in Model)
 {
     <div class="col-md-3">

@@ -32,9 +32,5 @@ namespace MoneyBlog.DataLayer.Repositories
             _db.CommentReports.Remove(_db.CommentReports.Find(id));
             _db.SaveChanges();
         }
-        public void SaveChanges()
-        {
-            _db.SaveChanges();
-        }
     }
 }

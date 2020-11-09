@@ -78,22 +78,24 @@ namespace MoneyBlog.Services.Service
             ( string title, string description, string email, int likeCount, int dislikeCount, HttpPostedFileBase file)
         {
            var image = ConvertToBytes(file);
+
+            Article article = new Article();
+
             if (image != null && IsImageValid(file))
             {
-
+                    article.Title = title;
+                    article.Description = description;
+                    article.Email = email;
+                    article.Image = image;
+                    article.LikeCount = 0;
+                    article.DislikeCount = 0;
+                    article.CreatedOn = DateTime.Now;
+                    article.ModifiedOn = null;
+                
+                _articleRepository.Create(article);
             }
-                Article article = new Article()
-            {
-                Title = title,
-                Description = description,
-                Email = email,
-                Image = image,
-                LikeCount = 0,
-                DislikeCount = 0,
-                CreatedOn = DateTime.Now,
-                ModifiedOn = null,
-            };
-            _articleRepository.Create(article);
+            
+            
             return article;
         }
         public void Delete(int id)
@@ -120,18 +122,11 @@ namespace MoneyBlog.Services.Service
         private bool IsImageValid (HttpPostedFileBase file)
         {
             string permittedType = DataConstants.PermittedImageTypes;
-            int permittedSizeInBytes = DataConstants.PermittedImageSize;
-            if (file.ContentLength > permittedSizeInBytes)
-            {
+            
                 if (permittedType.Split(",".ToCharArray()).Contains(file.ContentType))
                 {
                     return true;
                 }
-            }
-            else
-            {
- throw new Exception("image size exceeded");
-            }
             return false;
         }
         public Article EditModel(HttpPostedFileBase file, Article article)
@@ -145,11 +140,7 @@ namespace MoneyBlog.Services.Service
                 article.Image = ConvertToBytes(file);
                 articleForEditing.Image = article.Image;
             }
-            else if(!IsImageValid(file))
-            {
-
-                throw new Exception("image size exceeded");
-            }
+            
                 
             articleForEditing.Title = article.Title;
             articleForEditing.Description = article.Description;

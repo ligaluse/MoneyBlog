@@ -221,6 +221,7 @@
     <Compile Include="ViewModels\AccountViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\VerifyCodeViewModel.cs" />
+    <Compile Include="ViewModels\AllArticlesViewModel.cs" />
     <Compile Include="ViewModels\ArticlesByPropertyViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -308,6 +309,8 @@
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\Admin\ReportedComments.cshtml" />
     <Content Include="Views\Article\AllArticles.cshtml" />
+    <Content Include="Views\Article\EditComment.cshtml" />
+    <Content Include="Views\Article\Searched.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,6 +337,10 @@
     <ProjectReference Include="..\MoneyBlog.Services\MoneyBlog.Services.csproj">
       <Project>{d5469ba9-4332-4d51-bceb-99efd48a9063}</Project>
       <Name>MoneyBlog.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MoneyBlog.Test\MoneyBlog.Test.csproj">
+      <Project>{467d80d5-0060-4fd1-a368-6bbb78a4d3eb}</Project>
+      <Name>MoneyBlog.Test</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

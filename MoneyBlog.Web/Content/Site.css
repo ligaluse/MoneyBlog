@@ -34,14 +34,14 @@ textarea {
 
 .rowlatest img {
     width: 100%;
-    height: 250px;
+    height: 150px;
 }
 .rowindex:hover{
     border:1px solid #777;
 }
 .rowindex img{
-    width: 70%;
-    height: 100px;
+    width: 100%;
+    height: 250px;
 }
 .welcomeuser{
     font-size: 15px;

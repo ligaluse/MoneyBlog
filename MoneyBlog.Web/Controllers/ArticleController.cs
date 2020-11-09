@@ -36,29 +36,11 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult Index()
         {
             var model = _articleModelBuilder.GetArticlesByPropertyBuild();
-            //var articles = _articleService.GetNewest();
-
-            //var model = new ArticlesViewModel()
-            //{
-            //    Articles = articles
-            //};
-
             return View(model);
         }
-        [HttpPost]
-        public ActionResult Index(string searching)
+        public ActionResult Searched()
         {
-            var articles = _articleService.GetByName(searching);
-            //var model = _articleModelBuilder.GetArticlesByPropertyBuild().Articles;
-            //if(searching!=null)
-            //{
-            //    model = _articleModelBuilder.GetArticlesByPropertyBuild().Articles.Where(x => x.Title.Contains(searching)).ToList();
-            //}
-            var model = new ArticlesByPropertyViewModel()
-            {
-                Articles = articles
-            };
-            return View(model.Articles);
+            return View(_articleService.GetAll());
         }
         [HttpGet]
         public ActionResult Article(int Id)
@@ -72,6 +54,17 @@ namespace MoneyBlog.Web.Controllers
         {
             return View(_articleService.GetAllByDate());
         }
+        [HttpPost]
+        public ActionResult AllArticles(string searching)
+        {
+            var model = _articleService.GetAllByDate();
+            if (searching != null)
+            {
+                model = _articleService.GetAllByDate().Where(x => x.Title.Contains(searching)).ToList();
+            }
+            return View(model);
+        }
+      
         [Authorize]
         public ActionResult MyArticles()
         {
@@ -117,11 +110,23 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult EditArticle(HttpPostedFileBase file, Article article)
         {
             var editArticle = _articleService.EditModel(file, article);
-            return View(editArticle);
+           return RedirectToAction("Article", "Article", new { Id = article.Id });
         }
         public ActionResult DeleteComment(int id)
         {
             _commentService.Delete(id);
+            return RedirectToAction("Index", "Article");
+        }
+
+        public ActionResult EditComment(int id)
+        {
+            return View(_commentService.Get(id));
+        }
+        [HttpPost]
+        public ActionResult EditComment(Comment comment)
+        {
+            var editComment = _commentService.Edit(comment);
+            //return RedirectToAction("Article", "Article", new { Id = comment.ArticleId });
             return RedirectToAction("Index", "Article");
         }
 
@@ -153,14 +158,14 @@ namespace MoneyBlog.Web.Controllers
             var articleLike = _articleLikeService.Get(id, email);
             if (articleLike != null)
             {
-                ModelState.AddModelError("error", "you already voted");
+                TempData["message"] = MoneyBlog.DataLayer.Constants.DataConstants.AlreadyVoted;
             }
             else
             {
-                _articleLikeService.UpdateArticleWithLike(article);
+                _articleLikeService.UpdateArticleWithLike(article, email);
             }
 
-            return RedirectToAction("Index", "Article");
+            return RedirectToAction("Article", "Article", new { Id = article.Id });
         }
         public ActionResult Dislike(int id, Article article)
         {
@@ -168,13 +173,13 @@ namespace MoneyBlog.Web.Controllers
             var articleLike = _articleLikeService.Get(id, email);
             if (articleLike != null)
             {
-                ModelState.AddModelError("error", "you already voted");
+                TempData["message"] = MoneyBlog.DataLayer.Constants.DataConstants.AlreadyVoted;
             }
             else
             {
-                _articleLikeService.UpdateArticleWithDislike(article);
+                _articleLikeService.UpdateArticleWithDislike(article, email);
             }
-            return RedirectToAction("Index", "Article");
+            return RedirectToAction("Article", "Article", new { Id = article.Id });
         }
     }
 }

@@ -33,18 +33,18 @@ namespace MoneyBlog.Services.Service
             _articleLikeRepository.SaveLikeDislike(articleLike);
             return articleLike;
         }
-        public void UpdateArticleWithLike(Article article)
+        public void UpdateArticleWithLike(Article article, string email)
         {
             Article update = _articleService.Get(article.Id);
             update.LikeCount += 1;
-            IsArticleLiked(article.Id, article.Email);
+            IsArticleLiked(article.Id, email);
             _articleService.Update(update);
         }
-        public void UpdateArticleWithDislike(Article article)
+        public void UpdateArticleWithDislike(Article article, string email)
         {
             Article update = _articleService.Get(article.Id);
             update.DislikeCount += 1;
-            IsArticleDisliked(article.Id, article.Email);
+            IsArticleDisliked(article.Id, email);
             _articleService.Update(update);
         }
         public ArticleLike IsArticleDisliked(int id, string email)

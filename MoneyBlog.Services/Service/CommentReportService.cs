@@ -47,7 +47,7 @@ namespace MoneyBlog.Services.Service
             Comment update = _commentRepository.Get(id);
             update.ReportCount += 1;
             IsCommentReported(id, email);
-            _commentRepository.UpdateComment();
+            _commentRepository.UpdateWithReport();
         }
         public void DeleteReport(int id)
         {

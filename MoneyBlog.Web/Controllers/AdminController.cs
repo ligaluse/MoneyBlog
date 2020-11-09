@@ -63,7 +63,15 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult CreateUserRole(Role role)
         {
-            _roleService.Create(role.RoleName);
+            if(role.RoleName!=null)
+            {
+                return RedirectToAction("UsersWithRoles", "Admin)");
+            }
+            else
+            {
+                _roleService.Create(role.RoleName);
+            }
+            
             return View(role);
         }
 

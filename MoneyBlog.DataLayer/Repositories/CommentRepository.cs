@@ -1,6 +1,7 @@
 ﻿using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 
 namespace MoneyBlog.DataLayer.Repositories
@@ -31,8 +32,13 @@ namespace MoneyBlog.DataLayer.Repositories
             _db.Comments.Remove(_db.Comments.Find(id));
             _db.SaveChanges();
         }
-        public void UpdateComment()
+        public void UpdateWithReport()
         {
+            _db.SaveChanges();
+        }
+        public void UpdateComment(Comment comment)
+        {
+            _db.Comments.AddOrUpdate(comment);
             _db.SaveChanges();
         }
     }

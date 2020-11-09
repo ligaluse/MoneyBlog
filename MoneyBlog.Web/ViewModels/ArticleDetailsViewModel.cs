@@ -6,6 +6,7 @@ namespace MoneyBlog.Web.ViewModels
     public class ArticleDetailsViewModel
     {
         public Article Article { get; set; }
+        public ArticleLike ArticleLike { get; set; }
         public List<Comment>Comments { get; set; }
         public Comment Comment { get; set; }
         public AspNetUser AspNetUser { get; set; }

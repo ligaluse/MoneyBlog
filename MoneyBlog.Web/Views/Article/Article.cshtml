@@ -2,7 +2,9 @@
 @using MoneyBlog.Web.Controllers
 @using MoneyBlog.Web.ViewModels
 
-    <h5 class="text-danger">@Html.ValidationSummary()</h5>
+
+<h3 class="text-danger">@Html.ValidationSummary()</h3>
+
 
 <div class="articletitle">@Model.Article.Title</div>
 <img src="@Url.Action("DisplayImage", new{ id = Model.Article.Id})" height=400 width=800 />
@@ -10,18 +12,18 @@
 <div class="datetime">Created on:  @Model.Article.CreatedOn.ToShortDateString()</div>
 @if (Model.Article.ModifiedOn != null)
 {
-<div class="datetime">Modified on:  @Model.Article.ModifiedOn</div>
+    <div class="datetime">Modified on:  @Model.Article.ModifiedOn</div>
 }
 <p>Author: @Model.Article.Email</p>
 <p class="articlebody">@Model.Article.Description</p>
 
-
+@TempData["message"]
 @if (Model.AspNetUser != null)
 {
+
     @Html.ActionLink("Like", "Like", new { id = Model.Article.Id, email = Model.Article.Email })
 
     @Html.ActionLink("Dislike", "Dislike", new { id = Model.Article.Id, email = Model.Article.Email })
-
 
     <p>Leave a comment:</p>
     <input id="Comment" class="form-control" placeholder="write your comment here" rows="3" />
@@ -46,6 +48,7 @@ else
         if (comment.Email == Model.AspNetUser.Email && Model.AspNetUser.Email != null)
         {
             @Html.ActionLink("Delete", "DeleteComment", new { id = comment.Id })
+            @Html.ActionLink("Edit", "EditComment", new { id = comment.Id })
         }
         if (Model.AspNetUser != null)
         {

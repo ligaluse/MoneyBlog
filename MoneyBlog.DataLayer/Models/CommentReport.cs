@@ -12,6 +12,5 @@ namespace MoneyBlog.DataLayer.Models
         public int CommentId { get; set; }
         public string Email { get; set; }
         public bool Reported { get; set; }
-        public string UserId { get; set; }
     }
 }

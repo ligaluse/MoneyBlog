@@ -35,6 +35,20 @@ namespace MoneyBlog.Services.Service
             _commentRepository.Create(comment);
             return comment;
         }
+        public Comment Edit(Comment comment)
+        {
+            var commentForEditing = Get(comment.Id);
+
+            commentForEditing.Body = comment.Body;
+
+            Update(commentForEditing);
+
+            return comment;
+        }
+        public void Update(Comment comment)
+        {
+            _commentRepository.UpdateComment(comment);
+        }
         public Comment Get(int id)
         {
             return _commentRepository.Get(id);
@@ -65,5 +79,6 @@ namespace MoneyBlog.Services.Service
             }
             _commentRepository.Delete(id);
         }
+       
     }
 }

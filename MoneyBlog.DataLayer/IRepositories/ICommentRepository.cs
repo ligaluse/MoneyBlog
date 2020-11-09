@@ -9,6 +9,7 @@ namespace MoneyBlog.DataLayer.IRepositories
         Comment Get(int id);
         List<Comment> GetAll();
         void Delete(int id);
-        void UpdateComment();
+        void UpdateWithReport();
+        void UpdateComment(Comment comment);
     }
 }
