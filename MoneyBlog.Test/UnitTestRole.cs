@@ -1,42 +1,92 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MoneyBlog.DataLayer.Models;
-using MoneyBlog.DataLayer.Repositories;
-using MoneyBlog.Services.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using MoneyBlog.DataLayer.IRepositories;
+//using MoneyBlog.DataLayer.Models;
+//using MoneyBlog.DataLayer.Repositories;
+//using MoneyBlog.Services.IService;
+//using MoneyBlog.Services.Service;
+//using Moq;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using System.Web.ModelBinding;
 
-namespace MoneyBlog.Test
-{
-    [TestClass]
-    public class UnitTestRole
-    {
-        //[TestMethod]
-        //public void Test_GetAll()
-        //{
-        //    RoleRepository roleRep = new RoleRepository();
+//namespace MoneyBlog.Test
+//{
+//    [TestClass]
+//    public class UnitTestRole
+//    {
+//        private Mock<IRoleRepository> _mockRepository;
+//        private ModelStateDictionary _modelState;
+//        private IRoleService _roleService;
 
-        //    var result = roleRep.GetAll();
 
-        //    //sagaidītā vērtība un reālā vērtība, lai tests būtu veiksmīgs
-        //    Assert.AreEqual("TestRole", result[0].RoleName);
-        //    Assert.AreEqual("SeniorRole", result[0].RoleName);
-        //    Assert.AreEqual(2, result.Count);
-        //}
-        //[TestMethod]
-        //public void Test_Create()
-        //{
-        //    RoleRepository roleRep = new RoleRepository();
-        //    Role role = roleRep.Create(new Role()
-        //    {
-        //        RoleName = "TestRole"
+//        [TestMethod]
+//        public void CreateRole()
+//        {
+//            // Arrange
+//            var role = _roleService.Create("Student"); 
 
-        //    });
-        //    Assert.AreEqual("TestRole", role.RoleName);
+//            // Act
+//            var result = _roleService.Create(role);
 
-        //    Assert.IsTrue(role.Id > 0);
-        //}
-    }
-}
+//            // Assert
+//            Assert.IsTrue(result);
+//        }
+
+
+//        //[TestMethod]
+//        //public void Test_Get()
+//        //{ 
+//        //    List<Role> roles = new List<Role>
+//        //        {
+//        //            new Role {Id = 1, RoleName = "Junior" },
+//        //           new Role {Id = 1, RoleName = "Senior" },
+//        //            new Role {Id = 1, RoleName = "Admin" },
+//        //        };
+//        //    Mock<RoleRepository> mockRoleRepository = new Mock<RoleRepository>();
+
+
+//        //    // Return all the products
+//        //    mockRoleRepository.Setup(mr => mr.GetAll()).Returns(roles);
+
+//        //    // return a product by Id
+//        //    mockRoleRepository.Setup(mr => mr.Get(
+//        //        It.IsAny<int>())).Returns((int i) => roles.Where(
+//        //        x => x.Id == i).Single());
+
+
+//        //    mockRoleRepository.Setup(mr => mr.Create(It.IsAny<Role>())).Returns(
+//        //        (Role role) =>
+//        //        {
+//        //            DateTime now = DateTime.Now;
+
+//        //            if (role.Id.Equals(default(int)))
+//        //            {
+//        //                role.DateCreated = now;
+//        //                role.DateModified = now;
+//        //                role.ProductId = products.Count() + 1;
+//        //                products.Add(role);
+//        //            }
+//        //            else
+//        //            {
+//        //                var original = products.Where(
+//        //                    q => q.ProductId == role.ProductId).Single();
+
+//        //                if (original == null)
+//        //                {
+//        //                    return false;
+//        //                }
+
+//        //                original.Name = role.Name;
+//        //                original.Price = role.Price;
+//        //                original.Description = role.Description;
+//        //                original.DateModified = now;
+//        //            }
+
+//        //            return true;
+//        //        });
+        
+//    }
+//}

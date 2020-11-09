@@ -38,10 +38,7 @@ namespace MoneyBlog.Web.Controllers
             var model = _articleModelBuilder.GetArticlesByPropertyBuild();
             return View(model);
         }
-        public ActionResult Searched()
-        {
-            return View(_articleService.GetAll());
-        }
+
         [HttpGet]
         public ActionResult Article(int Id)
         {
@@ -76,9 +73,7 @@ namespace MoneyBlog.Web.Controllers
         {
             var userId = User.Identity.GetUserId();
             var email = User.Identity.GetUserName();
-            
             _commentService.Create(articleId, userId, email, comment);
-
             return Json(comment);
         }
 
@@ -114,8 +109,8 @@ namespace MoneyBlog.Web.Controllers
         }
         public ActionResult DeleteComment(int id)
         {
-            _commentService.Delete(id);
-            return RedirectToAction("Index", "Article");
+            _commentService.DeleteWithReports(id);
+            return Redirect(Request.UrlReferrer.PathAndQuery);
         }
 
         public ActionResult EditComment(int id)
@@ -126,7 +121,7 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult EditComment(Comment comment)
         {
             var editComment = _commentService.Edit(comment);
-            //return RedirectToAction("Article", "Article", new { Id = comment.ArticleId });
+          
             return RedirectToAction("Index", "Article");
         }
 
@@ -150,7 +145,9 @@ namespace MoneyBlog.Web.Controllers
             {
                 _commentReportService.UpdateCommentWithReport(id, email);
             }
-            return RedirectToAction("Index", "Article");
+            return Redirect(Request.UrlReferrer.PathAndQuery);
+
+
         }
         public ActionResult Like(int id, Article article)
         {

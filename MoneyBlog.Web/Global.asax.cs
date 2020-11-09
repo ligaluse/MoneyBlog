@@ -18,6 +18,7 @@ namespace MoneyBlog.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             UnityConfig.RegisterComponents();
+            GlobalFilters.Filters.Add(new HandleErrorAttribute());
         }
         //protected void Application_Error(object sender, EventArgs e)
         //{

@@ -23,16 +23,18 @@ namespace MoneyBlog.Services.Service
         }
         public Comment Create(int articleId, string userId, string email, string body)
         {
-            Comment comment = new Comment()
+            Comment comment = new Comment();
+            if(body.Length>0)
             {
-                ArticleId = articleId,
-                UserId = userId,
-                Email = email,
-                Body = body,
-                CreatedOn = DateTime.Now,
-                ReportCount = 0
+                comment.ArticleId = articleId;
+                comment.UserId = userId;
+                comment.Email = email;
+                comment.Body = body;
+                comment.CreatedOn = DateTime.Now;
+                comment.ReportCount = 0;
+           _commentRepository.Create(comment);
             };
-            _commentRepository.Create(comment);
+ 
             return comment;
         }
         public Comment Edit(Comment comment)
@@ -70,15 +72,16 @@ namespace MoneyBlog.Services.Service
             var userComments = _commentRepository.GetAll().Where(u => u.Email == email).ToList();
             return userComments;
         }
-        public void Delete(int id)
+        public void DeleteWithReports(int id)
         {
             var reportToDelete = _commentReportService.GetAllForComment(id);
-            foreach(var report in reportToDelete)
+            foreach (var report in reportToDelete)
             {
                 _commentReportService.DeleteReport(report.Id);
             }
             _commentRepository.Delete(id);
         }
-       
+
+
     }
 }

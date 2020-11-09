@@ -53,5 +53,6 @@ namespace MoneyBlog.Services.Service
         {
             _commentReportRepository.Delete(id);
         }
+
     }
 }

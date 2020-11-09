@@ -53,7 +53,7 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult Delete(string id)
         {
             _adminService.Delete(id);
-            return RedirectToAction("UsersWithRoles", "Admin");
+            return Redirect(Request.UrlReferrer.PathAndQuery);
         }
         public ActionResult CreateUserRole()
         {
@@ -97,13 +97,13 @@ namespace MoneyBlog.Web.Controllers
         }
         public ActionResult DeleteComment(int id)
         {
-            _commentService.Delete(id);
-            return RedirectToAction("ReportedComments", "Admin");
+            _commentService.DeleteWithReports(id);
+            return Redirect(Request.UrlReferrer.PathAndQuery);
         }
         public ActionResult DeleteReport(int id)
         {
             _commentReportService.DeleteReport(id);
-            return RedirectToAction("ReportedComments", "Admin");
+            return Redirect(Request.UrlReferrer.PathAndQuery);
         }
     }
 }

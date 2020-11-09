@@ -103,7 +103,7 @@ namespace MoneyBlog.Services.Service
             var commentToDelete = _commentService.GetAllForArticle(id);
             foreach(var comment in commentToDelete)
             {
-                _commentService.Delete(comment.Id);
+                _commentService.DeleteWithReports(comment.Id);
             }
             _articleRepository.Delete(id);
         }

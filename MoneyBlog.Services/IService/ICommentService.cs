@@ -9,7 +9,7 @@ namespace MoneyBlog.Services.IService
         Comment Get(int id);
         List<Comment> GetAll();
         List<Comment> GetAllForArticle(int articleId);
-        void Delete(int id);
+        void DeleteWithReports(int id);
         List<Comment> GetByUser(string email);
         List<Comment> GetNewest();
         Comment Edit(Comment comment);
