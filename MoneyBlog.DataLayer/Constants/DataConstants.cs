@@ -13,6 +13,7 @@ namespace MoneyBlog.DataLayer.Constants
         public const string PermittedImageTypes = "image/jpg,image/jpeg,image/png";
         public const int PermittedImageSize = 40000;
         public const string AlreadyVoted = "You already voted";
+        public const string ImageInvalid = "image is not valid. Only jpg/jpeg/png allowed. Max 20mb";
 
     }
 }

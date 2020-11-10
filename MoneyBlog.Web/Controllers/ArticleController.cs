@@ -3,8 +3,6 @@ using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
 using MoneyBlog.Services.Service;
 using MoneyBlog.Web.ModelBuilders;
-using MoneyBlog.Web.ViewModels;
-using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,19 +16,17 @@ namespace MoneyBlog.Web.Controllers
         private readonly ArticleModelBuilder _articleModelBuilder;
         private readonly ICommentService _commentService;
         private readonly ICommentReportService _commentReportService;
-        private readonly IAdminService _adminService;
 
         public ArticleController
         (ArticleService articleService, ArticleLikeService articleLikeService, 
         ArticleModelBuilder articleModelBuilder,CommentService commentService,
-        CommentReportService commentReportService, AdminService adminService)
+        CommentReportService commentReportService)
         {
             _articleService = articleService;
             _articleLikeService = articleLikeService;
             _articleModelBuilder = articleModelBuilder;
             _commentService = commentService;
             _commentReportService = commentReportService;
-            _adminService = adminService;
         }
 
         public ActionResult Index()
@@ -44,7 +40,6 @@ namespace MoneyBlog.Web.Controllers
         {
             var userId = User.Identity.GetUserId();
             var model = _articleModelBuilder.BuildArticleModel(Id, userId);
-           
             return View(model);
         }
         public ActionResult AllArticles()
@@ -90,10 +85,13 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult AddNewArticle(HttpPostedFileBase file, Article article)
         {
+            if(_articleService.IsImageValid(file)==false)
+            {
+                TempData["message2"] = MoneyBlog.DataLayer.Constants.DataConstants.ImageInvalid;
+            }
             article.Email = User.Identity.GetUserName();
             _articleService.Create
               (article.Title, article.Description, article.Email, article.LikeCount, article.DislikeCount, file);
-            
             return View(article);
         }
 
@@ -104,7 +102,16 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult EditArticle(HttpPostedFileBase file, Article article)
         {
-            var editArticle = _articleService.EditModel(file, article);
+            if (_articleService.IsImageValid(file) == false)
+            {
+                TempData["message2"] = MoneyBlog.DataLayer.Constants.DataConstants.ImageInvalid;
+                return View(article);
+            }
+            else
+            {
+                var editArticle = _articleService.EditModel(file, article);
+            }
+            
            return RedirectToAction("Article", "Article", new { Id = article.Id });
         }
         public ActionResult DeleteComment(int id)
@@ -121,7 +128,6 @@ namespace MoneyBlog.Web.Controllers
         public ActionResult EditComment(Comment comment)
         {
             var editComment = _commentService.Edit(comment);
-          
             return RedirectToAction("Index", "Article");
         }
 
@@ -146,8 +152,6 @@ namespace MoneyBlog.Web.Controllers
                 _commentReportService.UpdateCommentWithReport(id, email);
             }
             return Redirect(Request.UrlReferrer.PathAndQuery);
-
-
         }
         public ActionResult Like(int id, Article article)
         {
@@ -161,7 +165,6 @@ namespace MoneyBlog.Web.Controllers
             {
                 _articleLikeService.UpdateArticleWithLike(article, email);
             }
-
             return RedirectToAction("Article", "Article", new { Id = article.Id });
         }
         public ActionResult Dislike(int id, Article article)

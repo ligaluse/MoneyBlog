@@ -22,9 +22,9 @@ namespace MoneyBlog.Services.IService
         void Delete(int id);
         void Update(Article article);
         Article EditModel(HttpPostedFileBase file, Article article);
-        //Article Create(string title, string description, byte[] image, string email, int likeCount, int dislikeCount);
         Article Create
             (string title, string description, string email, int likeCount, int dislikeCount, HttpPostedFileBase file);
         List<Article> GetArticlesByNewestComment();
+        bool IsImageValid(HttpPostedFileBase file);
     }
 }

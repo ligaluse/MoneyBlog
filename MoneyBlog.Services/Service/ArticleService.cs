@@ -83,19 +83,17 @@ namespace MoneyBlog.Services.Service
 
             if (image != null && IsImageValid(file))
             {
-                    article.Title = title;
-                    article.Description = description;
-                    article.Email = email;
-                    article.Image = image;
-                    article.LikeCount = 0;
-                    article.DislikeCount = 0;
-                    article.CreatedOn = DateTime.Now;
-                    article.ModifiedOn = null;
+                article.Title = title;
+                article.Description = description;
+                article.Email = email;
+                article.Image = image;
+                article.LikeCount = 0;
+                article.DislikeCount = 0;
+                article.CreatedOn = DateTime.Now;
+                article.ModifiedOn = null;
                 
                 _articleRepository.Create(article);
             }
-            
-            
             return article;
         }
         public void Delete(int id)
@@ -119,7 +117,7 @@ namespace MoneyBlog.Services.Service
             return imageBytes;
         }
 
-        private bool IsImageValid (HttpPostedFileBase file)
+        public bool IsImageValid (HttpPostedFileBase file)
         {
             string permittedType = DataConstants.PermittedImageTypes;
             
