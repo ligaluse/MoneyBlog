@@ -40,7 +40,6 @@ namespace MoneyBlog.Web.ModelBuilders
         {
             ArticlesByPropertyViewModel articlesViewModel = new ArticlesByPropertyViewModel()
             {
-                 Articles = _articleService.GetAll(),
                 NewestArticles = _articleService.GetNewest(),
                 LastCommentedArticles = _articleService.GetArticlesByNewestComment(),
                 TopArticles = _articleService.GetTopArticles()

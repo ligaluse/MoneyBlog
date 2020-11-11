@@ -5,10 +5,8 @@ namespace MoneyBlog.Web.ViewModels
 {
     public class ArticlesByPropertyViewModel
     {
-        public List<Article> Articles { get; set; }
         public List<Article> NewestArticles { get; set; }
         public List<Article> LastCommentedArticles { get; set; }
         public List<Article> TopArticles { get; set; }
-
     }
 }

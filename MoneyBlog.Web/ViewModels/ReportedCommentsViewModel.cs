@@ -6,8 +6,9 @@ using System.Web;
 
 namespace MoneyBlog.Web.ViewModels
 {
-    public class AllArticlesViewModel
+    public class ReportedCommentsViewModel
     {
-        public List<Article> Articles { get; set; }
+        public List<Comment> Comments { get; set; }
+        public List<CommentReport> CommentReports { get; set; }
     }
 }

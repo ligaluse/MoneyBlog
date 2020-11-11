@@ -1,11 +1,11 @@
-﻿@model List<MoneyBlog.DataLayer.Models.Comment>
+﻿@model MoneyBlog.Web.ViewModels.ReportedCommentsViewModel
 @{
     ViewBag.Title = "ReportedComments";
 }
 
 <h2>Reported Comments</h2>
 
-@foreach (var comment in Model)
+@foreach (var comment in Model.Comments)
 {
     if (comment.ReportCount > 0)
     {
@@ -14,7 +14,12 @@
             Posted by @comment.Email on @comment.CreatedOn
         </small>
         <p>  @Html.ActionLink("Delete Comment", "DeleteComment", new { id = comment.Id })</p>
-        <p>@Html.ActionLink("Delete Report", "DeleteReport", new { id = comment.Id })</p>
+
+        foreach(var report in Model.CommentReports.Where(x=>x.CommentId==comment.Id))
+        {
+               <p>@Html.ActionLink("Delete Report", "DeleteReport", new { id = report.Id })</p>
+        }
+        
     }
 
 }

@@ -29,7 +29,8 @@ namespace MoneyBlog.DataLayer.Repositories
         }
         public void Delete(int id)
         {
-            _db.CommentReports.Remove(_db.CommentReports.Find(id));
+            var reportToRemove = _db.CommentReports.Find(id);
+            _db.CommentReports.Remove(reportToRemove);
             _db.SaveChanges();
         }
     }

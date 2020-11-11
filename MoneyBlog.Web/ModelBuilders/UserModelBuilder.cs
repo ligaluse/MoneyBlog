@@ -12,14 +12,17 @@ namespace MoneyBlog.Web.ModelBuilders
         public IRoleService _roleService;
         public IArticleService _articleService;
         public ICommentService _commentService;
+        public ICommentReportService _commentReportService;
 
         public UserModelBuilder(AdminService adminService, RoleService roleService, 
-            ArticleService articleService, CommentService commentService)
+            ArticleService articleService, CommentService commentService, 
+            CommentReportService commentReportService)
         {
             _adminService = adminService;
             _roleService = roleService;
             _articleService = articleService;
             _commentService = commentService;
+            _commentReportService = commentReportService;
         }
         public UserDetailsViewModel SingleUserDetailsBuild(string id)
         {
@@ -44,6 +47,16 @@ namespace MoneyBlog.Web.ModelBuilders
                 userList.Add(SingleUserDetailsBuild(user.Id));
             }
             return userList;
+        }
+        public ReportedCommentsViewModel BuildReportedComments()
+        {
+            ReportedCommentsViewModel reportedCommentsViewModel = new ReportedCommentsViewModel()
+            { 
+                Comments = _commentService.GetAll(),
+                CommentReports = _commentReportService.GetAll(),
+            };
+            return reportedCommentsViewModel;
+        
         }
     }
 }

@@ -93,7 +93,9 @@ namespace MoneyBlog.Web.Controllers
         }
         public ActionResult ReportedComments()
         {
-            return View(_commentService.GetAll());
+            //return View(_commentService.GetAll());
+            var model = _modelBuilder.BuildReportedComments();
+            return View(model);
         }
         public ActionResult DeleteComment(int id)
         {

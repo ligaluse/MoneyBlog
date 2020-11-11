@@ -1,12 +1,31 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MoneyBlog.DataLayer.IRepositories;
+using MoneyBlog.Services.IService;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.ModelBinding;
 
 namespace MoneyBlog.Test
 {
-    class UnitTestArticleLike
+    [TestClass]
+    public class UnitTestArticleLike
     {
+        private Mock<IArticleLikeRepository> _mockRepository;
+        private ModelStateDictionary _modelState;
+        private IArticleLikeService _service;
+
+        [TestMethod]
+        public void Is_Article_Updated_With_Like()
+        {
+            //arrange
+
+            //act
+
+            //assert
+        }
     }
 }
