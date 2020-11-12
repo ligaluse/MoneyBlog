@@ -11,6 +11,11 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
+
+        public ArticleLikeRepository()
+        {
+        }
+
         public ArticleLike Get(int id, string email)
         {
             var articleLike = _db.ArticleLikes.Where(x => x.Email == email && x.Article_Id == id).FirstOrDefault();

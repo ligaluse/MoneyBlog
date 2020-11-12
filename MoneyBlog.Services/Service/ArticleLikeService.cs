@@ -10,8 +10,8 @@ namespace MoneyBlog.Services.Service
         private readonly IArticleLikeRepository _articleLikeRepository;
         private readonly IArticleService _articleService;
 
-        public ArticleLikeService(ArticleLikeRepository articleLikeRepository,
-        ArticleService articleService)
+        public ArticleLikeService(IArticleLikeRepository articleLikeRepository,
+        IArticleService articleService)
         {
             _articleLikeRepository = articleLikeRepository;
             _articleService = articleService;

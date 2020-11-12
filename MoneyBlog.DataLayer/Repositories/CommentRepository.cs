@@ -13,6 +13,11 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
+
+        public CommentRepository()
+        {
+        }
+
         public Comment Create(Comment comment)
         {
             _db.Comments.Add(comment);

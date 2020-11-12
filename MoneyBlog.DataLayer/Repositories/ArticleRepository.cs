@@ -13,6 +13,10 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
+        public ArticleRepository()
+        {
+           
+        }
         public List<Article> GetAll()
         {
             var article = _db.Articles.ToList();

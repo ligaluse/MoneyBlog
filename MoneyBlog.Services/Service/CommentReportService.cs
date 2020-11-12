@@ -13,7 +13,7 @@ namespace MoneyBlog.Services.Service
         private readonly ICommentReportRepository _commentReportRepository;
         private readonly ICommentRepository _commentRepository;
 
-        public CommentReportService(CommentReportRepository commentReportRepository, CommentRepository commentRepository)
+        public CommentReportService(ICommentReportRepository commentReportRepository, ICommentRepository commentRepository)
         {
             _commentReportRepository = commentReportRepository;
             _commentRepository = commentRepository;

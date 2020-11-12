@@ -16,7 +16,7 @@ namespace MoneyBlog.Services.Service
         private readonly IArticleRepository _articleRepository;
         private readonly ICommentService _commentService;
 
-        public ArticleService(ArticleRepository articleRepository, CommentService commentService)
+        public ArticleService(IArticleRepository articleRepository, ICommentService commentService)
         {
             _articleRepository = articleRepository;
             _commentService = commentService;

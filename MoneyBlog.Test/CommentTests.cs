@@ -12,20 +12,21 @@ using System.Web.ModelBinding;
 namespace MoneyBlog.Test
 {
     [TestClass]
-    public class UnitTestCommentReport
+    public class CommentTests
     {
-        private Mock<ICommentReportRepository> _mockRepository;
+        private Mock<ICommentRepository> _mockRepository;
         private ModelStateDictionary _modelState;
-        private ICommentReportService _aervice;
+        private ICommentService _service;
 
         [TestMethod]
-        public void Is_Comment_Reported()
+        public void Get_Comments_By_User()
         {
             //arrange
 
             //act
 
             //assert
+
         }
     }
 }

@@ -12,14 +12,14 @@ using System.Web.ModelBinding;
 namespace MoneyBlog.Test
 {
     [TestClass]
-    public class UnitTestArticleLike
+    public class CommentReportTests
     {
-        private Mock<IArticleLikeRepository> _mockRepository;
+        private Mock<ICommentReportRepository> _mockRepository;
         private ModelStateDictionary _modelState;
-        private IArticleLikeService _service;
+        private ICommentReportService _aervice;
 
         [TestMethod]
-        public void Is_Article_Updated_With_Like()
+        public void Is_Comment_Reported()
         {
             //arrange
 

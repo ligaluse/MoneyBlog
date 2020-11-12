@@ -10,7 +10,7 @@ namespace MoneyBlog.Services.Service
     public class RoleService : IRoleService
     {
         public IRoleRepository _roleRepository;
-        public RoleService(RoleRepository roleRepository)
+        public RoleService(IRoleRepository roleRepository)
         {
             _roleRepository = roleRepository;
         }

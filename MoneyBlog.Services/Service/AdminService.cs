@@ -10,7 +10,7 @@ namespace MoneyBlog.Services.Service
     {
         private readonly IAdminRepository _adminRepository;
 
-        public AdminService(AdminRepository adminRepository)
+        public AdminService(IAdminRepository adminRepository)
         {
             _adminRepository = adminRepository;
         }

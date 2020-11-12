@@ -13,6 +13,10 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
+
+        public AdminRepository()
+        {
+        }
         public List<AspNetUser>GetAll()
         {
             List<AspNetUser> AspNetUsers = _db.AspNetUsers.ToList();

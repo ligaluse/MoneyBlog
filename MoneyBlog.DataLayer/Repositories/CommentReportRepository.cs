@@ -12,6 +12,11 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
+
+        public CommentReportRepository()
+        {
+        }
+
         public CommentReport Get(int id, string email)
         {
             var commentReport = _db.CommentReports.Where(x => x.Email == email && x.CommentId == id).FirstOrDefault();

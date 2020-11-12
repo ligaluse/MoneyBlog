@@ -12,21 +12,20 @@ using System.Web.ModelBinding;
 namespace MoneyBlog.Test
 {
     [TestClass]
-    public class UnitTestComment
+    public class ArticleLikeTests
     {
-        private Mock<ICommentRepository> _mockRepository;
+        private Mock<IArticleLikeRepository> _mockRepository;
         private ModelStateDictionary _modelState;
-        private ICommentService _service;
+        private IArticleLikeService _service;
 
         [TestMethod]
-        public void Get_Comments_By_User()
+        public void Is_Article_Updated_With_Like()
         {
             //arrange
 
             //act
 
             //assert
-
         }
     }
 }

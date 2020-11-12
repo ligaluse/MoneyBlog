@@ -16,6 +16,11 @@ namespace MoneyBlog.DataLayer.Repositories
         {
             _db = db;
         }
+
+        public RoleRepository()
+        {
+        }
+
         public List<Role> GetAll()
         {
             var role = _db.Role.ToList();
