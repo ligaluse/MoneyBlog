@@ -11,20 +11,15 @@ namespace MoneyBlog.Services.Service
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository;
-        private readonly ICommentReportRepository _commentReportRepository;
         private readonly ICommentReportService _commentReportService;
 
-        public CommentService(ICommentRepository commentRepository, ICommentReportRepository commentReportRepository,
+        public CommentService(ICommentRepository commentRepository, 
             ICommentReportService commentReportService)
         {
             _commentRepository = commentRepository;
-            _commentReportRepository = commentReportRepository;
             _commentReportService = commentReportService;
         }
-        public CommentService()
-        {
-          
-        }
+
         public Comment Create(int articleId, string userId, string email, string body)
         {
             Comment comment = new Comment();

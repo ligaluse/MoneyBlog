@@ -1,7 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoneyBlog.DataLayer.IRepositories;
+using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
+using MoneyBlog.Services.Service;
 using Moq;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,18 +17,51 @@ namespace MoneyBlog.Test
     [TestClass]
     public class CommentReportTests
     {
-        private Mock<ICommentReportRepository> _mockRepository;
-        private ModelStateDictionary _modelState;
-        private ICommentReportService _aervice;
+        private Mock<ICommentReportRepository> _commentReportRepositoryMock;
+        private Mock<ICommentRepository> _commentRepositoryMock;
+        private ICommentReportService _service;
 
-        [TestMethod]
-        public void Is_Comment_Reported()
+
+        [SetUp]
+        public void Setup()
         {
-            //arrange
+            _commentReportRepositoryMock = new Mock<ICommentReportRepository>();
+            _commentRepositoryMock = new Mock<ICommentRepository>();
+            _service = new CommentReportService(_commentReportRepositoryMock.Object, _commentRepositoryMock.Object);
+        }
 
-            //act
+        [Test]
+        public void GetAllForComment_ReturnsValue_IfNotNull()
+        {
+            var report = new List<CommentReport>();
+            report.Add(new CommentReport()
+            {
+                Id = 1,
+                CommentId =2,
+                Email = "test1@test.com",
+                Reported = true
+            });
+            report.Add(new CommentReport()
+            {
+                Id = 2,
+                CommentId = 2,
+                Email = "test2@test.com",
+                Reported = true
+            });
+            report.Add(new CommentReport()
+            {
+                Id = 3,
+                CommentId = 1,
+                Email = "test3@test.com",
+                Reported = true
+            });
 
-            //assert
+            _commentReportRepositoryMock.Setup(a => a.GetAll()).Returns(report.ToList());
+
+            var result = _service.GetAllForComment(2);
+
+            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(result);
+
         }
     }
 }

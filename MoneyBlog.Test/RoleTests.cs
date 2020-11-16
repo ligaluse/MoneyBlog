@@ -38,79 +38,18 @@ namespace MoneyBlog.Test
 
             var result = _service.Get(role.Id).RoleName;
 
-            //Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(result);
             NUnit.Framework.Assert.AreEqual("Junior", result);
-
-
         }
-        //[Test]
-        //public void CreateRole()
-        //{
+        [Test]
+        public void CreateRole()
+        {
+            _roleRepositoryMock.Setup(x => x.Create(It.IsAny<Role>()))
+                .Returns<Role>(a => { a.RoleName = "Test"; a.Id = 1; return a; });
 
-        //    _roleRepositoryMock.Setup(x => x.Create(It.IsAny<Role>()))
-        //        .Returns(Role );
+            var id = _service.Create("Test");
 
-        //    var id = _service.Create("Test");
-
-        //    NUnit.Framework.Assert.IsInstanceOf<Int32>(id);
-        //    NUnit.Framework.Assert.AreEqual(1, id);
-        //    _roleRepositoryMock.VerifyAll();
-        //}
-            //[Test]
-            //public void Test_Get()
-            //{
-            //    //arrange
-            //    _roleService.Setup(a => a.Get(It.IsAny<int>())).Returns((int i) => roles.Where(x => x.Id == i).Single());
-            //   //act
-
-            //    //assert
-
-            //}
-            //{ 
-            //    
-            //    Mock<RoleRepository> mockRoleRepository = new Mock<RoleRepository>();
-
-
-            //    // Return all the products
-            //    mockRoleRepository.Setup(mr => mr.GetAll()).Returns(roles);
-
-            //    // return a product by Id
-            //    mockRoleRepository.Setup(mr => mr.Get(
-            //        It.IsAny<int>())).Returns((int i) => roles.Where(
-            //        x => x.Id == i).Single());
-
-
-            //    mockRoleRepository.Setup(mr => mr.Create(It.IsAny<Role>())).Returns(
-            //        (Role role) =>
-            //        {
-            //            DateTime now = DateTime.Now;
-
-            //            if (role.Id.Equals(default(int)))
-            //            {
-            //                role.DateCreated = now;
-            //                role.DateModified = now;
-            //                role.ProductId = products.Count() + 1;
-            //                products.Add(role);
-            //            }
-            //            else
-            //            {
-            //                var original = products.Where(
-            //                    q => q.ProductId == role.ProductId).Single();
-
-            //                if (original == null)
-            //                {
-            //                    return false;
-            //                }
-
-            //                original.Name = role.Name;
-            //                original.Price = role.Price;
-            //                original.Description = role.Description;
-            //                original.DateModified = now;
-            //            }
-
-            //            return true;
-            //        });
-
-            //}
+            _roleRepositoryMock.VerifyAll();
         }
+      
+    }
 }
