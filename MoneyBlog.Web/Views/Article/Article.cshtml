@@ -3,7 +3,7 @@
 @using MoneyBlog.Web.ViewModels
 
 
-<h3 class="text-danger">@Html.ValidationSummary()</h3>
+@*<h3 class="text-danger">@Html.ValidationSummary()</h3>*@
 
 
 <div class="articletitle">@Model.Article.Title</div>
@@ -36,7 +36,25 @@ else
 {
     <p>If you want to comment, please sign in</p>
 }
+<h5>My comments:</h5>
 
+@if (Model.AspNetUser != null)
+{
+    foreach (var comment in Model.Comments.Where(u => u.Email == Model.AspNetUser.Email))
+        {
+        <p>@comment.Body</p>
+        <small class="text-muted">
+            Posted by @comment.Email on @comment.CreatedOn
+        </small>
+      
+            @Html.ActionLink("Delete", "DeleteComment", new { id = comment.Id })
+            @Html.ActionLink("Edit", "EditComment", new { id = comment.Id })
+        
+    }
+}
+
+
+<h4>All comments:</h4>
 @if (Model.Comments != null && Model.Comments.Count > 0)
 {
     foreach (var comment in Model.Comments)
@@ -45,11 +63,12 @@ else
         <small class="text-muted">
             Posted by @comment.Email on @comment.CreatedOn
         </small>
-        if (comment.Email == Model.AspNetUser.Email && Model.AspNetUser.Email != null)
+        @*if (comment.Email == Model.AspNetUser.Email && Model.AspNetUser.Email != null)
         {
             @Html.ActionLink("Delete", "DeleteComment", new { id = comment.Id })
             @Html.ActionLink("Edit", "EditComment", new { id = comment.Id })
-        }
+        }*@
+
         if (Model.AspNetUser != null)
         {
             @Html.ActionLink("Report", "ReportComment", new { id = comment.Id })

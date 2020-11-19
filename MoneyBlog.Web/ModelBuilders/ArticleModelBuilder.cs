@@ -22,7 +22,7 @@ namespace MoneyBlog.Web.ModelBuilders
             _roleService = roleService;
             _adminService = adminService;
         }
-        public ArticleDetailsViewModel BuildArticleModel(int id, string userId)
+        public ArticleDetailsViewModel BuildArticleModel(int id, string? userId)
         {
             var article = _articleService.Get(id);
             var user = _adminService.Get(userId);
