@@ -6,7 +6,8 @@ namespace MoneyBlog.DataLayer
     public class DefaultConnection : DbContext
     {
         public DefaultConnection()
-            : base("Name=DefaultConnection")
+            : base("DefaultConnection")
+            //: base("Name=DefaultConnection")
         {
 
         }
