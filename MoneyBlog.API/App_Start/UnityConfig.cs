@@ -1,21 +1,17 @@
-using MoneyBlog.API.Controllers;
-using MoneyBlog.DataLayer;
+using MoneyBlog.Api.Controllers;
 using System.Web.Http;
-using System.Web.Mvc;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
 using Unity.WebApi;
 
-namespace MoneyBlog.API
+namespace MoneyBlog.Api
 {
     public static class UnityConfig
     {
         public static void RegisterComponents()
         {
 			var container = new UnityContainer();
-
-
             container.RegisterType<MoneyBlog.DataLayer.IRepositories.IAdminRepository, MoneyBlog.DataLayer.Repositories.AdminRepository>();
             container.RegisterType<MoneyBlog.Services.IService.IAdminService, MoneyBlog.Services.Service.AdminService>();
 
@@ -34,19 +30,16 @@ namespace MoneyBlog.API
             container.RegisterType<MoneyBlog.DataLayer.IRepositories.ICommentReportRepository, MoneyBlog.DataLayer.Repositories.CommentReportRepository>();
             container.RegisterType<MoneyBlog.Services.IService.ICommentReportService, MoneyBlog.Services.Service.CommentReportService>();
 
-            //container.RegisterType<MoneyBlog.DataLayer.DefaultConnection>(new InjectionConstructor());
-            container.RegisterType<ArticleController>(new InjectionConstructor());
-            //container.RegisterType<DefaultConnection>(new PerThreadLifetimeManager());
-            container.RegisterType<DefaultConnection>(new HierarchicalLifetimeManager(),new InjectionFactory(c => new DefaultConnection()));
+            container.RegisterType<MoneyBlog.DataLayer.DefaultConnection>(new HierarchicalLifetimeManager(), new InjectionConstructor());
+           
+           
 
             // register all your components with the container here
             // it is NOT necessary to register your controllers
 
             // e.g. container.RegisterType<ITestService, TestService>();
 
-            //GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
 }

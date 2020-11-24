@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBlog.Services", "Money
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBlog.Test", "MoneyBlog.Test\MoneyBlog.Test.csproj", "{467D80D5-0060-4FD1-A368-6BBB78A4D3EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBlog.Api", "MoneyBlog.Api\MoneyBlog.Api.csproj", "{A01DAD47-4A4A-49FA-8409-DD6D90F3637B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{467D80D5-0060-4FD1-A368-6BBB78A4D3EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{467D80D5-0060-4FD1-A368-6BBB78A4D3EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{467D80D5-0060-4FD1-A368-6BBB78A4D3EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A01DAD47-4A4A-49FA-8409-DD6D90F3637B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A01DAD47-4A4A-49FA-8409-DD6D90F3637B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A01DAD47-4A4A-49FA-8409-DD6D90F3637B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A01DAD47-4A4A-49FA-8409-DD6D90F3637B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

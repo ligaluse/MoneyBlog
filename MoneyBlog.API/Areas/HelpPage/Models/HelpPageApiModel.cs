@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
-using MoneyBlog.API.Areas.HelpPage.ModelDescriptions;
+using MoneyBlog.Api.Areas.HelpPage.ModelDescriptions;
 
-namespace MoneyBlog.API.Areas.HelpPage.Models
+namespace MoneyBlog.Api.Areas.HelpPage.Models
 {
     /// <summary>
     /// The model that represents an API displayed on the help page.

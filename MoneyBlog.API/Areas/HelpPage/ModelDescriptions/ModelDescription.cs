@@ -1,6 +1,6 @@
 using System;
 
-namespace MoneyBlog.API.Areas.HelpPage.ModelDescriptions
+namespace MoneyBlog.Api.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

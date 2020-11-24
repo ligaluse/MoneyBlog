@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace MoneyBlog.API.Areas.HelpPage.ModelDescriptions
+namespace MoneyBlog.Api.Areas.HelpPage.ModelDescriptions
 {
     public class ComplexTypeModelDescription : ModelDescription
     {

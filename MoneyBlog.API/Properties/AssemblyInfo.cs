@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MoneyBlog.API")]
+[assembly: AssemblyTitle("MoneyBlog.Api")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MoneyBlog.API")]
+[assembly: AssemblyProduct("MoneyBlog.Api")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("008b22c4-7e00-4d43-b5c6-c349727871c9")]
+[assembly: Guid("850fe0cd-9523-434e-9e39-9208a602a1a2")]
 
 // Version information for an assembly consists of the following four values:
 //

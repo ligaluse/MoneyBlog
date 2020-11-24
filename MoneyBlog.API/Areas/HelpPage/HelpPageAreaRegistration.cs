@@ -1,7 +1,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace MoneyBlog.API.Areas.HelpPage
+namespace MoneyBlog.Api.Areas.HelpPage
 {
     public class HelpPageAreaRegistration : AreaRegistration
     {

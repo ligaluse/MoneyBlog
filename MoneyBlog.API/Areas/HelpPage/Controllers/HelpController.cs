@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using MoneyBlog.API.Areas.HelpPage.ModelDescriptions;
-using MoneyBlog.API.Areas.HelpPage.Models;
+using MoneyBlog.Api.Areas.HelpPage.ModelDescriptions;
+using MoneyBlog.Api.Areas.HelpPage.Models;
 
-namespace MoneyBlog.API.Areas.HelpPage.Controllers
+namespace MoneyBlog.Api.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

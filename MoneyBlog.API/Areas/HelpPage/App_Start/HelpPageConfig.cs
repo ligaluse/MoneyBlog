@@ -16,7 +16,7 @@ using System.Web.Http;
 using System.Web.Http.OData;
 #endif
 
-namespace MoneyBlog.API.Areas.HelpPage
+namespace MoneyBlog.Api.Areas.HelpPage
 {
     /// <summary>
     /// Use this class to customize the Help Page.
@@ -26,7 +26,7 @@ namespace MoneyBlog.API.Areas.HelpPage
     public static class HelpPageConfig
     {
         [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters",
-            MessageId = "MoneyBlog.API.Areas.HelpPage.TextSample.#ctor(System.String)",
+            MessageId = "MoneyBlog.Api.Areas.HelpPage.TextSample.#ctor(System.String)",
             Justification = "End users may choose to merge this string with existing localized resources.")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly",
             MessageId = "bsonspec",
