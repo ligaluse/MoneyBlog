@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
@@ -16,9 +17,10 @@ namespace MoneyBlog.Api
             // Web API routes
 
             config.MapHttpAttributeRoutes();
-            //         config.Formatters.JsonFormatter.SupportedMediaTypes.Add(
-            //new MediaTypeHeaderValue("text/html")
-            config.Formatters.Add(new BsonMediaTypeFormatter()); 
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
