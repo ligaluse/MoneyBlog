@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBlog.Test", "MoneyBlog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBlog.Api", "MoneyBlog.Api\MoneyBlog.Api.csproj", "{A01DAD47-4A4A-49FA-8409-DD6D90F3637B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapi2", "webapi2\webapi2.csproj", "{5A7E6626-C409-47E6-A457-F0AF65E4C1D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBlogAPI", "MoneyBlogAPI\MoneyBlogAPI.csproj", "{32DB172C-AD41-446E-A500-9C2E93FCA254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{A01DAD47-4A4A-49FA-8409-DD6D90F3637B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A01DAD47-4A4A-49FA-8409-DD6D90F3637B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A01DAD47-4A4A-49FA-8409-DD6D90F3637B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A7E6626-C409-47E6-A457-F0AF65E4C1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A7E6626-C409-47E6-A457-F0AF65E4C1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A7E6626-C409-47E6-A457-F0AF65E4C1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A7E6626-C409-47E6-A457-F0AF65E4C1D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32DB172C-AD41-446E-A500-9C2E93FCA254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32DB172C-AD41-446E-A500-9C2E93FCA254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32DB172C-AD41-446E-A500-9C2E93FCA254}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32DB172C-AD41-446E-A500-9C2E93FCA254}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

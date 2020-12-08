@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -20,6 +21,13 @@ namespace MoneyBlog.Api.Controllers
             _repo = new AuthRepository();
         }
 
+        [HttpGet]
+        [Route("authenticate")]
+        public IHttpActionResult GetForAuthenticate()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            return Ok("Hello " + identity.Name);
+        }
         // POST api/Account/Register
         [AllowAnonymous]
         [System.Web.Http.AcceptVerbs("GET", "POST")]
