@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using MoneyBlog.Api.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,31 @@ namespace MoneyBlog.Api.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             return Ok("Hello " + identity.Name);
         }
+
+        //[HttpPost]
+        //[AllowAnonymous]
+ 
+        //public async Task<IHttpActionResult> Login(LoginViewModel model, string returnUrl)
+        //{
+
+
+        //    // This doesn't count login failures towards account lockout
+        //    // To enable password failures to trigger account lockout, change to shouldLockout: true
+        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password);
+        //    switch (result)
+        //    {
+        //        case SignInStatus.Success:
+        //            return RedirectToAction("Index", "Article");
+        //        case SignInStatus.LockedOut:
+        //            return View("Lockout");
+        //        case SignInStatus.RequiresVerification:
+        //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+        //        case SignInStatus.Failure:
+        //        default:
+        //            ModelState.AddModelError("", "Invalid login attempt.");
+        //            return View(model);
+        //    }
+        //}
         // POST api/Account/Register
         [AllowAnonymous]
         [System.Web.Http.AcceptVerbs("GET", "POST")]

@@ -33,9 +33,12 @@ namespace MoneyBlog.Web
             container.RegisterType<MoneyBlog.DataLayer.IRepositories.ICommentReportRepository, MoneyBlog.DataLayer.Repositories.CommentReportRepository>();
             container.RegisterType<MoneyBlog.Services.IService.ICommentReportService, MoneyBlog.Services.Service.CommentReportService>();
 
+            container.RegisterType<MoneyBlog.DataLayer.IRepositories.IUserRepository, MoneyBlog.DataLayer.Repositories.UserRepository>();
+            container.RegisterType<MoneyBlog.Services.IService.IUserService, MoneyBlog.Services.Service.UserService>();
 
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
+
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>("DefaultConnection");
 
 
