@@ -11,5 +11,7 @@ namespace MoneyBlog.Services.IService
     {
         User GetByEmailAndPassword(string email, string password);
         User GetByEmail(string email);
+        bool IsUserValid(string email, string password);
+        bool isUserExist(string email, string password);
     }
 }

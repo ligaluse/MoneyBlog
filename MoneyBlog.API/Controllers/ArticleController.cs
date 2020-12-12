@@ -18,6 +18,7 @@ using System.Web.Http;
 
 namespace MoneyBlog.Api.Controllers
 {
+
     [RoutePrefix("api/Article")]
     public class ArticleController : ApiController
     {
@@ -32,7 +33,7 @@ namespace MoneyBlog.Api.Controllers
             _articleService = articleService;
             _articleRepository = articleRepository;
         }
- 
+
         //[HttpGet]
         //[Route("GetAll")]
         //public IHttpActionResult GetAll()
@@ -41,6 +42,7 @@ namespace MoneyBlog.Api.Controllers
         //    var articles = _articleService.GetAll();
         //    return Ok(articles);
         //}
+      
         [HttpGet]
         [Route("GetAll")]
         public IEnumerable<Article> GetAll()

@@ -1,4 +1,5 @@
-﻿using MoneyBlog.DataLayer.IRepositories;
+﻿using MoneyBlog.DataLayer;
+using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
 using System;
@@ -12,9 +13,11 @@ namespace MoneyBlog.Services.Service
    public class UserService : IUserService
     {
         private IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private static DefaultConnection _db;
+        public UserService(IUserRepository userRepository, DefaultConnection db)
         {
             _userRepository = userRepository;
+            _db = db;
         }
         public User GetByEmailAndPassword(string email, string password)
         {
@@ -23,7 +26,8 @@ namespace MoneyBlog.Services.Service
         }
         public bool IsUserValid(string email, string password)
         {
-            if(GetByEmailAndPassword(email,password) != null)
+            var user = _db.Users.ToList().FirstOrDefault(u => u.Email == email && u.Password == password);
+            if (user != null)
             {
                 return true;
             }
@@ -31,6 +35,11 @@ namespace MoneyBlog.Services.Service
             {
                 return false;
             }
+        }
+        public bool isUserExist(string email, string password)
+        {
+            var user = _db.Users.Any(u => u.Email == email && u.Password == password);
+            return user;
         }
         public User GetByEmail(string email)
         {

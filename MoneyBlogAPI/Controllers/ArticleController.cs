@@ -27,14 +27,8 @@ namespace MoneyBlogAPI.Controllers
             _articleRepository = articleRepository;
         }
 
-        //[HttpGet]
-        //[Route("GetAll")]
-        //public IHttpActionResult GetAll()
-        //{
-
-        //    var articles = _articleService.GetAll();
-        //    return Ok(articles);
-        //}
+     
+        [Authorize]
         [HttpGet]
         [Route("GetAll")]
         public IEnumerable<Article> GetAll()

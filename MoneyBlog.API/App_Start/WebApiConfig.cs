@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace MoneyBlog.Api
 {
@@ -21,6 +22,7 @@ namespace MoneyBlog.Api
             config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.Remove(config.Formatters.XmlFormatter);
+    
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

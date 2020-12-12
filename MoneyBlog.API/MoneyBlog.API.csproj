@@ -232,6 +232,7 @@
     <Compile Include="Models\MyAuthorizationServerProvider.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="App_Start\OwinStartup.cs" />
+    <Compile Include="Models\UserSecurity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
