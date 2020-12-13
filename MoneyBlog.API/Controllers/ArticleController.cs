@@ -1,24 +1,16 @@
-﻿using AutoMapper;
-using MoneyBlog.Api.Models;
-using MoneyBlog.DataLayer;
+﻿using MoneyBlog.DataLayer;
 using MoneyBlog.DataLayer.IRepositories;
 using MoneyBlog.DataLayer.Models;
 using MoneyBlog.Services.IService;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 
 namespace MoneyBlog.Api.Controllers
 {
-
+    [Authorize]
     [RoutePrefix("api/Article")]
     public class ArticleController : ApiController
     {
@@ -42,13 +34,16 @@ namespace MoneyBlog.Api.Controllers
         //    var articles = _articleService.GetAll();
         //    return Ok(articles);
         //}
-      
+
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetAll")]
         public IEnumerable<Article> GetAll()
         {
             return _articleService.GetAll();
         }
+
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetById")]
         public IHttpActionResult GetById(int id)
@@ -61,12 +56,10 @@ namespace MoneyBlog.Api.Controllers
              return Ok(article);
         }
 
-
-
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [System.Web.Http.HttpPost]
         [Route("Post")]
-        public IHttpActionResult Post(/*ArticleModel model,*/ string title, string description )
+        public IHttpActionResult Post(string title, string description )
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:44354/");
@@ -74,24 +67,20 @@ namespace MoneyBlog.Api.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //var image = _articleService.ConvertToBytes(model.file);
-            //var email = RequestContext.Principal.Identity.Name;
+            var email = RequestContext.Principal.Identity.Name;
 
             Article article = new Article();
 
                 article.Title = title;
                 article.Description = description;
-                //article.Email = email;
-                //article.Image = image;
+                article.Email = email;
+            //article.Image = image;
                 article.LikeCount = 0;
                 article.DislikeCount = 0;
                 article.CreatedOn = DateTime.Now;
                 article.ModifiedOn = null;
 
                 _articleRepository.Create(article);
-            
-
-            //var json = JsonConvert.SerializeObject(article);
-            //var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             return Ok(article);
 
@@ -102,15 +91,21 @@ namespace MoneyBlog.Api.Controllers
         [Route("Put")]
         public IHttpActionResult Put(int id, Article article)
         {
-            
+
             if (id != article.Id)
             {
                 return BadRequest();
             }
-
+            var email = RequestContext.Principal.Identity.Name;
+            
             article.ModifiedOn = DateTime.Now;
             var articleForEditing = _articleService.Get(article.Id);
-
+            if (email != articleForEditing.Email)
+            {
+                return BadRequest("you have no access to this article");
+            }
+            else
+            {
             articleForEditing.Title = article.Title;
             articleForEditing.Description = article.Description;
             articleForEditing.ModifiedOn = article.ModifiedOn;
@@ -118,19 +113,28 @@ namespace MoneyBlog.Api.Controllers
             _articleService.Update(articleForEditing);
              
             return Ok(articleForEditing);
+            }
+
         }
 
         [HttpDelete]
         [Route("Delete")]
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete(int id, Article article)
         {
-            if (id <= 0)
-                return BadRequest("Not a valid article id");
+            if (id != article.Id)
+            {
+                return BadRequest();
+            }
+            var email = RequestContext.Principal.Identity.Name;
 
+            var articleToDelete = _articleService.Get(article.Id);
+            if (email != articleToDelete.Email)
+            {
+                return BadRequest("you have no access to delete this article");
+            }
             _articleService.Delete(id);
 
             return Ok();
         }
-
     }
 }

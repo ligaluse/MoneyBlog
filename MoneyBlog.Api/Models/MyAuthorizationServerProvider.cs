@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
+﻿using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using MoneyBlog.DataLayer;
 using MoneyBlog.DataLayer.Models;
@@ -8,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace MoneyBlog.Api.Models
 {
@@ -65,39 +63,7 @@ namespace MoneyBlog.Api.Models
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
         }
-        //public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
-        //{
-        //    context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-
-        //    using (AuthRepository _repo = new AuthRepository())
-        //    {
-        //        IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
-
-        //        if (user == null)
-        //        {
-        //            context.SetError("invalid_grant", "The user name or password is incorrect.");
-        //            return;
-        //        }
-        //    }
-
-        //    // Optional : You can add a role based claim by uncommenting the line below.
-        //    // identity.AddClaim(new Claim(ClaimTypes.Role, "Administrator"));
-
-
-        //    ClaimsIdentity oAuthIdentity =
-        //     new ClaimsIdentity(context.Options.AuthenticationType);
-        //    oAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-        //    context.Validated(oAuthIdentity);
-        //    ClaimsIdentity cookiesIdentity =
-        //    new ClaimsIdentity(context.Options.AuthenticationType);
-        //    cookiesIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-        //    context.Validated(cookiesIdentity);
-        //    AuthenticationProperties properties = CreateProperties(context.UserName);
-        //    AuthenticationTicket ticket =
-        //    new AuthenticationTicket(oAuthIdentity, properties);
-        //    context.Validated(ticket);
-        //    context.Request.Context.Authentication.SignIn(cookiesIdentity);
-        //}
+       
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
