@@ -2,6 +2,7 @@
 using Microsoft.Owin.Security.OAuth;
 using MoneyBlog.DataLayer;
 using MoneyBlog.DataLayer.Models;
+using Scrypt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,20 +30,26 @@ namespace MoneyBlog.Api.Models
         }
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            using (var obj = new DefaultConnection())
+            ScryptEncoder encoder = new ScryptEncoder();
+            var hashedPassword = encoder.Encode(context.Password);
+            using (var db = new DefaultConnection())
             {
+                //bool isValidUser = encoder.Compare(context.Password, db.Users.Password);
 
-                User entry = obj.Users.Where
+                User entry = db.Users.Where
                 <User>(record =>
                 record.Email == context.UserName &&
-                record.Password == context.Password).FirstOrDefault();
+                record.Password == hashedPassword).FirstOrDefault();
+                //User entry = db.Users.Where
+                //<User>(record =>
+                //record.Email == context.UserName && encoder.Compare(record.Password, context.Password)).FirstOrDefault();
 
-                if (entry == null)
-                {
-                    context.SetError("invalid_grant",
-                    "The user name or password is incorrect.");
-                    return;
-                }
+                //if (entry == null)
+                //{
+                //    context.SetError("invalid_grant",
+                //    "The user name or password is incorrect.");
+                //    return;
+                //}
             }
 
             // Optional : You can add a role based claim by uncommenting the line below.

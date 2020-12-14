@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Scrypt;
+using MoneyBlog.DataLayer;
 
 namespace MoneyBlog.Web.Controllers
 {
@@ -16,11 +18,13 @@ namespace MoneyBlog.Web.Controllers
   
         private IUserService _userService;
         private IUserRepository _userRepository;
+        private DefaultConnection _db;
 
-        public UserController(IUserService userService, IUserRepository userRepository)
+        public UserController(IUserService userService, IUserRepository userRepository, DefaultConnection db)
         {
             _userService = userService;
             _userRepository = userRepository;
+            _db = db;
         }
 
         public ActionResult SignIn()
@@ -31,18 +35,20 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult SignIn(LoginViewModel model)
         {
+            ScryptEncoder encoder = new ScryptEncoder();
             if (ModelState.IsValid)
             {
-                var user = _userService.GetByEmailAndPassword(model.Email, model.Password);
-                if (user == null)
+                var user = _userService.GetByEmail(model.Email);
+                bool isValidUser = encoder.Compare(model.Password, user.Password);
+                if(isValidUser)
                 {
-                    ModelState.AddModelError("error2", "nepareizs epasts un/vai parole");
+                   Session.Add("userId", user.Id);
+                  Session.Add("email", user.Email);
+                   return RedirectToAction("Index", "Article");
                 }
                 else
                 {
-                    Session.Add("userId", user.Id);
-                    Session.Add("email", user.Email);
-                    return RedirectToAction("Index", "Article");
+                    ModelState.AddModelError("error2", "nepareizs epasts un/vai parole");
                 }
             }
             return View();
@@ -56,26 +62,24 @@ namespace MoneyBlog.Web.Controllers
         [HttpPost]
         public ActionResult SignUp(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            ScryptEncoder encoder = new ScryptEncoder();
+            
+            var validUser = _userService.GetByEmail(model.Email);
+            if(validUser !=null)
             {
-                if (_userService.GetByEmail(model.Email) != null)
-                {
-                    ModelState.AddModelError("error3", "Email already exists");
-                }
-                else
-                {
-                    _userRepository.Create(new User()
-                    {
-                        Email = model.Email,
-                        Password = model.Password,
-                    });
-                    TempData["message"] = "account created";
-                    return RedirectToAction("SignIn", "User");
-
-                }
+                ModelState.AddModelError("error3", "Email already exists");
+                return RedirectToAction("Index", "Article");
             }
 
-            return View();
+            User user = new User()
+            {
+                Email = model.Email,
+                Password = encoder.Encode(model.Password)
+            };
+            _db.Users.Add(user);
+            _db.SaveChanges();
+            TempData["message"] = "account created";
+          return RedirectToAction("SignIn", "User");
         }
 
         public ActionResult SignOut()
