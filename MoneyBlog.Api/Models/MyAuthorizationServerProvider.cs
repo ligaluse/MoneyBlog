@@ -40,21 +40,8 @@ namespace MoneyBlog.Api.Models
                 <User>(record =>
                 record.Email == context.UserName &&
                 record.Password == hashedPassword).FirstOrDefault();
-                //User entry = db.Users.Where
-                //<User>(record =>
-                //record.Email == context.UserName && encoder.Compare(record.Password, context.Password)).FirstOrDefault();
-
-                //if (entry == null)
-                //{
-                //    context.SetError("invalid_grant",
-                //    "The user name or password is incorrect.");
-                //    return;
-                //}
+               
             }
-
-            // Optional : You can add a role based claim by uncommenting the line below.
-            // identity.AddClaim(new Claim(ClaimTypes.Role, "Administrator"));
-
 
             ClaimsIdentity oAuthIdentity =
              new ClaimsIdentity(context.Options.AuthenticationType);
